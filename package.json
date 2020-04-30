@@ -1,0 +1,18 @@
+{
+  "name": "techlab",
+  "version": "1.0.1",
+  "description": "Techlab software for employees",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kushagra Srivastava",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.2",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.10",
+    "request-ip": "^2.1.3"
+  }
+}
