@@ -34,6 +34,7 @@ var requestIp = require('request-ip');
         res.render("ipcheck");
     });
 
-    app.listen(3000, '127.0.0.1', function(){
-        console.log("The YelpCamp Server Has Started!");
+    // app.listen(3000, '127.0.0.1', function(){
+    app.listen(process.env.PORT, process.env.IP, function(){
+        console.log("Techlab Server Has Started!");
      });
