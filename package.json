@@ -4,7 +4,7 @@
   "description": "Techlab software for employees",
   "main": "app.js",
   "scripts": {
-    "start": "npm run build && node server.js"
+    "start": "node app.js"
   },
   "author": "Kushagra Srivastava",
   "license": "ISC",
