@@ -1,1 +1,29 @@
-<h1>this will check ip</h1>
+<%- include("partials/header") %>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Zip</th>
+        <th>State</th>
+        <th>Phone</th>
+      </tr>
+<% for(var i=0; i < parsedData.length; i++){ %>
+
+    <tr>
+        <td><%= parsedData[i]["contactname"] %></td>
+        <td><%= parsedData[i]["address"] %></td>
+        <td><%= parsedData[i]["zip"] %></td>
+        <td><%= parsedData[i]["state"] %></td>
+        <td><%= parsedData[i]["phone"] %></td>
+    </tr>
+    
+    
+<% }; %>
+</table>
+
+<!-- <p>
+<%= parsedData[0]["phone"] %> 
+</p> -->
+
+<%- include("partials/footer") %>
