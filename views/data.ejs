@@ -1,9 +1,14 @@
 <%- include("partials/header") %>
-<div class="container">
 
+<div class="container">
     <div class="toprow">
+        <% usadata.forEach(function(usa, index){ %>
+        <% if(!boolData && usadata[index].state === xa){ %>
         <h2>USE Florida Data</h2>
-        <a href="/data/<%= usadata[0]._id %>" class="btn btn-primary">USE Data</a>
+        <a href="/data/<%= usadata[index]._id %>" class="btn btn-primary">USE Data</a>
+        <% boolData = true; %>
+        <% }; %>
+        <% }); %>
     </div>
 </div>  
 <%- include("partials/footer") %>
