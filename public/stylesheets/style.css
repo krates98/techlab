@@ -27,6 +27,7 @@
  #fetchdata{
      margin: auto;
      max-width: 500px;
+     justify-content: center;
  }
 
  .topclass{
@@ -37,4 +38,8 @@
 
  .wid{
      width: 9rem;
+ }
+
+ .btn{
+     outline: 0;
  }

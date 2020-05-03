@@ -62,26 +62,15 @@ const   express         = require("express"),
 
     //Delete Fetched Data
     app.delete("/data/:id", function(req, res){
-        // Campground.findByIdAndRemove(req.params.id, function(err){
-        //    if(err){
-        //        res.redirect("/");
-        //    } else {
-        //        res.redirect("/");
-        //    }
-        // });
-        res.send("you are trying to delete something");
+        Data.findByIdAndRemove(req.params.id, function(err){
+           if(err){
+               res.redirect("/");
+           } else {
+               res.redirect("/");
+           }
+        });
      });
-         //Delete Fetched Data
-    app.put("/data/:id", function(req, res){
-        // Campground.findByIdAndRemove(req.params.id, function(err){
-        //    if(err){
-        //        res.redirect("/");
-        //    } else {
-        //        res.redirect("/");
-        //    }
-        // });
-        res.send("you are trying to put something");
-     });
+     
 
     app.listen(3000, '127.0.0.1', function(){
     // app.listen(process.env.PORT, process.env.IP, function(){
