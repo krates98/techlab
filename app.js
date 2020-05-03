@@ -1,15 +1,17 @@
 const   express         = require("express"),
-        app             = express(),
+        methodOverride  = require('method-override'),
         bodyParser      = require("body-parser"),
         mongoose        = require("mongoose"),
         Data            = require("./models/data"),
         request         = require("request-promise"),
+        app             = express(),
         seedDB          = require("./seeds");
 
     mongoose.connect('mongodb://localhost:27017/techlab', { useNewUrlParser: true , useUnifiedTopology: true });
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(express.static(__dirname + "/public"));
     app.set("view engine", "ejs");
+    app.use(methodOverride('_method'));
     // seedDB();
 
     // require request-ip and register it as middleware
@@ -21,13 +23,6 @@ const   express         = require("express"),
     app.get("/",function(req,res){
         var ip = req.clientIp;
         res.render("landing",{ip});
-    });
-
-    //Delete first element of data array
-    app.post("/", function(req, res){
-        // usadata.shift();
-        // res.redirect("/");
-        res.send("You hit the post route")
     });
 
     // Fetch Data Page
@@ -43,38 +38,50 @@ const   express         = require("express"),
      });
     });
 
+    app.get("/data/:id",function(req,res){
+        Data.findById(req.params.id, function(err, alldata){
+            if(err){
+                console.log(err);
+            } else {
+               res.render("show",{usadata:alldata});
+            }
+         });
+    });
+
     // Fetch Offer Pages
 
     app.get("/pages",function(req,res){
         res.render("pages");
     });
 
-    // Fetch Offer Pages
+    // Fetch Admin Page
 
     app.get("/admin",function(req,res){
         res.render("admin");
     });
 
-    // Middleware
-
-    app.get("/ipcheck",function(req,res){
-        // var url = 'https://api.covid19india.org/data.json';
-        // request(url , function(error, response, body){
-        // if(!error && response.statusCode == 200){
-        // var parsedData = JSON.parse(body);
-        // res.send("${parsedData.cases_time_series}");
-        // }
-    request("http://www.exirv.com/1.json")
-    .then((body) => {
-    const parsedData = JSON.parse(body);
-	res.render("ipcheck", {parsedData:parsedData});
-    })
-    .catch(function (err) {
-       console.log("Api call failed!!");
-    });
-   
-    });
-
+    //Delete Fetched Data
+    app.delete("/data/:id", function(req, res){
+        // Campground.findByIdAndRemove(req.params.id, function(err){
+        //    if(err){
+        //        res.redirect("/");
+        //    } else {
+        //        res.redirect("/");
+        //    }
+        // });
+        res.send("you are trying to delete something");
+     });
+         //Delete Fetched Data
+    app.put("/data/:id", function(req, res){
+        // Campground.findByIdAndRemove(req.params.id, function(err){
+        //    if(err){
+        //        res.redirect("/");
+        //    } else {
+        //        res.redirect("/");
+        //    }
+        // });
+        res.send("you are trying to put something");
+     });
 
     app.listen(3000, '127.0.0.1', function(){
     // app.listen(process.env.PORT, process.env.IP, function(){
