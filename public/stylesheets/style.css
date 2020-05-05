@@ -3,6 +3,12 @@
     text-align: center;
 }
 
+.auth{
+    max-width: 300px;
+    text-align: center;
+    margin: 10px auto;
+}
+
 #footer {
     position: absolute;
     bottom:0;
