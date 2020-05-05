@@ -3,6 +3,7 @@ const   express         = require("express"),
         bodyParser      = require("body-parser"),
         mongoose        = require("mongoose"),
         Data            = require("./models/data"),
+        Email           = require("./models/emails"),
         request         = require("request-promise"),
         app             = express(),
         seedDB          = require("./seeds");
@@ -10,10 +11,12 @@ const   express         = require("express"),
         
 
     mongoose.connect('mongodb://localhost:27017/techlab', { useNewUrlParser: true , useUnifiedTopology: true });
+    mongoose.set('useFindAndModify', false);
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(express.static(__dirname + "/public"));
     app.set("view engine", "ejs");
     app.use(methodOverride('_method'));
+    
     // seedDB();
     // ipCheck();
 
@@ -66,13 +69,16 @@ const   express         = require("express"),
 
 
     app.get("/data/:id",function(req,res){
+        Email.findOne(function(err, emails){
+        
         Data.findById(req.params.id, function(err, alldata){
             if(err){
                 console.log(err);
             } else {
-               res.render("show",{usadata:alldata});
+               res.render("show",{usadata:alldata, emails: emails});
             }
          });
+        });
     });
 
     // Fetch Offer Pages
@@ -89,6 +95,14 @@ const   express         = require("express"),
 
     //Delete Fetched Data
     app.delete("/data/:id", function(req, res){
+        Email.findOneAndDelete({},function(err){
+            if(err){
+                console.log("cannot delete emails")
+            }
+            else{
+                console.log("deleted email")
+            }
+        });
         Data.findByIdAndRemove(req.params.id, function(err){
            if(err){
                res.redirect("/");

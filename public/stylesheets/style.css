@@ -43,3 +43,8 @@
  .btn{
      outline: 0;
  }
+
+ .phone{
+     max-width: 70px;
+     display: inline;
+ }
