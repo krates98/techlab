@@ -54,3 +54,8 @@
      max-width: 70px;
      display: inline;
  }
+
+ .datafooter{
+    padding-top: 15vh;
+    text-align: center;
+}
