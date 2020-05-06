@@ -36,19 +36,20 @@ router.get("/data", isLoggedIn, function(req,res){
         }).catch(function (err) {
         console.log("Api call failed!!");
         });
-
         }
         });
         var currentIp = req.clientIp;
         var datime    = (new Date()).toLocaleDateString('en-GB');
         var tatime    = (new Date()).toLocaleTimeString('en-US');
-        var ipcreate  = {ipaddress: currentIp, date: datime, time: tatime} 
+        var userId    = req.user._id;
+        var username  = req.user.username;
+        var ipcreate  = {ipaddress: currentIp, date: datime, time: tatime, username: username} 
         ipAdd.create(ipcreate, function(err, email){
         if(err){
             console.log(err)
         } else {
             console.log("added ip");
-                }
+               }
         });
     });
 

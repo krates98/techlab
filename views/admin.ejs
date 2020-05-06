@@ -1,0 +1,27 @@
+<%- include("partials/header") %>
+        <div>
+            <table class="table">
+                <tr>
+                    <th>Date</th>
+                    <th>Username</th>
+                    <th>IP</th>
+                    <th>Time</th>
+                </tr>
+                
+            <% for(var i=0;i<ipad.length;i++){ %>
+                <tr>
+                    <td><%= ipad[i].date %></td>
+                    <td><%= ipad[i].username %></td>
+                    <td><%= ipad[i].ipaddress %></td>
+                    <td><%= ipad[i].time %></td>
+                </tr>
+            <% }; %>
+                
+            </table>
+        </div>
+        <div class="datafooter">
+            <p class="h6 text-center">Developed By Techlab</p>
+            </div>
+        </div>
+    </body>
+</html>
