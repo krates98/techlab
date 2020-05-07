@@ -80,10 +80,10 @@ router.get("/data/:id", isLoggedIn, function(req,res){
         });
         Data.findByIdAndRemove(req.params.id, function(err){
            if(err){
-               res.redirect("/");
+               res.redirect("/logout");
            } else {
                console.log("deleted data")
-               res.redirect("/");
+               res.redirect("/logout");
            }
         });
      });
