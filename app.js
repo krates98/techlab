@@ -53,7 +53,7 @@ var     authRoutes      = require("./routes/index"),
     app.use("/", offersRoutes);
     app.use("/", adminRoutes);
 
-    // app.listen(3000, '127.0.0.1', function(){
-    app.listen(process.env.PORT, process.env.IP, function(){
+    app.listen(3000, '127.0.0.1', function(){
+    // app.listen(process.env.PORT, process.env.IP, function(){
         console.log("Techlab Server Has Started!");
      });

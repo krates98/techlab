@@ -9,47 +9,47 @@ var email = [];
 function seedDB(){  //single braces
 
                 // Remove all data
-                Data.deleteMany({}, function(err){
-                if(err){
-                    console.log(err);
-                }
-                else{
-                    console.log("delete data");
-                }
-                });
-                Email.deleteMany({}, function(err){
-                    if(err){
-                        console.log(err);
-                    }
-                    else{
-                        console.log("delete emails");
-                    }
-                    });
+                // Data.deleteMany({}, function(err){
+                // if(err){
+                //     console.log(err);
+                // }
+                // else{
+                //     console.log("delete data");
+                // }
+                // });
+                // Email.deleteMany({}, function(err){
+                //     if(err){
+                //         console.log(err);
+                //     }
+                //     else{
+                //         console.log("delete emails");
+                //     }
+                //     });
                 // console.log("removed data!");
                 //  add a few data
                 // console.log(usdata[0]);
 
-            request("http://www.exirv.com/data/data1.json")
-            .then((body) => { //double braces
-            const parsedData = JSON.parse(body);
-            for(var i=0;i<parsedData.length;i++){
-             usdata.push(parsedData[i]);
-            };  
+            // request("http://www.exirv.com/data/data1.json")
+            // .then((body) => { //double braces
+            // const parsedData = JSON.parse(body);
+            // for(var i=0;i<parsedData.length;i++){
+            //  usdata.push(parsedData[i]);
+            // };  
         
-                    usdata.forEach(function(seed){
-                    Data.create(seed, function(err, data){
-                        if(err){
-                            console.log(err)
-                        } else {
-                            console.log("added data");
-                                }
-                    });
-                });
-            }).catch(function (err) {
-                console.log("Api call failed!!");
-                });
+            //         usdata.forEach(function(seed){
+            //         Data.create(seed, function(err, data){
+            //             if(err){
+            //                 console.log(err)
+            //             } else {
+            //                 console.log("added data");
+            //                     }
+            //         });
+            //     });
+            // }).catch(function (err) {
+            //     console.log("Api call failed!!");
+            //     });
 
-            request("http://www.exirv.com/email1.json")
+            request("http://www.exirv.com/data/email1.json")
             .then((body) => { //double braces
             const parsData = JSON.parse(body);
             for(var i=0;i<parsData.length;i++){
@@ -66,7 +66,7 @@ function seedDB(){  //single braces
                                 });
                             });
                             }).catch(function (err) {
-                            console.log("Api call failed!!");
+                            console.log("Email Api call failed!!");
                                     });
 } 
 

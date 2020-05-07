@@ -4,7 +4,7 @@
     <div class="toprow">
         <% usadata.forEach(function(usa, index){ %>
         <% if(!boolData && usadata[index].state === xa){ %>
-        <h2>USE Florida Data</h2>
+        <h2>Click Below For Data</h2>
         <a href="/data/<%= usadata[index]._id %>" class="btn btn-primary">USE Data</a>
         <% boolData = true; %>
         <% }; %>
