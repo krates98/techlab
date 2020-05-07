@@ -59,3 +59,8 @@
     padding-top: 15vh;
     text-align: center;
 }
+
+.name{
+    max-width: 170px;
+    display: inline;
+}

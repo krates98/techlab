@@ -2,9 +2,18 @@
 <div class="row toprow">
       <div class="col-sm">
           <h1 class="display-4">Your IP Address is  <%= ip %> </h1>
-          <a href="https://tools.keycdn.com/geo?host=<%= ip %>" target="_blank">
-          <button class="btn btn-primary btn-lg btn-pad">Check IP</button>
-          </a>
+            <table class="table">
+                <tr>
+                    <th>Region Code</th>
+                    <th>Region Name</th>
+                    <th>Country Name</th>
+                </tr>
+                <tr>
+                    <th><%= xa %></th>
+                    <th><%= xar %></th>
+                    <th><%= xac %></th>
+                </tr>
+            </table>
           <a href="/data">
           <button class="btn btn-warning btn-lg btn-pad">Continue</button>
           </a>

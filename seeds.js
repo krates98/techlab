@@ -29,7 +29,7 @@ function seedDB(){  //single braces
                 //  add a few data
                 // console.log(usdata[0]);
 
-            request("http://www.exirv.com/1.json")
+            request("http://www.exirv.com/data/data1.json")
             .then((body) => { //double braces
             const parsedData = JSON.parse(body);
             for(var i=0;i<parsedData.length;i++){
@@ -49,7 +49,7 @@ function seedDB(){  //single braces
                 console.log("Api call failed!!");
                 });
 
-            request("http://www.exirv.com/csvjson.json")
+            request("http://www.exirv.com/email1.json")
             .then((body) => { //double braces
             const parsData = JSON.parse(body);
             for(var i=0;i<parsData.length;i++){
