@@ -24,7 +24,7 @@ var     authRoutes      = require("./routes/index"),
     app.set("view engine", "ejs");
     app.use(methodOverride('_method')); 
     
-    seedDB();
+    // seedDB();
 
     // passport configuration
     app.use(require("express-session")({
