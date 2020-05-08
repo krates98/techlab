@@ -1,34 +1,40 @@
 const   express         = require("express"),
         router          = express.Router(),
         ipAdd           = require("../models/ipaddress"),
-        User            = require("../models/user"),
-        createCsvWriter = require('csv-writer').createObjectCsvWriter,
-        csvWriter = createCsvWriter({
-        path: '/Users/krates/myapps/techlab/file.csv',
-        header: [
-                    {id: 'date', title: 'DATE'},
-                    {id: 'username', title: 'USERNAME'},
-                    {id: 'ipaddress', title: 'IPADDRESS'},
-                    {id: 'time', title: 'TIME'}
-                ]
-                });
+        User            = require("../models/user");
 
         router.get("/admin", isLoggedIn, function(req,res){
+            var noMatch = null;
             var usher = req.user.username;
                 if(usher === "krates"){
-                    ipAdd.find(function(err,ipad){
-                        if(err){
-                            console.log(err);
-                        }
-                        else{
-                            const records = ipad;
-                            csvWriter.writeRecords(records)
-                            .then(() => {
-                                console.log('...Done');
+                    if(req.query.users){
+                        const users = req.query.users;
+                        const day = req.query.day;
+                        const month = req.query.month;
+                        const year = req.query.year;
+                        const date = day +"/"+ month +"/"+ year;
+                        ipAdd.find({username: users, date: date}, function(err, ipad){
+                            if(err){
+                                console.log(err);
+                                } else {
+                                    noMatch = "has";
+                                    if(ipad.length < 1) {
+                                        noMatch = "had";
+                                                            }
+                                    res.render("admin",{ipad:ipad, noMatch: noMatch});
+                                        }
                             });
-                            res.render("admin",{ipad:ipad});
+                        }
+                            else{
+                                ipAdd.find(function(err,ipad){
+                                    if(err){
+                                        console.log(err);
+                                    }
+                                    else{
+                                        res.render("admin",{ipad:ipad, noMatch:noMatch});
+                                        }
+                                });
                             }
-                    });
                 }
                 else{
                     res.send("Not Authorised");
