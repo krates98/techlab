@@ -4,7 +4,8 @@ const   express         = require("express"),
         Email           = require("../models/emails"),
         User            = require("../models/user"),
         ipAdd           = require("../models/ipaddress"),
-        request         = require("request-promise");
+        request         = require("request-promise"),
+        moment          = require('moment');
 
 // Data Pages
 
@@ -44,8 +45,8 @@ router.get("/data", isLoggedIn, function(req,res){
 
 router.get("/data/:id", isLoggedIn, function(req,res){
         var currentIp = req.clientIp;
-        var datime    = (new Date()).toLocaleDateString('en-IN');
-        var tatime    = (new Date()).toLocaleTimeString('en-IN');
+        var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
+        var tatime    = moment().utc().add(5, 'hours').add(30,'m').format("LTS");
         var userId    = req.user._id;
         var username  = req.user.username;
         var ipcreate  = {ipaddress: currentIp, date: datime, time: tatime, username: username} 
