@@ -58,6 +58,10 @@ footer {
      justify-content: center;
  }
 
+ .fetch{
+     padding: 25px 0px;
+ }
+
  .topclass{
      margin-top: 5vh;
      text-align: center;
@@ -99,3 +103,4 @@ select {
     appearance: none;
     background: url(http://www.stackoverflow.com/favicon.ico) 96% / 15% no-repeat #eee;
   }
+  
