@@ -38,9 +38,14 @@ router.get("/data", isLoggedIn, function(req,res){
         });
         }
         });
+    });
+
+    // Data Show Page
+
+router.get("/data/:id", isLoggedIn, function(req,res){
         var currentIp = req.clientIp;
-        var datime    = (new Date()).toLocaleDateString('en-GB');
-        var tatime    = (new Date()).toLocaleTimeString('en-US');
+        var datime    = (new Date()).toLocaleDateString('en-IN');
+        var tatime    = (new Date()).toLocaleTimeString('en-IN');
         var userId    = req.user._id;
         var username  = req.user.username;
         var ipcreate  = {ipaddress: currentIp, date: datime, time: tatime, username: username} 
@@ -51,11 +56,6 @@ router.get("/data", isLoggedIn, function(req,res){
             console.log("added ip");
                }
         });
-    });
-
-    // Data Show Page
-
-router.get("/data/:id", isLoggedIn, function(req,res){
     Email.findOne(function(err, emails){
     
     Data.findById(req.params.id, function(err, alldata){
@@ -66,6 +66,7 @@ router.get("/data/:id", isLoggedIn, function(req,res){
         }
      });
     });
+        
 });
 
     //Delete Fetched Data
