@@ -11,37 +11,34 @@ const   express         = require("express"),
 
 router.get("/data", isLoggedIn, function(req,res){
         
-    ipAdd.find({}, function(err, ipData, next){
+    ipAdd.find({}, function(err, ipData){
         if(err){
             console.log(err);
         }
         else{
+            
             for(var i=0;i<ipData.length;i++){
-                var boolData = false;
-            if(req.clientIp === ipData[i].ipaddress && !boolData){
-                boolData = true;
-                res.render("ipcheck");
+            if(req.clientIp === ipData[i].ipaddress){
+            return res.render("ipcheck");
             }
           };
         var ip = req.clientIp;
         var boolData = false;
         request("http://api.ipstack.com/"+ ip +"?access_key=2b9734f1e27d53cbe77f447111dba11c").then((body) => {
-            const ipData = JSON.parse(body);
-            var xa = ipData.region_code;
-
-            // Get all data from DB
-
-                Data.find({}, function(err, alldata){
-                if(err){
-                    console.log(err);
-                    } else {
-                res.render("data",{usadata:alldata, ip, xa, boolData});
-                }
-                });
-                }).catch(function (err) {
-                    console.log("Api call failed!!");
-                });
+        const ipData = JSON.parse(body);
+        var xa = ipData.region_code;
+        // Get all data from DB
+        Data.find({}, function(err, alldata){
+            if(err){
+                console.log(err);
+            } else {
+            res.render("data",{usadata:alldata, ip, xa, boolData});
             }
+        });
+        }).catch(function (err) {
+        console.log("Api call failed!!");
+        });
+        }
         });
     });
 

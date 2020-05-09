@@ -2,13 +2,20 @@
 
 <div class="container">
     <div class="toprow">
-        <% usadata.forEach(function(usa, index){ %>
+        <!-- <% usadata.forEach(function(usa, index){ %>
         <% if(!boolData && usadata[index].state === xa){ %>
         <h2>Click Below For Data</h2>
         <a href="/data/<%= usadata[index]._id %>" class="btn btn-primary">USE Data</a>
         <% boolData = true; %>
+        <% }; %>
+        <% }); %> -->
+        <% for(var i=0;i<usadata.length;i++){ %>
+        <% if(!boolData && usadata[i].state === xa){ %>
+            <h2>Click Below For Data</h2>
+            <a href="/data/<%= usadata[i]._id %>" class="btn btn-primary">USE Data</a>
+            <% boolData = true; %>
+            <% } %>
         <% } %>
-        <% }); %>
     </div>
 </div>  
 <%- include("partials/footer") %>
