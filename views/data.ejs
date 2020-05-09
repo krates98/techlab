@@ -7,7 +7,9 @@
         <h2>Click Below For Data</h2>
         <a href="/data/<%= usadata[index]._id %>" class="btn btn-primary">USE Data</a>
         <% boolData = true; %>
-        <% }; %>
+        <% } else { %>
+            <h2>Data Not Found</h2>
+            <% } %>
         <% }); %>
     </div>
 </div>  
