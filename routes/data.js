@@ -21,26 +21,28 @@ router.get("/data", isLoggedIn, function(req,res){
             if(req.clientIp === ipData[i].ipaddress){
             return res.render("ipcheck");
             }
-          };
+          }
+        
+    
         var ip = req.clientIp;
         var boolData = false;
         request("http://api.ipstack.com/"+ ip +"?access_key=2b9734f1e27d53cbe77f447111dba11c").then((body) => {
         const ipData = JSON.parse(body);
         var xa = ipData.region_code;
         // Get all data from DB
-        Data.find({}, function(err, alldata){
+        Data.findOne({state: xa}, function(err, alldata){
             if(err){
                 console.log(err);
             } else {
-            res.render("data",{usadata:alldata, ip, xa, boolData});
+            res.render("data",{alldata:alldata});
             }
         });
         }).catch(function (err) {
-        console.log("Api call failed!!");
-        });
+            console.log("Api call failed!!");
+            });
         }
-        });
     });
+});
 
     // Data Show Page
 
@@ -54,9 +56,7 @@ router.get("/data/:id", isLoggedIn, function(req,res){
         ipAdd.create(ipcreate, function(err, email){
         if(err){
             console.log(err)
-        } else {
-            console.log("added ip");
-               }
+            } 
         });
     Email.findOne(function(err, emails){
     
