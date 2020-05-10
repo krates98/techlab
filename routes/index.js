@@ -14,7 +14,7 @@ router.get("/", isLoggedIn, function(req,res){
         var xar = ipData.region_name;
         var xac = ipData.country_name;
         
-    res.render("landing",{ip, xa, xar, xac});
+    res.render("index",{ip, xa, xar, xac});
 
     }).catch(function (err) {
     console.log("Api call failed!!");

@@ -1,0 +1,13 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+    <div class="toprow">
+            <% if(alldata !== null) { %>
+                <h2>Click Below For Data</h2>
+                <a href="/data/<%= alldata._id %>" class="btn btn-primary">USE Data</a>
+            <% } else { %>
+            <h2>Data Not Found</h2>
+            <% } %>
+    </div>
+</div>  
+<%- include("../partials/footer") %>

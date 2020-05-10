@@ -19,7 +19,7 @@ router.get("/data", isLoggedIn, function(req,res){
             
             for(var i=0;i<ipData.length;i++){
             if(req.clientIp === ipData[i].ipaddress){
-            return res.render("ipcheck");
+            return res.render("data/ipcheck");
             }
           }
         
@@ -64,7 +64,7 @@ router.get("/data/:id", isLoggedIn, function(req,res){
         if(err){
             console.log(err);
         } else {
-           res.render("show",{usadata:alldata, emails: emails});
+           res.render("data/show",{usadata:alldata, emails: emails});
         }
      });
     });
