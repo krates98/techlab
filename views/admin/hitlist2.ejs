@@ -1,0 +1,30 @@
+<%- include("../partials/header") %>
+<%- include("../partials/adminnav") %>
+
+    
+    <table class="table">
+        <th>Username</th>
+        <th>Count</th>
+        <% workers.forEach(function(worker) { %>
+            <tr>
+                <td><%= worker.username %></td>
+                <% ipad.forEach(function(ipdb) { %>
+                    <% fileRows.forEach(function(ipadd) { %>
+                    <% if(ipdb.ipaddress === ipadd.ipaddress){ %>
+                    
+                        <% if(worker.username === ipdb.username){ %>
+                            <% wooo++ %>
+                        <% } %>
+                    <% } %>
+                <% }) %>
+            <% }) %>
+            <td><%= wooo %></td>
+            <% wooo = 0 %>
+            </tr>
+        <% }) %>
+        </table>
+    
+    
+    
+ <%- include("../partials/footer") %>
+    

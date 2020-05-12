@@ -4,25 +4,33 @@ const   express         = require("express"),
         Email           = require("../models/emails"),
         ipAdd           = require("../models/ipaddress"),
         User            = require("../models/user"),
-        moment          = require('moment');
+        moment          = require('moment'),
+        multer          = require('multer'),
+        csv             = require('fast-csv'),
+        fs              = require('fs'),
+        http            = require('http');
 
-        
+        // SET STORAGE
+        var storage = multer.diskStorage({
+            destination: function (req, file, cb) {
+            cb(null, 'uploads')
+            },
+            filename: function (req, file, cb) {
+            cb(null, file.fieldname + '-' + Date.now() + '.csv')
+            }
+        })
+   
+        var upload = multer({ storage: storage })
+
+
         // Admin Landing Page
         router.get("/admin", isLoggedIn, function(req,res){
-            var usher = req.user.username;
-            if(usher === "krates"){
-                res.render("admin/index");
-            }
-            else {
-                res.send("Not Authorised");
-            }
+                res.render("admin/index", );
         });
 
         // Admin Today's Work
 
         router.get("/admin/todaywork", isLoggedIn, function(req,res){
-            var usher = req.user.username;
-            if(usher === "krates"){
                 var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
                 ipAdd.find({date: datime}, function(err,today){
                     if(err){
@@ -32,31 +40,19 @@ const   express         = require("express"),
                         res.render("admin/todaywork",{today:today});
                         }
                 });
-            }
-            else {
-                res.send("Not Authorised");
-            }
         });
 
         
         // Admin Register User
 
         router.get("/admin/register", isLoggedIn, function(req,res){
-            var usher = req.user.username;
-            if(usher === "krates"){
-                res.render("admin/register");
-            }
-            else {
-                res.send("Not Authorised");
-            }
+            res.render("admin/register");
         });
 
         // Admin UserWork
 
         router.get("/admin/userwork", isLoggedIn, function(req,res){
             var noMatch = null;
-            var usher = req.user.username;
-                if(usher === "krates"){
                     if(req.query.users){
                         const users = req.query.users;
                         const day = req.query.day;
@@ -85,16 +81,10 @@ const   express         = require("express"),
                                         }
                                 });
                             }
-                }
-                else{
-                    res.send("Not Authorised");
-                }
-        });
+                        });
 
         // Admin Data Left
         router.get("/admin/dataleft", isLoggedIn, function(req,res){
-            var usher = req.user.username;
-            if(usher === "krates"){
                 var noMatch = null;
                 if(req.query.state){
                     const state = req.query.state;
@@ -123,17 +113,55 @@ const   express         = require("express"),
                             }
                     });
                 }
-                 }
-            else {
-                res.send("Not Authorised");
-            }
         });
+
+        // Admin HitList Page
+        router.get("/admin/hitlist", isLoggedIn, function(req,res){
+            res.render("admin/hitList", );
+        });
+
+        router.post('/admin/hitlist', upload.single('myFile'), (req, res, next) => {
+            
+            const file = req.file
+            if (!file) {
+              const error = new Error('Please upload a file')
+              error.httpStatusCode = 400
+              return next(error)
+            }
+            var wooo = 0;
+            const fileRows = [];
+            // open uploaded file
+            
+                csv .parseFile(req.file.path, {headers: true})
+                .on("data", function(data) {
+                fileRows.push(data); // push each row
+                })
+                .on("end", function() {
+                fs.unlinkSync(req.file.path);
+                User.find(function(err, workers){
+                ipAdd.find(function(err,ipad){
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        res.render("admin/hitlist2",{ipad:ipad, fileRows:fileRows, workers:workers, wooo:wooo});
+                        }
+                    });
+                });
+            });
+        }); 
 
         // middleware
 
         function isLoggedIn(req, res, next){
         if(req.isAuthenticated()){
+            var usher = req.user.username;
+            if(usher === "krates"){
             return next();
+            }
+            else {
+                res.send("Not Authorised");
+            }
         }
        res.redirect("/login");
         }

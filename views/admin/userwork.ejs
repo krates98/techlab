@@ -1,18 +1,6 @@
 <%- include("../partials/header") %>
-<div class="row">
-    <div class="col-sm-1">
-        <div class="sidebar">
-            <a href="/admin/todaywork">Today's Work</a>
-            <a href="/admin/register">Register User</a>
-            <a href="/admin/dataleft">Data Left</a>
-            <a href="/admin/userwork">Indvidual Work</a>
-            <a href="/admin/attendance">Attendance</a>
-            <a href="/admin/salary">Salary</a>
-            <a href="/admin/performance">User Performance</a>
-            <a href="/admin/accounts">Accounts</a>
+<%- include("../partials/adminnav") %>
 
-        </div>
-    </div>
             <div class="col-sm-11">
             <form action="/admin/userwork" method="GET" class="form-inline">
             <select name="users">
