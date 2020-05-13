@@ -149,7 +149,43 @@ const   express         = require("express"),
                     });
                 });
             });
-        }); 
+        });
+        
+        // Admin Upload Email
+        router.get("/admin/uploademail", isLoggedIn, function(req,res){
+            res.render("admin/uploademail", );
+        });
+
+        router.post('/admin/uploademail', upload.single('myFile'), (req, res, next) => {
+            
+            const file = req.file
+            if (!file) {
+              const error = new Error('Please upload a file')
+              error.httpStatusCode = 400
+              return next(error)
+            }
+
+            const emailRows = [];
+            // open uploaded file
+            
+                csv .parseFile(req.file.path, {headers: true})
+                .on("data", function(data) {
+                emailRows.push(data); // push each row
+                })
+                .on("end", function() {
+                fs.unlinkSync(req.file.path);
+                emailRows.forEach(function(bean){
+                    Email.create(bean, function(err, email){
+                        if(err){
+                            console.log(err)
+                        } else {
+                            console.log("added email");
+                        }
+                    });
+                });
+                res.render("admin/uploademail2")
+            });
+        });
 
         // middleware
 

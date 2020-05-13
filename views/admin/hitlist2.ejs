@@ -5,23 +5,24 @@
     <table class="table">
         <th>Username</th>
         <th>Count</th>
-        <% workers.forEach(function(worker) { %>
+        <% for(var i=1; i<workers.length; i++) { %>
             <tr>
-                <td><%= worker.username %></td>
-                <% ipad.forEach(function(ipdb) { %>
-                    <% fileRows.forEach(function(ipadd) { %>
-                    <% if(ipdb.ipaddress === ipadd.ipaddress){ %>
-                    
-                        <% if(worker.username === ipdb.username){ %>
+                <td><%= workers[i].username %></td>
+                <% for(var j=0; j<ipad.length; j++) { %>
+                    <% for(var k=0;k<fileRows.length; k++) { %>
+                    <% if(ipad[j].ipaddress === fileRows[k].ipaddress){ %>
+                        <% if(workers[i].username === ipad[j].username){ %>
                             <% wooo++ %>
                         <% } %>
+                        
                     <% } %>
-                <% }) %>
-            <% }) %>
+                    
+                <% } %>
+            <% } %>
             <td><%= wooo %></td>
             <% wooo = 0 %>
             </tr>
-        <% }) %>
+        <% } %>
         </table>
     
     
