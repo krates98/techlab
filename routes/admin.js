@@ -8,7 +8,8 @@ const   express         = require("express"),
         multer          = require('multer'),
         csv             = require('fast-csv'),
         fs              = require('fs'),
-        http            = require('http');
+        http            = require('http'),
+        Chart           = require('chart.js');
 
         // SET STORAGE
         var storage = multer.diskStorage({
@@ -24,8 +25,30 @@ const   express         = require("express"),
 
 
         // Admin Landing Page
-        router.get("/admin", isLoggedIn, function(req,res){
-                res.render("admin/index", );
+        router.get("/admin", isLoggedIn,async function(req,res){
+            var datime      = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
+            var datime1     = moment().utc().subtract(18, 'hours').subtract(30,'m').format("DD/MM/YYYY");
+            var datime2     = moment().utc().subtract(43, 'hours').subtract(30,'m').format("DD/MM/YYYY");
+            var datime3     = moment().utc().subtract(67, 'hours').subtract(30,'m').format("DD/MM/YYYY");
+            var datime4     = moment().utc().subtract(91, 'hours').subtract(30,'m').format("DD/MM/YYYY");
+            var datcount1   = await ipAdd.countDocuments({ date: datime },function(err,result){
+                return result;
+            });
+            var datcount2   = await ipAdd.countDocuments({ date: datime1 },function(err,result){
+                return result;
+            });
+            var datcount3   = await ipAdd.countDocuments({ date: datime2 },function(err,result){
+                return result;
+            });
+            var datcount4   = await ipAdd.countDocuments({ date: datime3 },function(err,result){
+                return result;
+            });
+            var datcount5   = await ipAdd.countDocuments({ date: datime4 },function(err,result){
+                return result;
+            });
+            var dat        = [datime,datime1,datime2,datime3,datime4];
+            var dac        = [datcount1,datcount2,datcount3,datcount4,datcount5]
+                res.render("admin/index",{dat,dac});
         });
 
         // Admin Today's Work
@@ -120,7 +143,7 @@ const   express         = require("express"),
             res.render("admin/hitList", );
         });
 
-        router.post('/admin/hitlist', upload.single('myFile'), (req, res, next) => {
+        router.post('/admin/hitlist', isLoggedIn, upload.single('myFile'), (req, res, next) => {
             
             const file = req.file
             if (!file) {
@@ -156,7 +179,7 @@ const   express         = require("express"),
             res.render("admin/uploademail", );
         });
 
-        router.post('/admin/uploademail', upload.single('myFile'), (req, res, next) => {
+        router.post('/admin/uploademail', isLoggedIn, upload.single('myFile'), (req, res, next) => {
             
             const file = req.file
             if (!file) {
