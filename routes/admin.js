@@ -103,9 +103,11 @@ const   express         = require("express"),
                                     noMatch = "has";
                                     if(ipad.length < 1) {
                                         noMatch = "had";
-                                                            }
-                                    res.render("admin/userwork",{ipad:ipad, noMatch: noMatch});
-                                        }
+                                    }
+                                    User.find(function(err, ussr){
+                                    res.render("admin/userwork",{ipad:ipad,ussr:ussr,noMatch});
+                                    });
+                                    }
                             });
                         }
                             else{
@@ -114,43 +116,86 @@ const   express         = require("express"),
                                         console.log(err);
                                     }
                                     else{
-                                        res.render("admin/userwork",{ipad:ipad, noMatch:noMatch});
-                                        }
+                                        User.find(function(err, ussr){
+                                        res.render("admin/userwork",{ipad:ipad,ussr:ussr, noMatch:noMatch});
+                                        });
+                                    }
                                 });
                             }
                         });
 
         // Admin Data Left
-        router.get("/admin/dataleft", isLoggedIn, function(req,res){
-                var noMatch = null;
-                if(req.query.state){
-                    const state = req.query.state;
-                    Data.find({state: state}, function(err, sta){
-                    if(err){
-                        console.log(err);
-                    }
-                    else{
-                        noMatch = "has";
-                        if(sta.length < 1){
-                            noMatch = "had";
-                        }
-                        const stalen = sta.length;
-                        res.render("admin/dataleft", {state:state, stalen:stalen, noMatch:noMatch})
-                    }
-                    });
-                }
-                else{
-                    Email.find(function(err,ipad){
-                        if(err){
-                            console.log(err);
-                        }
-                        else{
-                            const emalen = ipad.length;
-                            res.render("admin/dataleft",{emalen:emalen, noMatch:noMatch});
-                            }
-                    });
-                }
-        });
+        router.get("/admin/dataleft", isLoggedIn, async function(req,res){
+            var AZ   = await Data.countDocuments({ state: "AZ" },function(err,result){
+                return result;
+            });
+            var CA   = await Data.countDocuments({ state: "CA" },function(err,result){
+                return result;
+            });
+            var CO   = await Data.countDocuments({ state: "CO" },function(err,result){
+                return result;
+            });
+            var CT   = await Data.countDocuments({ state: "CT" },function(err,result){
+                return result;
+            });
+            var FL   = await Data.countDocuments({ state: "FL" },function(err,result){
+                return result;
+            });
+            var GA   = await Data.countDocuments({ state: "GA" },function(err,result){
+                return result;
+            });
+            var ID   = await Data.countDocuments({ state: "ID" },function(err,result){
+                return result;
+            });
+            var IL   = await Data.countDocuments({ state: "IL" },function(err,result){
+                return result;
+            });
+            var IN   = await Data.countDocuments({ state: "IN" },function(err,result){
+                return result;
+            });
+            var IA   = await Data.countDocuments({ state: "IA" },function(err,result){
+                return result;
+            });
+            var MD   = await Data.countDocuments({ state: "MD" },function(err,result){
+                return result;
+            });
+            var MA   = await Data.countDocuments({ state: "MA" },function(err,result){
+                return result;
+            });
+            var MI   = await Data.countDocuments({ state: "MI" },function(err,result){
+                return result;
+            });
+            var NE   = await Data.countDocuments({ state: "NE" },function(err,result){
+                return result;
+            });
+            var NV   = await Data.countDocuments({ state: "NV" },function(err,result){
+                return result;
+            });
+            var NJ   = await Data.countDocuments({ state: "NJ" },function(err,result){
+                return result;
+            });
+            var TX   = await Data.countDocuments({ state: "TX" },function(err,result){
+                return result;
+            });
+            var UT   = await Data.countDocuments({ state: "UT" },function(err,result){
+                return result;
+            });
+            var VA   = await Data.countDocuments({ state: "VA" },function(err,result){
+                return result;
+            });
+            var WA   = await Data.countDocuments({ state: "WA" },function(err,result){
+                return result;
+            });
+
+            var EMAIL   = await Email.countDocuments(function(err,result){
+                return result;
+            });
+
+            var stes =[AZ,CA,CO,CT,FL,GA,ID,IL,IN,IA,MD,MA,MI,NE,NV,NJ,TX,UT,VA,WA];
+
+            res.render("admin/dataleft",{stes, EMAIL});
+
+                });
 
         // Admin HitList Page
         router.get("/admin/hitlist", isLoggedIn, function(req,res){
@@ -221,6 +266,42 @@ const   express         = require("express"),
                     });
                 });
                 res.render("admin/uploademail2")
+            });
+        });
+        
+        // Admin Upload Data
+        router.get("/admin/uploaddata", isLoggedIn, function(req,res){
+            res.render("admin/uploaddata", );
+        });
+
+        router.post('/admin/uploaddata', isLoggedIn, upload.single('myFile'), (req, res, next) => {
+            
+            const file = req.file
+            if (!file) {
+              const error = new Error('Please upload a file')
+              error.httpStatusCode = 400
+              return next(error)
+            }
+
+            const dataRows = [];
+            // open uploaded file
+            
+                csv .parseFile(req.file.path, {headers: true})
+                .on("data", function(data) {
+                dataRows.push(data); // push each row
+                })
+                .on("end", function() {
+                fs.unlinkSync(req.file.path);
+                dataRows.forEach(function(bean){
+                    Data.create(bean, function(err, userdata){
+                        if(err){
+                            console.log(err)
+                        } else {
+                            console.log("added data");
+                        }
+                    });
+                });
+                res.render("admin/uploaddata2")
             });
         });
 

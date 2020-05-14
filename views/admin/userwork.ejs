@@ -5,14 +5,9 @@
             <form action="/admin/userwork" method="GET" class="form-inline">
             <select name="users">
                 <option value="selectuser">Select User</option>
-                <option value="deepak">Deepak</option>
-                <option value="tushar">Tushar</option>
-                <option value="shaan">Shaan</option>
-                <option value="vipin">Vipin</option>
-                <option value="rishi">Rishi</option>
-                <option value="deepak">Deepak</option>
-                <option value="krishna">Krishna</option>
-                <option value="prakash">Prakash</option>
+                <% for(var i=1;i<ussr.length;i++){ %>
+                    <option value="<%= ussr[i].username %>"><%= ussr[i].username %></option>
+                <% } %>
               </select>
            
               <select name="day">
@@ -91,7 +86,10 @@
                 </table>
         <% } %>
             <% if(noMatch === "had") { %>
+                <div class="noresults">
+                    <br><br><br><br><br>
                 <h3>No Results</h3>
+            </div>
                 <% } %>
 
             </div>

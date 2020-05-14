@@ -147,3 +147,13 @@ select {
 .imagax{
     margin-bottom: 20px;
 }
+
+.noresults{
+    margin: auto;
+    width: 30%;
+}
+
+.success{
+    margin:auto;
+    width: 70%;
+}
