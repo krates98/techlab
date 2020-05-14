@@ -65,6 +65,20 @@ const   express         = require("express"),
                 });
         });
 
+        // Admin Yesterday's Work
+
+        router.get("/admin/yesterdaywork", isLoggedIn, function(req,res){
+                var datime    = moment().utc().subtract(18, 'hours').subtract(30,'m').format("DD/MM/YYYY");
+                ipAdd.find({date: datime}, function(err,today){
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        res.render("admin/yesterdaywork",{today:today});
+                        }
+                });
+        });
+
         
         // Admin Register User
 
