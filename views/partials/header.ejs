@@ -22,6 +22,11 @@
             <li class="nav-item active"> 
               <a class="nav-link" href="/pages">Pages</a>
             </li>
+            <% if(currentUser.username === "krates"){ %>
+            <li class="nav-item active"> 
+              <a class="nav-link" href="/admin">Admin</a>
+            </li>
+            <% } %>
           </ul>
           <span class="navbar-text">
             <a class="nav-link">Signed In As <%= currentUser.username %></a>

@@ -137,3 +137,13 @@ select {
     padding-top: 10vh;
     text-align: center;
   }
+
+  .form-group {
+      
+      
+      max-width: 500px;
+      
+  }
+.imagax{
+    margin-bottom: 20px;
+}
