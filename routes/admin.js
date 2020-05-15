@@ -268,6 +268,21 @@ const   express         = require("express"),
                 res.render("admin/uploademail2")
             });
         });
+
+        // Admin Upload Data
+        router.get("/admin/attendance", isLoggedIn,async function(req,res){
+            var worker = await User.find(function(err,work){
+                return work;
+            })
+
+            var dates = await ipAdd.find({date: {$regex: "\/05\/2020"}},function(err,work){
+                return work;
+            })
+            
+            var daysm = moment().daysInMonth();
+            
+            res.render("admin/attendance",{worker,dates,daysm}) ;
+        });
         
         // Admin Upload Data
         router.get("/admin/uploaddata", isLoggedIn, function(req,res){

@@ -46,7 +46,7 @@ router.get("/data", isLoggedIn, function(req,res){
 
     // Data Show Page
 
-router.get("/data/:id", isLoggedIn, function(req,res){
+router.get("/data/:id", isLoggedIn, async function(req,res){
         var currentIp = req.clientIp;
         var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
         var tatime    = moment().utc().add(5, 'hours').add(30,'m').format("LTS");
@@ -58,37 +58,28 @@ router.get("/data/:id", isLoggedIn, function(req,res){
             console.log(err)
             } 
         });
-    Email.findOne(function(err, emails){
-    
-    Data.findById(req.params.id, function(err, alldata){
-        if(err){
-            console.log(err);
-        } else {
-           res.render("data/show",{usadata:alldata, emails: emails});
-        }
-     });
-    });
         
-});
+
+        var oneEmail = await Email.findOne(function(err, emails){
+        return emails;
+        });
+        
+        var oneData = await Data.findById(req.params.id, function(err, alldata){ 
+                return alldata;
+            }); 
+
+        await Email.findOneAndDelete({}, function(err){
+                    console.log("deleted email")
+            });
+        await Data.findByIdAndRemove(req.params.id, function(err){
+                 console.log("delete data");
+               });
+               res.render("data/show",{usadata:oneData, emails: oneEmail});
+            });
 
     //Delete Fetched Data
     router.delete("/data/:id", isLoggedIn,  function(req, res){
-        Email.findOneAndDelete({},function(err){
-            if(err){
-                console.log("cannot delete emails")
-            }
-            else{
-                console.log("deleted email")
-            }
-        });
-        Data.findByIdAndRemove(req.params.id, function(err){
-           if(err){
                res.redirect("/logout");
-           } else {
-               console.log("deleted data")
-               res.redirect("/logout");
-           }
-        });
      });
 
      // middleware
