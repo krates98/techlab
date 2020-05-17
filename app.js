@@ -9,8 +9,7 @@ var     express         = require("express"),
         Email           = require("./models/emails"),
         User            = require("./models/user"),
         ipAdd           = require("./models/ipaddress"),
-        request         = require("request-promise"),
-        seedDB          = require("./seeds");
+        request         = require("request-promise");
         
 var     authRoutes      = require("./routes/index"),
         dataRoutes      = require("./routes/data"),
@@ -23,8 +22,6 @@ var     authRoutes      = require("./routes/index"),
     app.use(express.static(__dirname + "/public"));
     app.set("view engine", "ejs");
     app.use(methodOverride('_method')); 
-    
-    // seedDB();
 
     // passport configuration
     app.use(require("express-session")({
@@ -53,7 +50,7 @@ var     authRoutes      = require("./routes/index"),
     app.use("/", offersRoutes);
     app.use("/", adminRoutes);
 
-    // app.listen(3000, '127.0.0.1', function(){
-    app.listen(process.env.PORT, process.env.IP, function(){
+    app.listen(3000, '127.0.0.1', function(){
+    // app.listen(process.env.PORT, process.env.IP, function(){
         console.log("Techlab Server Has Started!");
      });

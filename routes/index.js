@@ -1,12 +1,51 @@
 const   express         = require("express"),
         router          = express.Router(),
         passport        = require("passport"),
+        Email           = require("../models/emails"),
         User            = require("../models/user"),
-        request         = require("request-promise");
+        request         = require("request-promise"),
+        nodemailer      = require("nodemailer"),
+        xoauth2         = require("xoauth2");
+
+        var transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                type: 'OAuth2',
+                user: 'kratesrockstar@gmail.com',
+                clientId: '660034104687-7cjclvriplqi2k9h5if7u9i7hhj3klts.apps.googleusercontent.com',
+                clientSecret: 'VF529KVc5QJuTmMg61d_Lw_9',
+                refreshToken: '1//04PnhrnssQFfBCgYIARAAGAQSNwF-L9IrI1FQH6zospQHj75WwyWlGEl-xvYgZJ0r7HBBG5QFSlUODL9g1oIutdvNZF1l3IxZzvo',
+                accessToken: 'ya29.a0AfH6SMB-7qIXDe6P69J04yKvjPoMu-PRhKHdPMK7U7nE0eMLRrx3-_G5HqNi0UzMOH8bah5hM0_WjxVu406FjInqmQkpimDO6lyEaR6lvQU00RMsQHirFPNUGoKGHyr_wSckXXQ9PZjDIWh_oIgAu-md4Aet3v5iED0'
+            }
+        });
+
+var mailOptions = {
+    from: 'Kushagra Srivastava <kratesrockstar@gmail.com>',
+    to: 'admin@imsuyash.in',
+    subject: 'Email Count Low',
+    text: 'Please upload more emails its less than 100'
+}
+
 
 //Landing page
 
-router.get("/", isLoggedIn, function(req,res){
+router.get("/", isLoggedIn,async function(req,res){
+    var emax = await Email.countDocuments(function(err,emaxa){
+        return emaxa;
+    })
+
+    if(emax<100){
+        transporter.sendMail(mailOptions, function (err, res) {
+            if(err){
+                console.log(err);
+            } else {
+                console.log('Email Sent');
+            }
+        })
+    }
+
     var ip = req.clientIp;
     request("http://api.ipstack.com/"+ ip +"?access_key=2b9734f1e27d53cbe77f447111dba11c").then((body) => {
         const ipData = JSON.parse(body);

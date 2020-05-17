@@ -269,19 +269,19 @@ const   express         = require("express"),
             });
         });
 
-        // Admin Upload Data
+        // Admin Attendance Current Month 
         router.get("/admin/attendance", isLoggedIn,async function(req,res){
             var worker = await User.find(function(err,work){
                 return work;
             })
 
-            var dates = await ipAdd.find({date: {$regex: "\/05\/2020"}},function(err,work){
+            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2020"}},function(err,work){
                 return work;
             })
+            var daysd = moment().utc().add(5, 'hours').add(30,'m').format("D");
+            var daysm = moment().utc().add(5, 'hours').add(30,'m').daysInMonth();
             
-            var daysm = moment().daysInMonth();
-            
-            res.render("admin/attendance",{worker,dates,daysm}) ;
+            res.render("admin/attendance",{worker,dates,daysm,daysd}) ;
         });
         
         // Admin Upload Data
