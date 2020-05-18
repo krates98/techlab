@@ -1,9 +1,6 @@
 <%- include("../partials/header") %>
 <%- include("../partials/adminnav") %>
-    <% var xax;%>
-    <% var arr =[];%> 
-    <% var cx = 0;%>
-    <% var cxe;%>  
+   
 </div><div class="container">
     <div class="col-sm">
         <table class="table table-dark">
@@ -13,7 +10,7 @@
             <%  for(var i=1;i<=daysd;i++){ %>    
                 <%  if(i<10){ xax = "0"+i.toString(); } else{ %>
                         <%     xax = i.toString(); } %>
-                        <%   xax = xax + "/05/2020"; %>
+                        <%   xax = xax + "/"+ curm +"/2020"; %>
                         <th><%= xax.substring(0, 2) %></th>
                 <% arr.push(xax); %>
                 <% } %>
@@ -25,7 +22,7 @@
                 
                     <% for(var j=0;j<arr.length;j++){ %>
                         <% for(var k=0;k<dates.length;k++){ %>
-                            <% cxe = dates[k].time.substring(8, 11); %>      
+                            <% cxe = dates[k].time.substring(8, 11).trim(); %>      
                     <% if(arr[j] === dates[k].date && worker[i].username === dates[k].username && cxe === "PM"){ %>
                     <%   cx++; %>
                     <% }  %>  

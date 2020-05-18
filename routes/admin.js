@@ -279,9 +279,30 @@ const   express         = require("express"),
                 return work;
             })
             var daysd = moment().utc().add(5, 'hours').add(30,'m').format("D");
-            var daysm = moment().utc().add(5, 'hours').add(30,'m').daysInMonth();
-            
-            res.render("admin/attendance",{worker,dates,daysm,daysd}) ;
+            var curm = moment().utc().add(5, 'hours').add(30,'m').format("MM");
+            var xax;
+            var arr =[];
+            var cx = 0;
+            var cxe; 
+            res.render("admin/attendance",{worker,dates,xax,arr,cx,cxe,daysd,curm}) ;
+        });
+
+        // Admin Attendance Last Month 
+        router.get("/admin/lastmonth", isLoggedIn,async function(req,res){
+            var worker = await User.find(function(err,work){
+                return work;
+            })
+
+            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().subtract(1, 'months').format("MM") +"\/2020"}},function(err,work){
+                return work;
+            })
+            var daysd = moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').daysInMonth();
+            var lasm = moment().utc().subtract(1, 'months').format("MM");
+            var xax;
+            var arr =[];
+            var cx = 0;
+            var cxe; 
+            res.render("admin/attendance2",{worker,dates,xax,arr,cx,cxe,daysd,lasm}) ;
         });
         
         // Admin Upload Data

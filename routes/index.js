@@ -36,7 +36,7 @@ router.get("/", isLoggedIn,async function(req,res){
         return emaxa;
     })
 
-    if(emax<100){
+    if(emax<1000){
         transporter.sendMail(mailOptions, function (err, res) {
             if(err){
                 console.log(err);
