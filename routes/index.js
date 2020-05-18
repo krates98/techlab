@@ -101,6 +101,11 @@ router.get("/", isLoggedIn,async function(req,res){
        res.redirect("/login");
    });
 
+    // User Profile 
+       router.get("/users/:id", function(req,res){
+        res.render("userprofile");
+    });
+
     // middleware
 
     function isLoggedIn(req, res, next){

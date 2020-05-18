@@ -275,7 +275,7 @@ const   express         = require("express"),
                 return work;
             })
 
-            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2020"}},function(err,work){
+            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2020"}, time: { $regex: "PM"}},function(err,work){
                 return work;
             })
             var daysd = moment().utc().add(5, 'hours').add(30,'m').format("D");
@@ -283,8 +283,8 @@ const   express         = require("express"),
             var xax;
             var arr =[];
             var cx = 0;
-            var cxe; 
-            res.render("admin/attendance",{worker,dates,xax,arr,cx,cxe,daysd,curm}) ;
+            
+            res.render("admin/attendance",{worker,dates,xax,arr,cx,daysd,curm}) ;
         });
 
         // Admin Attendance Last Month 
@@ -293,7 +293,7 @@ const   express         = require("express"),
                 return work;
             })
 
-            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().subtract(1, 'months').format("MM") +"\/2020"}},function(err,work){
+            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().subtract(1, 'months').format("MM") +"\/2020"}, time: { $regex: "PM"}},function(err,work){
                 return work;
             })
             var daysd = moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').daysInMonth();
@@ -301,8 +301,7 @@ const   express         = require("express"),
             var xax;
             var arr =[];
             var cx = 0;
-            var cxe; 
-            res.render("admin/attendance2",{worker,dates,xax,arr,cx,cxe,daysd,lasm}) ;
+            res.render("admin/attendance2",{worker,dates,xax,arr,cx,daysd,lasm}) ;
         });
         
         // Admin Upload Data

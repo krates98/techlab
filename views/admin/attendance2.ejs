@@ -22,8 +22,8 @@
                 
                     <% for(var j=0;j<arr.length;j++){ %>
                         <% for(var k=0;k<dates.length;k++){ %>
-                            <% cxe = dates[k].time.substring(8, 11).trim(); %>      
-                    <% if(arr[j] === dates[k].date && worker[i].username === dates[k].username && cxe === "PM"){ %>
+                               
+                    <% if(arr[j] === dates[k].date && worker[i].username === dates[k].username){ %>
                     <%   cx++; %>
                     <% }  %>  
                     <% } %>
