@@ -9,6 +9,7 @@ var     express         = require("express"),
         Email           = require("./models/emails"),
         User            = require("./models/user"),
         ipAdd           = require("./models/ipaddress"),
+        offer           = require("./models/offers"),
         request         = require("request-promise");
         
 var     authRoutes      = require("./routes/index"),
@@ -53,7 +54,7 @@ var     authRoutes      = require("./routes/index"),
     app.use("/", adminRoutes);
     app.use("/", userRoutes);
 
-    // app.listen(3000, '127.0.0.1', function(){
-    app.listen(process.env.PORT, process.env.IP, function(){
+    app.listen(3000, '127.0.0.1', function(){
+    // app.listen(process.env.PORT, process.env.IP, function(){
         console.log("Techlab Server Has Started!");
      });

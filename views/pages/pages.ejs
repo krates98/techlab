@@ -1,29 +1,16 @@
 <%- include("../partials/header") %>
 
 <div class="row">
+    <% for(var i=0;i<offurl.length;i++){ %>
+    
     <div class="col-sm-4">
         <div class="card text-white bg-secondary mb-3 topclass">
-            <div class="card-header">Header</div>
+            <div class="card-header">OFFER <%= i+1 %></div>
             <div class="card-body">
-            <a href="#"><button class="btn btn-success wid">Link</button></a>
+            <a href="<%= offurl[i].offerurl %>" target="_blank"><button class="btn btn-success wid">Link</button></a>
             </div>
         </div>
     </div>
-    <div class="col-sm-4">
-        <div class="card text-white bg-secondary mb-3 topclass">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-            <a href="#"><button class="btn btn-success wid">Link</button></a>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-4">
-        <div class="card text-white bg-secondary mb-3 topclass">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-            <a href="#"><button class="btn btn-success wid">Link</button></a>
-            </div>
-        </div>
-    </div>
+    <% } %>
 </div>
 <%- include("../partials/footer") %>

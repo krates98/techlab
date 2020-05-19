@@ -4,6 +4,7 @@ const   express         = require("express"),
         Email           = require("../models/emails"),
         ipAdd           = require("../models/ipaddress"),
         User            = require("../models/user"),
+        Offer           = require("../models/offers"),
         moment          = require('moment'),
         multer          = require('multer'),
         csv             = require('fast-csv'),
@@ -339,6 +340,49 @@ const   express         = require("express"),
                 res.render("admin/uploaddata2")
             });
         });
+
+        // Admin Update Offers
+         router.get("/admin/offers", isLoggedIn,async function(req,res){
+            var offurl = await Offer.find(function(err,offig){
+                return offig;
+            });
+            res.render("admin/offers",{offurl});
+        });
+
+        // Admin Post Update Offers
+        router.post("/admin/offers", isLoggedIn, async function(req,res){
+            var insput = req.body.offerurl;
+            var off;
+            for(var i=0;i<insput.length;i++){
+                off = {offerurl:insput[i]};
+                
+            Offer.create(off, function(err, email){
+                if(err){
+                    console.log(err)
+                    }
+                    else{
+                        console.log("added offer")
+                    } 
+                });
+            }
+            var offurl = await Offer.find(function(err,offig){
+                return offig;
+            });
+            
+            res.render("admin/offers", {offurl});
+        });
+
+        router.delete("/admin/offers/:id", function(req, res){
+            Offer.findById(req.params.id, function(err, offrm){
+                if(err){
+                    console.log(err);
+                } else {
+                    offrm.remove();
+                    res.redirect("/admin/offers");
+                }
+            });
+            
+         });
 
         // middleware
 

@@ -54,7 +54,7 @@ router.get("/data/:id", isLoggedIn, async function(req,res){
         var tatime    = moment().utc().add(5, 'hours').add(30,'m').format("LTS");
         var userId    = req.user._id;
         var username  = req.user.username;
-        var ipcreate  = {ipaddress: currentIp, date: datime, time: tatime, username: username} 
+        var ipcreate  = {ipaddress: currentIp, date: datime, time: tatime, username: username}; 
         ipAdd.create(ipcreate, function(err, email){
         if(err){
             console.log(err)

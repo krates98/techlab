@@ -17,7 +17,8 @@ var UserSchema  = new mongoose.Schema({
     bankacc: String,
     bankbranch: String,
     bankifsc: String,
-    bankbene: String
+    bankbene: String,
+    salary: String
 })
 
 UserSchema.plugin(passportLocalMongoose);
