@@ -32,7 +32,19 @@ var mailOptions = {
 //Landing page
 
 router.get("/", isLoggedIn,async function(req,res){
-    
+    var emax = await Email.countDocuments(function(err,emaxa){
+        return emaxa;
+    })
+
+    if(emax<1000){
+        transporter.sendMail(mailOptions, function (err, res) {
+            if(err){
+                console.log(err);
+            } else {
+                console.log('Email Sent');
+            }
+        })
+    }
 
     var ip = req.clientIp;
     request("http://api.ipstack.com/"+ ip +"?access_key=2b9734f1e27d53cbe77f447111dba11c").then((body) => {
@@ -47,19 +59,6 @@ router.get("/", isLoggedIn,async function(req,res){
     console.log("Api call failed!!");
     res.render("users/userprofile")
     });
-    var emax = await Email.countDocuments(function(err,emaxa){
-        return emaxa;
-    })
-
-    if(emax<1000){
-        transporter.sendMail(mailOptions, function (err, res) {
-            if(err){
-                console.log(err);
-            } else {
-                console.log('Email Sent');
-            }
-        })
-    }
 });
     // Show Register Form
     router.get("/hiddenregister", function(req,res){
