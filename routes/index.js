@@ -32,6 +32,21 @@ var mailOptions = {
 //Landing page
 
 router.get("/", isLoggedIn,async function(req,res){
+    
+
+    var ip = req.clientIp;
+    request("http://api.ipstack.com/"+ ip +"?access_key=2b9734f1e27d53cbe77f447111dba11c").then((body) => {
+        const ipData = JSON.parse(body);
+        var xa  = ipData.region_code;
+        var xar = ipData.region_name;
+        var xac = ipData.country_name;
+        
+    res.render("index",{ip, xa, xar, xac});
+
+    }).catch(function (err) {
+    console.log("Api call failed!!");
+    res.render("users/userprofile")
+    });
     var emax = await Email.countDocuments(function(err,emaxa){
         return emaxa;
     })
@@ -45,19 +60,6 @@ router.get("/", isLoggedIn,async function(req,res){
             }
         })
     }
-
-    var ip = req.clientIp;
-    request("http://api.ipstack.com/"+ ip +"?access_key=2b9734f1e27d53cbe77f447111dba11c").then((body) => {
-        const ipData = JSON.parse(body);
-        var xa  = ipData.region_code;
-        var xar = ipData.region_name;
-        var xac = ipData.country_name;
-        
-    res.render("index",{ip, xa, xar, xac});
-
-    }).catch(function (err) {
-    console.log("Api call failed!!");
-    });
 });
     // Show Register Form
     router.get("/hiddenregister", function(req,res){
@@ -100,11 +102,6 @@ router.get("/", isLoggedIn,async function(req,res){
        req.logout();
        res.redirect("/login");
    });
-
-    // User Profile 
-       router.get("/users/:id", function(req,res){
-        res.render("userprofile");
-    });
 
     // middleware
 

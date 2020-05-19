@@ -87,7 +87,7 @@ footer {
 }
 
 .name{
-    max-width: 170px;
+    max-width: 250px;
     display: inline;
 }
 
@@ -157,3 +157,15 @@ select {
     margin:auto;
     width: 70%;
 }
+
+#usersubmit{
+    margin: auto;
+    max-width: 100px;
+}
+
+.userheading{
+    margin:auto;
+    text-align: center;
+}
+
+

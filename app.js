@@ -14,9 +14,11 @@ var     express         = require("express"),
 var     authRoutes      = require("./routes/index"),
         dataRoutes      = require("./routes/data"),
         offersRoutes    = require("./routes/offers"),
-        adminRoutes     = require("./routes/admin");
+        adminRoutes     = require("./routes/admin"),
+        userRoutes      = require("./routes/users");
 
-    mongoose.connect('mongodb+srv://krates:suyash98@yelpcamp-rda1o.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true });
+    // mongoose.connect('mongodb+srv://krates:suyash98@yelpcamp-rda1o.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true });
+    mongoose.connect('mongodb://localhost:27017/techlab1', { useNewUrlParser: true , useUnifiedTopology: true });
     mongoose.set('useFindAndModify', false);
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(express.static(__dirname + "/public"));
@@ -49,6 +51,7 @@ var     authRoutes      = require("./routes/index"),
     app.use("/", dataRoutes);
     app.use("/", offersRoutes);
     app.use("/", adminRoutes);
+    app.use("/", userRoutes);
 
     app.listen(3000, '127.0.0.1', function(){
     // app.listen(process.env.PORT, process.env.IP, function(){
