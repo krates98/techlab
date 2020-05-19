@@ -1,19 +1,7 @@
 <%- include("partials/header") %>
 <div class="row toprow">
       <div class="col-sm">
-          <h1 class="display-4">Your IP Address is  <%= ip %> </h1>
-            <table class="table">
-                <tr>
-                    <th>Region Code</th>
-                    <th>Region Name</th>
-                    <th>Country Name</th>
-                </tr>
-                <tr>
-                    <td><%= xa %></td>
-                    <td><%= xar %></td>
-                    <td><%= xac %></td>
-                </tr>
-            </table>
+          <h1 class="display-6">Welcome <%= currentUser.username %></h1>
           <a href="/data">
           <button class="btn btn-warning btn-lg btn-pad">Continue</button>
           </a>

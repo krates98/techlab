@@ -18,7 +18,7 @@ var     authRoutes      = require("./routes/index"),
         userRoutes      = require("./routes/users");
 
     mongoose.connect('mongodb+srv://krates:suyash98@yelpcamp-rda1o.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true });
-    // mongoose.connect('mongodb://localhost:27017/techlab1', { useNewUrlParser: true , useUnifiedTopology: true });
+    // mongoose.connect('mongodb://localhost:27017/techlab', { useNewUrlParser: true , useUnifiedTopology: true });
     mongoose.set('useFindAndModify', false);
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(express.static(__dirname + "/public"));

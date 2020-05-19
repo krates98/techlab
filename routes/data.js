@@ -28,13 +28,15 @@ router.get("/data", isLoggedIn, function(req,res){
         var boolData = false;
         request("http://api.ipstack.com/"+ ip +"?access_key=2b9734f1e27d53cbe77f447111dba11c").then((body) => {
         const ipData = JSON.parse(body);
+        var xar = ipData.region_name;
+        var xac = ipData.country_name;
         var xa = ipData.region_code;
         // Get all data from DB
         Data.findOne({state: xa}, function(err, alldata){
             if(err){
                 console.log(err);
             } else {
-            res.render("data",{alldata:alldata});
+            res.render("data",{alldata:alldata,xar,xac,xa});
             }
         });
         }).catch(function (err) {
