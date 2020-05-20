@@ -1,20 +1,24 @@
 <%- include("../partials/header") %>
 <%- include("../partials/adminnav") %>
-   
+
 </div><div class="container">
     <div class="col-sm">
         <table class="table table-dark">
             <th>
                 Username
             </th>
+            <th>
+                Salary Till Date
+            </th>
             <%  for(var i=1;i<=daysd;i++){ %>    
                 <%  if(i<10){ xax = "0"+i.toString(); } else{ %>
                         <%     xax = i.toString(); } %>
                         <%   xax = xax + "/"+ curm +"/2020"; %>
-                        <th><%= xax.substring(0, 2) %></th>
                 <% arr.push(xax); %>
                 <% } %>
         <% for(var i=1;i<worker.length;i++){ %>
+            <%    dsal = (worker[i].salary / daysm); %>
+            
             <tr>
                 <td>
             <%= worker[i].username %>
@@ -24,18 +28,19 @@
                         <% for(var k=0;k<dates.length;k++){ %>
                                 
                     <% if(arr[j] === dates[k].date && worker[i].username === dates[k].username){ %>
-                    <%   cx++; %>
+                    <%   cx = cx + dsal %>
                     <%   k = dates.length; %>
                     <% }  %>  
                     <% } %>
-                <%  if(cx > 0){ %><td class="bg-primary">P</td> <%} else { %>
-                    <td class="bg-danger">A</td>        
-                </td>
                 <%  } %>
-                <% cx = 0;%> 
+                <%  if(cx > 0){ %><td class="bg-info"><%= Math.round(cx) %></td> <%} else { %>
+                    <td class="bg-danger">0</td>        
+                </td>
+                
                 <%  } %>
             </tr>
-            
+            <% cx = 0;%>
+            <% dsal = 0; %> 
             <% } %>
     </table>
     </div>
@@ -44,4 +49,7 @@
     
     
  <%- include("../partials/footer") %>
+    
+
+<%- include("../partials/footer") %>
     

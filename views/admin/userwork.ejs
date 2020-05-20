@@ -3,14 +3,14 @@
 
             <div class="col-sm-11">
             <form action="/admin/userwork" method="GET" class="form-inline">
-            <select name="users">
+            <select class="userwork" name="users">
                 <option value="selectuser">Select User</option>
                 <% for(var i=1;i<ussr.length;i++){ %>
                     <option value="<%= ussr[i].username %>"><%= ussr[i].username %></option>
                 <% } %>
               </select>
            
-              <select name="day">
+              <select class="userwork" name="day">
                 <option>- Day -</option>
                 <option value="01">1</option>
                 <option value="02">2</option>
@@ -43,7 +43,7 @@
                 <option value="29">29</option>
                 <option value="30">30</option>
                 <option value="31">31</option>
-                </select><select name="month">
+                </select><select class="userwork" name="month">
                 <option>- Month -</option>
                 <option value="01">January</option>
                 <option value="02">Febuary</option>
@@ -57,7 +57,7 @@
                 <option value="10">October</option>
                 <option value="11">November</option>
                 <option value="12">December</option>
-                </select><select name="year">
+                </select><select class="userwork" name="year">
                 <option>- Year -</option>
                 <option value="2020">2020</option>
                 </select>

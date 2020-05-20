@@ -384,6 +384,54 @@ const   express         = require("express"),
             
          });
 
+        // Admin Salary User
+
+        router.get("/admin/salary", isLoggedIn,async function(req,res){
+            var userdata = await User.find(function (err,userd){
+                return userd;
+            })
+            res.render("admin/salary",{userdata});
+        });
+
+         // Admin Salary Post
+
+         router.post("/admin/salary", isLoggedIn,function(req,res){
+             var sal = {salary: req.body.salary};
+             var seu = {username: req.body.users};
+             User.findOneAndUpdate(seu, sal,async function(err, blog){
+                if(err){
+                    console.log(err);
+                } else {
+                    var userdata = await User.find(function (err,userd){
+                        return userd;
+                    })
+                    res.render("admin/salary",{userdata});
+                }
+            });
+        });
+
+        // Admin Salary User
+
+        router.get("/admin/gensalary", isLoggedIn,async function(req,res){
+            
+            var worker = await User.find(function(err,work){
+                return work;
+            })
+
+            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2020"}, time: { $regex: "PM"}},function(err,work){
+                return work;
+            })
+            var daysm = moment().utc().add(5, 'hours').add(30,'m').daysInMonth();
+            var daysd = moment().utc().add(5, 'hours').add(30,'m').format("D");
+            var curm = moment().utc().add(5, 'hours').add(30,'m').format("MM");
+            var xax;
+            var arr =[];
+            var cx = 0;
+            var dsal = 0;
+            
+            res.render("admin/gensalary",{worker,dates,xax,arr,cx,daysd,curm,dsal,daysm}) ;
+        });
+
         // middleware
 
         function isLoggedIn(req, res, next){

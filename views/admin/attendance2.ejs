@@ -25,6 +25,7 @@
                                
                     <% if(arr[j] === dates[k].date && worker[i].username === dates[k].username){ %>
                     <%   cx++; %>
+                    <%   k = dates.length; %>
                     <% }  %>  
                     <% } %>
                 <%  if(cx > 0){ %><td class="bg-primary">P</td> <%} else { %>

@@ -91,7 +91,7 @@ footer {
     display: inline;
 }
 
-select {
+.userwork {
     margin: 20px;
     width: 150px;
     padding: 5px 35px 5px 5px;
@@ -139,10 +139,7 @@ select {
   }
 
   .form-group {
-      
-      
-      max-width: 500px;
-      
+      max-width: 70%;
   }
 .imagax{
     margin-bottom: 20px;
@@ -168,4 +165,32 @@ select {
     text-align: center;
 }
 
+.input2{
+    width: 450px;
+}
 
+.margin-right{
+    margin-left: 100px;
+}
+
+.usersalary {
+    padding-left: 5px;
+    width: 120px;
+    border: 1px solid white;
+    font-weight: bold;
+    background-color: #f8f9fa;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    }
+
+.userprofile {
+        padding-left: 15px;
+        width: 400px;
+        height: 35px;
+        border: 1px solid #ccc;
+        background-color: #f8f9fa;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        }

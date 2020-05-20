@@ -10,6 +10,7 @@ var UserSchema  = new mongoose.Schema({
     pin: String,
     laddress: String,
     paddress: String,
+    shift: String,
     gpay:String,
     phonepe: String,
     paytm: String,

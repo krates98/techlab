@@ -4,11 +4,11 @@
 <div class="col-sm-11">
 
     <% for(var i=0;i<offurl.length;i++){ %>
-        <div class="backgroundoffer form-group  row">
+        <div class="backgroundoffer form-group row">
             <label class="col-sm-3 col-form-label"><strong>OFFER #  <%= i+1 %></strong></label>
             <form action="/admin/offers/<%=offurl[i]._id%>/?_method=DELETE" method="POST">
             <div class="col-sm-9">
-                <div class="input-group">                
+                <div class="input-group input2">                
                 <input class="form-control formoffers" type="text" value="<%= offurl[i].offerurl %>" readonly>
                 <div class="input-group-append">
                     <button class="btn btn-danger">Delete</button>

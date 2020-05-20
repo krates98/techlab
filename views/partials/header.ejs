@@ -19,14 +19,15 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <% if(currentUser){ %>  
+              <% if(currentUser.username === "krates"){ %>
+                <li class="nav-item active"> 
+                  <a class="nav-link" href="/admin">Admin</a>
+                </li>
+                <% } %>
             <li class="nav-item active"> 
-              <a class="nav-link" href="/pages">Pages</a>
+              <a class="nav-link" target="_blank" href="/pages">Pages</a>
             </li>
-            <% if(currentUser.username === "krates"){ %>
-            <li class="nav-item active"> 
-              <a class="nav-link" href="/admin">Admin</a>
-            </li>
-            <% } %>
+            
           </ul>
           <span class="navbar-text">
             <a class="nav-link" href="/users/<%= currentUser._id %>">Profile</a>
