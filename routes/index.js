@@ -78,7 +78,7 @@ router.get("/", isLoggedIn,async function(req,res){
                     console.log("added invalid user")
                     }
                 });
-                res.render("invalidmac");
+                res.render("invalidmac",{mac});
                 }
             });
         });
