@@ -15,8 +15,10 @@
             </tr>
         </table>
             <% if(alldata !== null) { %>
-                
+                <hr>
+                <a href="/pages/" target="_blank"class="btn btn-info">Open Offers</a> -------
                 <a href="/data/<%= alldata._id %>" class="btn btn-primary">USE Data</a>
+                <hr>
             <% } else { %>
             <h2>Data Not Found</h2>
             <% } %>

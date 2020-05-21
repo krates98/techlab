@@ -353,7 +353,7 @@ const   express         = require("express"),
 
         // Admin Post Update Offers
         router.post("/admin/offers", isLoggedIn, async function(req,res){
-            var insput = req.body.offerurl;
+            var insput = [req.body.offerurl];
             var off;
             for(var i=0;i<insput.length;i++){
                 off = {offerurl:insput[i]};
