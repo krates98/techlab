@@ -56,31 +56,8 @@ router.get("/", isLoggedIn,async function(req,res){
         return maccc;
     });
 
-    // Check Mac Address
-    macaddress.one(function (err, mac) {
-        var coun = 0;
-        for(i=0;i<macc.length;i++){
-            if(mac === macc[i].macaddress){
-                i=macc.length;
-                coun++;
-                res.render("index");
-            } } 
-            if(coun === 0){
-                var currentIp = req.clientIp;
-                var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
-                var tatime    = moment().utc().add(5, 'hours').add(30,'m').format("LTS");
-                var username  = req.user.username;
-                var maccreate  = {ipaddress: currentIp, date: datime, time: tatime, username: username, macadd: mac}; 
-                Macval.create(maccreate, function(err, email){
-                if(err){
-                    console.log(err)
-                    } else {
-                    console.log("added invalid user")
-                    }
-                });
-                res.render("invalidmac",{mac});
-                }
-            });
+    res.render("index");
+    
         });
     // Show Register Form
     router.get("/hiddenregister", function(req,res){
