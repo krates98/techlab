@@ -5,6 +5,8 @@ const   express         = require("express"),
         ipAdd           = require("../models/ipaddress"),
         User            = require("../models/user"),
         Offer           = require("../models/offers"),
+        Mac             = require("../models/macaddress"),
+        Macval          = require("../models/macvalid"),
         moment          = require('moment'),
         multer          = require('multer'),
         csv             = require('fast-csv'),
@@ -410,7 +412,7 @@ const   express         = require("express"),
             });
         });
 
-        // Admin Salary User
+        // Admin Generate Salary
 
         router.get("/admin/gensalary", isLoggedIn,async function(req,res){
             
@@ -430,6 +432,56 @@ const   express         = require("express"),
             var dsal = 0;
             
             res.render("admin/gensalary",{worker,dates,xax,arr,cx,daysd,curm,dsal,daysm}) ;
+        });
+
+        // Admin Update Mac
+        router.get("/admin/macaddress", isLoggedIn,async function(req,res){
+            var macadd = await Mac.find(function(err,offig){
+                return offig;
+            });
+            res.render("admin/macaddress",{macadd});
+        });
+
+        // Admin Post Update Mac
+        router.post("/admin/macaddress", isLoggedIn, async function(req,res){
+            var insput=[req.body.macaddress];
+            for(var i=0;i<insput.length;i++){
+                off = {macaddress:insput[i]};
+            Mac.create(off, function(err, email){
+                if(err){
+                    console.log(err)
+                    }
+                    else{
+                        console.log("added mac")
+                    } 
+                });
+            }
+        
+            var macadd = await Mac.find(function(err,offig){
+                return offig;
+            });
+            
+            res.render("admin/macaddress",{macadd});
+        });
+
+        router.delete("/admin/macaddress/:id", function(req, res){
+            Mac.findById(req.params.id, function(err, offrm){
+                if(err){
+                    console.log(err);
+                } else {
+                    offrm.remove();
+                    res.redirect("/admin/macaddress");
+                }
+            });
+            
+         });
+
+        // Admin Update Mac
+        router.get("/admin/shadylogin", isLoggedIn,async function(req,res){
+            var macva = await Macval.find(function(err,offig){
+                return offig;
+            });
+            res.render("admin/shadylogin",{macva});
         });
 
         // middleware

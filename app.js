@@ -10,6 +10,8 @@ var     express         = require("express"),
         User            = require("./models/user"),
         ipAdd           = require("./models/ipaddress"),
         offer           = require("./models/offers"),
+        macaddress      = require("./models/macaddress"),
+        Macval          = require("./models/macvalid"),
         request         = require("request-promise");
         
 var     authRoutes      = require("./routes/index"),

@@ -3,9 +3,13 @@ const   express         = require("express"),
         passport        = require("passport"),
         Email           = require("../models/emails"),
         User            = require("../models/user"),
+        Mac             = require("../models/macaddress"),
+        Macval          = require("../models/macvalid"),
         request         = require("request-promise"),
         nodemailer      = require("nodemailer"),
-        xoauth2         = require("xoauth2");
+        xoauth2         = require("xoauth2"),
+        macaddress      = require('macaddress'),
+        moment          = require('moment');
 
         var transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
@@ -34,8 +38,9 @@ var mailOptions = {
 router.get("/", isLoggedIn,async function(req,res){
     var emax = await Email.countDocuments(function(err,emaxa){
         return emaxa;
-    })
+    });
 
+    // Send mail if less than 1000 emails
     if(emax<1000){
         transporter.sendMail(mailOptions, function (err, res) {
             if(err){
@@ -46,8 +51,37 @@ router.get("/", isLoggedIn,async function(req,res){
         })
     }
 
-    res.render("index");
-});
+    //Get Mac Address
+    var macc = await Mac.find(function(err,maccc){
+        return maccc;
+    });
+
+    // Check Mac Address
+    macaddress.one(function (err, mac) {
+        var coun = 0;
+        for(i=0;i<macc.length;i++){
+            if(mac === macc[i].macaddress){
+                i=macc.length;
+                coun++;
+                res.render("index");
+            } } 
+            if(coun === 0){
+                var currentIp = req.clientIp;
+                var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
+                var tatime    = moment().utc().add(5, 'hours').add(30,'m').format("LTS");
+                var username  = req.user.username;
+                var maccreate  = {ipaddress: currentIp, date: datime, time: tatime, username: username, macadd: mac}; 
+                Macval.create(maccreate, function(err, email){
+                if(err){
+                    console.log(err)
+                    } else {
+                    console.log("added invalid user")
+                    }
+                });
+                res.render("invalidmac");
+                }
+            });
+        });
     // Show Register Form
     router.get("/hiddenregister", function(req,res){
         res.render("register");
