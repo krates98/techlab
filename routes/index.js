@@ -3,12 +3,9 @@ const   express         = require("express"),
         passport        = require("passport"),
         Email           = require("../models/emails"),
         User            = require("../models/user"),
-        Mac             = require("../models/macaddress"),
-        Macval          = require("../models/macvalid"),
         request         = require("request-promise"),
         nodemailer      = require("nodemailer"),
         xoauth2         = require("xoauth2"),
-        macaddress      = require('macaddress'),
         moment          = require('moment');
 
         var transporter = nodemailer.createTransport({
@@ -50,15 +47,9 @@ router.get("/", isLoggedIn,async function(req,res){
             }
         })
     }
-
-    //Get Mac Address
-    var macc = await Mac.find(function(err,maccc){
-        return maccc;
-    });
-
     res.render("index");
+    });
     
-        });
     // Show Register Form
     router.get("/hiddenregister", function(req,res){
         res.render("register");

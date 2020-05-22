@@ -1,8 +1,27 @@
 <%- include("../partials/header") %>
 <%- include("../partials/adminnav") %>
-
+<% var counter = 0 %>
     <div class="col-sm-11">
-        <table class="table">
+        <table class="table table-striped">
+            <tr>
+                <th>Username</th>
+                <th>Total</th>
+            </tr>
+            
+        <% for(var i=1;i<worker.length;i++){ %>
+            <tr>
+                <td><%= worker[i].username %></td>
+                <% today.forEach(function(campground,index){ %>
+                    <% if(worker[i].username === campground.username){ %>
+                    <%   counter++; %>
+                        <% } %>
+                <% })%>
+                <td><%= counter %></td>
+                <% counter = 0 %>
+        <% } %>
+            </tr>
+        </table>
+        <table class="table table-sm">
             <tr>
                 <th>Count</th>
                 <th>Date</th>

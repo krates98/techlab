@@ -5,8 +5,6 @@ const   express         = require("express"),
         ipAdd           = require("../models/ipaddress"),
         User            = require("../models/user"),
         Offer           = require("../models/offers"),
-        Mac             = require("../models/macaddress"),
-        Macval          = require("../models/macvalid"),
         moment          = require('moment'),
         multer          = require('multer'),
         csv             = require('fast-csv'),
@@ -56,32 +54,29 @@ const   express         = require("express"),
 
         // Admin Today's Work
 
-        router.get("/admin/todaywork", isLoggedIn, function(req,res){
+        router.get("/admin/todaywork", isLoggedIn,async function(req,res){
                 var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
-                ipAdd.find({date: datime}, function(err,today){
-                    if(err){
-                        console.log(err);
-                    }
-                    else{
-                        res.render("admin/todaywork",{today:today});
-                        }
-                });
+                var today     = await ipAdd.find({date: datime}, function(err,todee){
+                                    return todee;
+                                });
+                var worker    = await User.find(function(err,uss){
+                                    return uss;
+                                })
+                res.render("admin/todaywork",{today,worker});
         });
 
         // Admin Yesterday's Work
 
-        router.get("/admin/yesterdaywork", isLoggedIn, function(req,res){
+        router.get("/admin/yesterdaywork", isLoggedIn,async function(req,res){
                 var datime    = moment().utc().subtract(18, 'hours').subtract(30,'m').format("DD/MM/YYYY");
-                ipAdd.find({date: datime}, function(err,today){
-                    if(err){
-                        console.log(err);
-                    }
-                    else{
-                        res.render("admin/yesterdaywork",{today:today});
-                        }
-                });
+                var today     = await ipAdd.find({date: datime}, function(err,todee){
+                                    return todee;
+                                });
+                var worker    = await User.find(function(err,uss){
+                                    return uss;
+                                })
+                res.render("admin/yesterdaywork",{today,worker});
         });
-
         
         // Admin Register User
 
@@ -205,7 +200,7 @@ const   express         = require("express"),
             res.render("admin/hitList", );
         });
 
-        router.post('/admin/hitlist', isLoggedIn, upload.single('myFile'), (req, res, next) => {
+        router.post('/admin/hitlist2', isLoggedIn, upload.single('myFile'), (req, res, next) => {
             
             const file = req.file
             if (!file) {
@@ -215,6 +210,7 @@ const   express         = require("express"),
             }
             var wooo = 0;
             const fileRows = [];
+
             // open uploaded file
             
                 csv .parseFile(req.file.path, {headers: true})
@@ -229,6 +225,7 @@ const   express         = require("express"),
                         console.log(err);
                     }
                     else{
+                        
                         res.render("admin/hitlist2",{ipad:ipad, fileRows:fileRows, workers:workers, wooo:wooo});
                         }
                     });
@@ -432,56 +429,6 @@ const   express         = require("express"),
             var dsal = 0;
             
             res.render("admin/gensalary",{worker,dates,xax,arr,cx,daysd,curm,dsal,daysm}) ;
-        });
-
-        // Admin Update Mac
-        router.get("/admin/macaddress", isLoggedIn,async function(req,res){
-            var macadd = await Mac.find(function(err,offig){
-                return offig;
-            });
-            res.render("admin/macaddress",{macadd});
-        });
-
-        // Admin Post Update Mac
-        router.post("/admin/macaddress", isLoggedIn, async function(req,res){
-            var insput=[req.body.macaddress];
-            for(var i=0;i<insput.length;i++){
-                off = {macaddress:insput[i]};
-            Mac.create(off, function(err, email){
-                if(err){
-                    console.log(err)
-                    }
-                    else{
-                        console.log("added mac")
-                    } 
-                });
-            }
-        
-            var macadd = await Mac.find(function(err,offig){
-                return offig;
-            });
-            
-            res.render("admin/macaddress",{macadd});
-        });
-
-        router.delete("/admin/macaddress/:id", function(req, res){
-            Mac.findById(req.params.id, function(err, offrm){
-                if(err){
-                    console.log(err);
-                } else {
-                    offrm.remove();
-                    res.redirect("/admin/macaddress");
-                }
-            });
-            
-         });
-
-        // Admin Update Mac
-        router.get("/admin/shadylogin", isLoggedIn,async function(req,res){
-            var macva = await Macval.find(function(err,offig){
-                return offig;
-            });
-            res.render("admin/shadylogin",{macva});
         });
 
         // middleware
