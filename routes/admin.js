@@ -197,7 +197,7 @@ const   express         = require("express"),
 
         // Admin HitList Page
         router.get("/admin/hitlist", isLoggedIn, function(req,res){
-            res.render("admin/hitList", );
+            res.render("admin/hitlist", );
         });
 
         router.post('/admin/hitlist2', isLoggedIn, upload.single('myFile'), (req, res, next) => {
