@@ -1,4 +1,13 @@
 <%- include("partials/header") %>
+<% if(currentUser.username === "krates"){ %>
+    <div class="col-sm-8 toprow">
+        <h1 class="display-6">Visit Admin Panel</h1>
+        <a href="/admin">
+        <button class="btn btn-warning btn-lg btn-pad">Continue</button>
+        </a>
+    </div>
+
+<% } else { %>
 <div class="row toprow">
       <div class="col-sm">
           <h1 class="display-6">Welcome <%= currentUser.username %></h1>
@@ -6,7 +15,8 @@
           <button class="btn btn-warning btn-lg btn-pad">Continue</button>
           </a>
       </div>
-    </div>
+    
+    <% } %>
 
 
 

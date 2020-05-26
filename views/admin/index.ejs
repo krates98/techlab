@@ -1,7 +1,7 @@
 <%- include("../partials/header") %>
-<%- include("../partials/adminnav") %>
 
-    <div class="col-sm-11">
+
+    <div class="col-sm-10">
         
         <input type="hidden" id="ds1" value="<%= dat[0] %>">
         <input type="hidden" id="ds2" value="<%= dat[1] %>">
@@ -14,7 +14,7 @@
         <input type="hidden" id="dc4" value="<%= dac[3] %>">
         <input type="hidden" id="dc5" value="<%= dac[4] %>">
 
-        <canvas id="myChart" width="1000" height="500"></canvas>
+        <canvas id="myChart" width="900" height="380"></canvas>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
         <script type="text/javascript" >
         var ctx = document.getElementById('myChart');
@@ -38,17 +38,18 @@
                 datasets: [{
                     label: '# Of Sets Completed',
                     data: xac,
-                    backgroundColor: 'rgba(102,255,102,0.2)',
-                    borderColor: 'rgba(51,51,0,0.2)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(0, 0, 0, 0)',
+                    borderColor: 'rgba(115, 134, 213 , 0.5)',
+                    borderWidth: 2
                 }]
             },
             options: {
-                responsive: false
+                responsive: true
             }
         });
     </script>
     </div>
+</div>
 </div>
 
     

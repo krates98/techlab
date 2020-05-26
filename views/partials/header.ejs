@@ -6,13 +6,19 @@
     <title>Techlab Software</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="icon" href="/favicon.ico">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel='stylesheet' type='text/css' media='screen' href='/stylesheets/style.css'>
+    <!-- CSS only -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<link rel='stylesheet' type='text/css' media='screen' href='/stylesheets/style.css'>
     </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
         <a class="navbar-brand" href="/">Techlab</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
       
@@ -23,17 +29,94 @@
                 <li class="nav-item active"> 
                   <a class="nav-link" href="/admin">Admin</a>
                 </li>
+                
                 <% } %>
-            
-            
           </ul>
-          <span class="navbar-text">
-            <a class="nav-link" href="/users/<%= currentUser._id %>">Profile</a>
-          </span>
-          <span class="navbar-text">
-            <a class="nav-link" href="/logout">Sign Out</a>
-          </span>
+          <ul class="navbar-nav mr-sm-2">
+            <li class="nav-item active"> 
+              <a class="nav-link" href="/users/<%= currentUser._id %>">Profile</a>
+            </li>
+            <li class="nav-item active"> 
+              <a class="nav-link" href="/logout">Sign Out</a>
+            </li>
+          </ul>
           <% } %>
         </div>
-      </nav> 
-      <div class="container" id="main-wrapper">
+      </nav>
+      
+      <% if(currentUser && currentUser.username === "krates"){ %>  
+      <div class="row">
+      <div class="col-sm-2">
+      <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebarboot">
+            <div class="sidebarboot-header">
+                <h3>Admin Panel</h3>
+            </div>
+    
+            <ul class="list-unstyled components">
+                
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Work</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="/admin/todaywork">Today's Work</a>
+                        </li>
+                        <li>
+                            <a href="/admin/yesterdaywork">Yesterday Work</a>
+                        </li>
+                        <li>
+                            <a href="/admin/userwork">Individual Work</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="/admin/dataleft">Data Left</a>
+                </li>
+                <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Attendance Salary</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="/admin/attendance">Attendance</a>
+                        </li>
+                        <li>
+                            <a href="/admin/lastmonth">L/M Attendance</a>
+                        </li>
+                        <li>
+                            <a href="/admin/salary">Salary</a>
+                        </li>
+                        <li>
+                            <a href="/admin/gensalary">Generate Salary</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                  <a href="#dataSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Data Upload</a>
+                  <ul class="collapse list-unstyled" id="dataSubmenu">
+                      <li>
+                          <a href="/admin/uploademail">Upload Emails</a>
+                      </li>
+                      <li>
+                          <a href="/admin/uploaddata">Upload Data</a>
+                      </li>
+                      
+                  </ul>
+              </li>
+              <li>
+                <a href="/admin/offers">Add Offers</a>
+            </li>
+                <li>
+                    <a href="/admin/hitlist">Hitlist</a>
+                </li>
+                <li>
+                    <a target="_blank" href="/hiddenregister">Register</a>
+                </li>
+            </ul>
+        </nav>
+    
+    </div> 
+    
+    <% } %>
+
+  </div>
+    

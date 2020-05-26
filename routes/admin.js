@@ -209,6 +209,17 @@ const   express         = require("express"),
               return next(error)
             }
             var wooo = 0;
+            var rowsum = 0; 
+            var wooo1 = 0;
+            var wooo2 = 0; 
+            var wooo3 = 0; 
+            var wooo4 = 0; 
+            var colsum1 = 0; 
+            var colsum2 = 0; 
+            var colsum3 = 0; 
+            var colsum4 = 0; 
+            var colsum5 = 0; 
+            var totalsum = 0; 
             const fileRows = [];
 
             // open uploaded file
@@ -225,8 +236,8 @@ const   express         = require("express"),
                         console.log(err);
                     }
                     else{
-                        
-                        res.render("admin/hitlist2",{ipad:ipad, fileRows:fileRows, workers:workers, wooo:wooo});
+                        console.log(fileRows);
+                        res.render("admin/hitlist2",{ipad:ipad, fileRows, workers:workers, wooo, wooo1, wooo2, wooo3, wooo4, colsum1, colsum2, colsum3, colsum4, colsum5,rowsum,totalsum});
                         }
                     });
                 });
@@ -350,12 +361,12 @@ const   express         = require("express"),
 
         // Admin Post Update Offers
         router.post("/admin/offers", isLoggedIn, async function(req,res){
-            var insput = [req.body.offerurl];
-            var off;
-            for(var i=0;i<insput.length;i++){
-                off = {offerurl:insput[i]};
+            var insput = req.body.offerurl;
+            var off = req.body.offername;
+            
+            var addoff = {offerurl:insput, offername:off};
                 
-            Offer.create(off, function(err, email){
+            Offer.create(addoff, function(err, email){
                 if(err){
                     console.log(err)
                     }
@@ -363,12 +374,8 @@ const   express         = require("express"),
                         console.log("added offer")
                     } 
                 });
-            }
-            var offurl = await Offer.find(function(err,offig){
-                return offig;
-            });
             
-            res.render("admin/offers", {offurl});
+            res.redirect("/admin/offers");
         });
 
         router.delete("/admin/offers/:id", function(req, res){

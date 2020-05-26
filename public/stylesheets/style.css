@@ -1,24 +1,91 @@
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 html,
 body {
     height: 100%;
     margin: 0;
     padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
 }
-
-#main-wrapper {
-    box-sizing: border-box;
-    min-height: 100%;
-    padding: 0 0 100px;
-    position: relative;
-}
-
-footer {
-    bottom: 0;
-    height: 100px;
-    left: 0;
-    position: absolute;
+/* Sidebar */
+.wrapper {
+    display: flex;
     width: 100%;
+    align-items: stretch;
 }
+
+#sidebarboot.active {
+    margin-left: -230px;
+    
+}
+
+#sidebarboot {
+    min-width: 230px;
+    max-width: 768px;
+}
+
+  @media (max-width: 768px) {
+    #sidebarboot {
+        margin-left: 0;
+        width: 768px;
+    }
+    #sidebarboot.active {
+        margin-left: 0;
+        width: 768px;
+    }
+    }
+
+    a, a:hover, a:focus {
+        color: inherit;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+    
+    #sidebarboot {
+        /* don't forget to add all the previously mentioned styles here too */
+        background: #7386D5;
+        color: #fff;
+        transition: all 0.3s;
+    }
+    
+    #sidebarboot .sidebarboot-header {
+        padding: 20px;
+        background: #6d7fcc;
+    }
+    
+    #sidebarboot ul.components {
+        padding: 20px 0;
+        border-bottom: 1px solid #47748b;
+    }
+    
+    #sidebarboot ul p {
+        color: #fff;
+        padding: 10px;
+    }
+    
+    #sidebarboot ul li a {
+        padding: 10px;
+        font-size: 1.1em;
+        display: block;
+    }
+    #sidebarboot ul li a:hover {
+        color: #7386D5;
+        background: #fff;
+    }
+    
+    #sidebarboot ul li.active > a, a[aria-expanded="true"] {
+        color: #fff;
+        background: #6d7fcc;
+    }
+    ul ul a {
+        font-size: 0.9em !important;
+        padding-left: 30px !important;
+        background: #6d7fcc;
+    }
+
+
+
+
 
 .toprow{
     padding-top: 30vh;
@@ -31,11 +98,11 @@ footer {
     margin: 10px auto;
 }
 
-#footer {
-    position: absolute;
-    bottom:0;
+.footer {
+    position: relative;
+    bottom: -100px;
     width:100%;
-    height:60px;   /* Height of the footer */
+    height:10px;   /* Height of the footer */
 
  }
 
@@ -105,32 +172,6 @@ footer {
   
   .row{
       margin-top: 30px;
-  }
-  
-  .sidebar{
-    height: auto; /* Full-height: remove this if you want "auto" height */
-    width: 12%; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    top: auto; /* Stay at the top */
-    left: 0;
-    background-color: #f8f9fa; /* Black */
-    
-    
-  }
-
-  .sidebar a {
-    padding: 6px 8px 6px 10px;
-    text-decoration: none;
-    font-size: 15px;
-    color: #395b66;
-    display: block;
-    border-bottom: 1px dashed rebeccapurple;
-  }
-
-  .sidebar a:hover {
-    background-color: #4a4a4a;
-    color: white;
   }
 
   #adminreg{

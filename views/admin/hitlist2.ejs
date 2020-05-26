@@ -1,13 +1,6 @@
 <%- include("../partials/header") %>
-<%- include("../partials/adminnav") %>
-<% var rowsum = 0; %>
-<% var colsum1 = 0; %>
-<% var colsum2 = 0; %>
-<% var colsum3 = 0; %>
-<% var colsum4 = 0; %>
-<% var colsum5 = 0; %>
-<% var totalsum = 0; %>
-<div class="col-sm-11">
+
+<div class="col-sm-10">
     <table class="table table-dark">
         <th>Username</th>
         <th>Offer 1</th>
@@ -19,90 +12,81 @@
         <% for(var i=1; i<workers.length; i++) { %>
             <tr>
                 <td><%= workers[i].username %></td>
-                <% for(var j=0; j<ipad.length; j++) { %>
-                    <% for(var k=0;k<fileRows.length; k++) { %>
+                
+                    
+                        <% for(var j=0; j<ipad.length; j++) { %>
+                            <% for(var k=0;k<fileRows.length; k++) { %>
                     <% if(ipad[j].ipaddress === fileRows[k].offer1){ %>
                         <% if(workers[i].username === ipad[j].username){ %>
                             <% wooo++ %>
-                            <% k = fileRows.length; %>
+                            <% break; %>
+                        <% } %>
+                        <% } %>
+                        <% if(fileRows[k].offer2 != ''){ %>
+                        <% if(ipad[j].ipaddress === fileRows[k].offer2){ %>
+                            <% if(workers[i].username === ipad[j].username){ %>
+                                <% wooo1++ %>
+                                <% break; %>
+                            <% } %>
+                        <% } %>
+                        <% } %>
+                        <% if(fileRows[k].offer3 != ''){ %>
+                        <% if(ipad[j].ipaddress === fileRows[k].offer3){ %>
+                            <% if(workers[i].username === ipad[j].username){ %>
+                                <% wooo2++ %>
+                                <% break; %>
+                            <% } %>
+                        <% } %>
+                        <% } %>
+                        <% if(fileRows[k].offer4 != ''){ %>
+                        <% if(ipad[j].ipaddress === fileRows[k].offer4){ %>
+                            <% if(workers[i].username === ipad[j].username){ %>
+                                <% wooo3++ %>
+                                <% break; %>
+                            <% } %>
+                        <% } %>
+                        <% } %>
+                        <% if(fileRows[k].offer5 != ''){ %>
+                        <% if(ipad[j].ipaddress === fileRows[k].offer5){ %>
+                            <% if(workers[i].username === ipad[j].username){ %>
+                                <% wooo4++ %>
+                                <% break; %>
+                            <% } %>
+                        <% } %>
                         <% } %>
                     <% } %>
                 <% } %>
-            <% } %>
+                <% totalsum = (wooo+wooo1+wooo2+wooo3+wooo4) %>
             <td><%= wooo %></td>
-            <% rowsum = rowsum + wooo; %>
-            <% colsum1 = colsum1 + wooo; %>
-            <% wooo = 0 %>
-                <% for(var j=0; j<ipad.length; j++) { %>
-                    <% for(var k=0;k<fileRows.length; k++) { %>
-                    <% if(ipad[j].ipaddress === fileRows[k].offer2){ %>
-                        <% if(workers[i].username === ipad[j].username){ %>
-                            <% wooo++ %>
-                            <% k = fileRows.length; %>
-                        <% } %>
-                    <% } %>
-                <% } %>
-            <% } %>
-            <% rowsum = rowsum + wooo; %>
-            <td><%= wooo %></td>
-            <% colsum2 = colsum2 + wooo; %>
-            <% wooo = 0 %>
-            <% for(var j=0; j<ipad.length; j++) { %>
-                    <% for(var k=0;k<fileRows.length; k++) { %>
-                    <% if(ipad[j].ipaddress === fileRows[k].offer3){ %>
-                        <% if(workers[i].username === ipad[j].username){ %>
-                            <% wooo++ %>
-                            <% k = fileRows.length; %>
-                        <% } %>
-                    <% } %>
-                <% } %>
-            <% } %>
-            <% rowsum = rowsum + wooo; %>
-            <td><%= wooo %></td>
-            <% colsum3 = colsum3 + wooo; %>
-            <% wooo = 0 %>
-            <% for(var j=0; j<ipad.length; j++) { %>
-                    <% for(var k=0;k<fileRows.length; k++) { %>
-                    <% if(ipad[j].ipaddress === fileRows[k].offer4){ %>
-                        <% if(workers[i].username === ipad[j].username){ %>
-                            <% wooo++ %>
-                            <% k = fileRows.length; %>
-                        <% } %>
-                    <% } %>
-                <% } %>
-            <% } %>
-            <% rowsum = rowsum + wooo; %>
-            <td><%= wooo %></td>
-            <% colsum4 = colsum4 + wooo; %>
-            <% wooo = 0 %>
-            <% for(var j=0; j<ipad.length; j++) { %>
-                    <% for(var k=0;k<fileRows.length; k++) { %>
-                    <% if(ipad[j].ipaddress === fileRows[k].offer5){ %>
-                        <% if(workers[i].username === ipad[j].username){ %>
-                            <% wooo++ %>
-                            <% k = fileRows.length; %>
-                        <% } %>
-                    <% } %>
-                <% } %>
-            <% } %>
-            <td><%= wooo %></td>
-            <% rowsum = rowsum + wooo; %>
-            <% colsum5 = colsum5 + wooo; %>
-            <% wooo = 0 %>
-            <td><%= rowsum %></td>
-            <% totalsum += rowsum %>
-            <% rowsum = 0; %>
+            <td><%= wooo1 %></td>
+            <td><%= wooo2 %></td>
+            <td><%= wooo3 %></td>
+            <td><%= wooo4 %></td>
+            <td><%= totalsum %></td>
             </tr>
-        <% } %>
+            <% colsum1 += wooo %>
+            <% colsum2 += wooo1 %>
+            <% colsum3 += wooo2 %>
+            <% colsum4 += wooo3 %>
+            <% colsum5 += wooo4 %>
+            
+            <% wooo  = 0 %>
+            <% wooo1 = 0 %>
+            <% wooo2 = 0 %>
+            <% wooo3 = 0 %>
+            <% wooo4 = 0 %>
+            <% } %>
             <tr>
-                <td>Total</td>
+                <% rowsum = colsum1+colsum2+colsum3+colsum4+colsum5 %>
+                <td>Count</td>
                 <td><%= colsum1 %></td>
                 <td><%= colsum2 %></td>
                 <td><%= colsum3 %></td>
                 <td><%= colsum4 %></td>
                 <td><%= colsum5 %></td>
-                <td><%= totalsum %></td>
+                <td><%= rowsum %></td>
             </tr>
+            
         </table>
     </div>
     

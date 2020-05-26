@@ -1,11 +1,10 @@
 <%- include("../partials/header") %>
-<%- include("../partials/adminnav") %>
   
-<div class="col-sm-11">
+<div class="col-sm-10">
 
     <% for(var i=0;i<offurl.length;i++){ %>
         <div class="backgroundoffer form-group row">
-            <label class="col-sm-3 col-form-label"><strong>OFFER #  <%= i+1 %></strong></label>
+            <label class="col-sm-3 col-form-label"><strong><%= offurl[i].offername %></strong></label>
             <form action="/admin/offers/<%=offurl[i]._id%>/?_method=DELETE" method="POST">
             <div class="col-sm-9">
                 <div class="input-group input2">                
@@ -29,6 +28,7 @@
         <div id="itemsfor" class="form-group">
           
             <div class="margin-bottom">
+            <input id="textinput" name="offername" type="text" placeholder="Enter Name of Offer" class="form-control input-md">
             <input id="textinput" name="offerurl" type="text" placeholder="Enter URL of Offer" class="form-control input-md">
             
             </div>
