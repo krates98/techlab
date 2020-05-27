@@ -200,6 +200,10 @@ const   express         = require("express"),
             res.render("admin/hitlist", );
         });
 
+        router.get("/admin/hitlist2", isLoggedIn, function(req,res){
+            res.redirect("/admin/hitlist", );
+        });
+
         router.post('/admin/hitlist2', isLoggedIn, upload.single('myFile'), (req, res, next) => {
             
             const file = req.file
@@ -228,19 +232,17 @@ const   express         = require("express"),
                 .on("data", function(data) {
                 fileRows.push(data); // push each row
                 })
-                .on("end", function() {
+                .on("end",async function() {
                 fs.unlinkSync(req.file.path);
-                User.find(function(err, workers){
-                ipAdd.find(function(err,ipad){
-                    if(err){
-                        console.log(err);
-                    }
-                    else{
-                        console.log(fileRows);
-                        res.render("admin/hitlist2",{ipad:ipad, fileRows, workers:workers, wooo, wooo1, wooo2, wooo3, wooo4, colsum1, colsum2, colsum3, colsum4, colsum5,rowsum,totalsum});
-                        }
-                    });
+                const workers = await User.find(function(err, worker){
+                    return worker;
                 });
+
+                const ipad = await ipAdd.find(function(err,ipadd){
+                    return ipadd;
+                });
+
+                res.render("admin/hitlist2",{ipad, fileRows, workers, wooo, wooo1, wooo2, wooo3, wooo4, colsum1, colsum2, colsum3, colsum4, colsum5,rowsum,totalsum});
             });
         });
         
@@ -408,10 +410,7 @@ const   express         = require("express"),
                 if(err){
                     console.log(err);
                 } else {
-                    var userdata = await User.find(function (err,userd){
-                        return userd;
-                    })
-                    res.render("admin/salary",{userdata});
+                    res.redirect("/admin/salary");
                 }
             });
         });
