@@ -224,6 +224,8 @@ const   express         = require("express"),
             var colsum4 = 0; 
             var colsum5 = 0; 
             var totalsum = 0; 
+            var cool;
+            var hitcount = [];
             const fileRows = [];
 
             // open uploaded file
@@ -241,9 +243,41 @@ const   express         = require("express"),
                 const ipad = await ipAdd.find(function(err,ipadd){
                     return ipadd;
                 });
-
-                res.render("admin/hitlist2",{ipad, fileRows, workers, wooo, wooo1, wooo2, wooo3, wooo4, colsum1, colsum2, colsum3, colsum4, colsum5,rowsum,totalsum});
+                var arr = new Array(workers.length-1).fill(0).map(() => new Array(5).fill(0));;
+                //Processing Hitlist
+                 for(var i=1;i<workers.length;i++) { 
+                 for(var k=0;k<fileRows.length;k++) { 
+                 cool = ipad.filter(x => x.username == workers[i].username && x.ipaddress == fileRows[k].offer1) 
+                 if(cool && cool.length){ 
+                     wooo++ 
+                 } 
+                 cool = ipad.filter(x => x.username == workers[i].username && x.ipaddress == fileRows[k].offer2) 
+                 if(cool && cool.length){ 
+                     wooo1++ 
+                 } 
+                 cool = ipad.filter(x => x.username == workers[i].username && x.ipaddress == fileRows[k].offer3) 
+                 if(cool && cool.length){ 
+                     wooo2++ 
+                 } 
+                 cool = ipad.filter(x => x.username == workers[i].username && x.ipaddress == fileRows[k].offer4) 
+                 if(cool && cool.length){ 
+                     wooo3++ 
+                 } 
+                 cool = ipad.filter(x => x.username == workers[i].username && x.ipaddress == fileRows[k].offer5) 
+                 if(cool && cool.length){ 
+                     wooo4++ 
+                 } 
+             }
+            
+             console.log(arr);
+             totalsum = (wooo+wooo1+wooo2+wooo3+wooo4) 
+            }
+                //Complete Process
+                console.log(totalsum);
+                
+                // res.render("admin/hitlist2",{ipad, fileRows, workers, wooo, wooo1, wooo2, wooo3, wooo4, colsum1, colsum2, colsum3, colsum4, colsum5,rowsum,totalsum});
             });
+            res.send("check console");
         });
         
         // Admin Upload Email
