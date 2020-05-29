@@ -224,6 +224,7 @@ const   express         = require("express"),
             var colsum4 = 0; 
             var colsum5 = 0; 
             var totalsum = 0; 
+            var arr = [];
             var cool;
             var hitcount = [];
             const fileRows = [];
@@ -233,6 +234,7 @@ const   express         = require("express"),
                 csv .parseFile(req.file.path, {headers: true})
                 .on("data", function(data) {
                 fileRows.push(data); // push each row
+                
                 })
                 .on("end",async function() {
                 fs.unlinkSync(req.file.path);

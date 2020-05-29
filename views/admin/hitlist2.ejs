@@ -1,8 +1,6 @@
 <%- include("../partials/header") %>
-<p class="lead">Showing data from hitlist</p>
+
 <% var cool; %>
-
-
 <div class="col-sm-9">
     <table class="table table-dark">
         <th>Username</th>
@@ -16,23 +14,23 @@
             <tr>
                 <td><%= workers[i].username %></td>
                 <% for(var k=0;k<fileRows.length;k++) { %>
-                <% cool = ipad.filter(x => x.username == workers[i].username && x.ipaddress == fileRows[k].offer1) %>
+                <% cool = ipad.filter(x => x.ipaddress == fileRows[k].offer1 && x.username == workers[i].username) %>
                 <% if(cool && cool.length){ %>
                     <% wooo++ %>
                 <% } %>
-                <% cool = ipad.filter(x => x.username == workers[i].username && x.ipaddress == fileRows[k].offer2) %>
+                <% cool = ipad.filter(x => x.ipaddress == fileRows[k].offer2 && x.username == workers[i].username) %>
                 <% if(cool && cool.length){ %>
                     <% wooo1++ %>
                 <% } %>
-                <% cool = ipad.filter(x => x.username == workers[i].username && x.ipaddress == fileRows[k].offer3) %>
+                <% cool = ipad.filter(x => x.ipaddress == fileRows[k].offer3 && x.username == workers[i].username) %>
                 <% if(cool && cool.length){ %>
                     <% wooo2++ %>
                 <% } %>
-                <% cool = ipad.filter(x => x.username == workers[i].username && x.ipaddress == fileRows[k].offer4) %>
+                <% cool = ipad.filter(x => x.ipaddress == fileRows[k].offer4 && x.username == workers[i].username) %>
                 <% if(cool && cool.length){ %>
                     <% wooo3++ %>
                 <% } %>
-                <% cool = ipad.filter(x => x.username == workers[i].username && x.ipaddress == fileRows[k].offer5) %>
+                <% cool = ipad.filter(x => x.ipaddress == fileRows[k].offer5 && x.username == workers[i].username) %>
                 <% if(cool && cool.length){ %>
                     <% wooo4++ %>
                 <% } %>
