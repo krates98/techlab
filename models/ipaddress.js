@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 var ipSchema = new mongoose.Schema({
-   ipaddress: String,
+   ipaddress: { type: String, unique: true },
    date: String,
    time: String,
    username: String

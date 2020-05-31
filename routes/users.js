@@ -8,7 +8,7 @@ const   express         = require("express"),
         request         = require("request-promise"),
         moment          = require('moment');
 
-    // User Profile 
+    // User Attendance 
     router.get("/users/attendance", isLoggedIn, function(req,res){
         var reas;
         Att.find({date: moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY")}, function(err, attData){
@@ -27,7 +27,7 @@ const   express         = require("express"),
     });
 });
 
-    // User Profile 
+    // User Attendance 
     router.post("/users/attendance", isLoggedIn, function(req,res){
         var userne  = req.user.username;
         var reason = req.body.reason;

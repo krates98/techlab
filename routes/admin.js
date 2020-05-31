@@ -5,6 +5,9 @@ const   express         = require("express"),
         ipAdd           = require("../models/ipaddress"),
         User            = require("../models/user"),
         Offer           = require("../models/offers"),
+        Att             = require("../models/attendance"),  
+        Hitlist         = require("../models/hitlist"),
+        Storehit        = require("../models/storehit"),
         moment          = require('moment'),
         multer          = require('multer'),
         csv             = require('fast-csv'),
@@ -200,11 +203,7 @@ const   express         = require("express"),
             res.render("admin/hitlist", );
         });
 
-        router.get("/admin/hitlist2", isLoggedIn, function(req,res){
-            res.redirect("/admin/hitlist", );
-        });
-
-        router.post('/admin/hitlist2', isLoggedIn, upload.single('myFile'), (req, res, next) => {
+        router.post('/admin/hitlistsuccess', isLoggedIn, upload.single('myFile'), (req, res, next) => {
             
             const file = req.file
             if (!file) {
@@ -212,47 +211,224 @@ const   express         = require("express"),
               error.httpStatusCode = 400
               return next(error)
             }
-            var wooo = 0;
-            var rowsum = 0; 
-            var wooo1 = 0;
-            var wooo2 = 0; 
-            var wooo3 = 0; 
-            var wooo4 = 0; 
-            var colsum1 = 0; 
-            var colsum2 = 0; 
-            var colsum3 = 0; 
-            var colsum4 = 0; 
-            var colsum5 = 0; 
-            var totalsum = 0; 
-            var arr = [];
-            var cool;
-            var hitcount = [];
-            const fileRows = [];
+            const hitRows = [];
+            var hitcreate;
+            var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
 
             // open uploaded file
             
                 csv .parseFile(req.file.path, {headers: true})
                 .on("data", function(data) {
-                fileRows.push(data); // push each row
+                hitRows.push(data); // push each row
                 
                 })
                 .on("end",async function() {
                 fs.unlinkSync(req.file.path);
-                const workers = await User.find(function(err, worker){
-                    return worker;
+                hitRows.forEach(function(bean){
+                    hitcreate  = {offer1:bean.offer1, offer2:bean.offer2, offer3:bean.offer3, offer4:bean.offer4, offer5:bean.offer5, date: datime}; 
+                    Hitlist.create(hitcreate, function(err, userdata){
+                        if(err){
+                            console.log(err)
+                        } else {
+                            console.log("added hitlist");
+                        }
+                    });
                 });
-
-                const ipad = await ipAdd.find(function(err,ipadd){
-                    return ipadd;
-                });
-                res.render("admin/hitlist2",{ipad, fileRows, workers, wooo, wooo1, wooo2, wooo3, wooo4, colsum1, colsum2, colsum3, colsum4, colsum5,rowsum,totalsum});
-            });
-            
+                res.render("admin/hitlistsuccess");
+            });     
         });
+
         
+        // Admin HitList Page
+        router.get("/admin/checkhitlist", isLoggedIn,async function(req,res){
+            
+            var workers = await User.find(function(err,work){
+                return work;
+            })
+
+            var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
+
+            var join = await Hitlist.aggregate(
+                [  
+                    { $lookup:
+                        {
+                            from:"ipaddresses",
+                            localField:"offer1",
+                            foreignField:"ipaddress",
+                            as:"newhitlist"
+                        }
+                    },
+                        {
+                            $unwind: '$newhitlist'
+                        },{
+                            $project: {
+
+                              username: '$newhitlist.username',
+                              ipaddress: '$newhitlist.ipaddress',
+                              date: '$newhitlist.date'
+
+                            }
+                        }
+
+                    ]).exec();
+            
+        var join2 = await Hitlist.aggregate(
+                [  
+                    { $lookup:
+                        {
+                            from:"ipaddresses",
+                            localField:"offer2",
+                            foreignField:"ipaddress",
+                            as:"newhitlist"
+                        }
+                    },
+                        {
+                            $unwind: '$newhitlist'
+                        },{
+                            $project: {
+
+                              username: '$newhitlist.username',
+                              ipaddress: '$newhitlist.ipaddress',
+                              date: '$newhitlist.date'
+
+                            }
+                        }
+
+                    ]).exec();
+        
+        var join3 = await Hitlist.aggregate(
+                [  
+                    { $lookup:
+                        {
+                            from:"ipaddresses",
+                            localField:"offer3",
+                            foreignField:"ipaddress",
+                            as:"newhitlist"
+                        }
+                    },
+                        {
+                            $unwind: '$newhitlist'
+                        },{
+                            $project: {
+
+                              username: '$newhitlist.username',
+                              ipaddress: '$newhitlist.ipaddress',
+                              date: '$newhitlist.date'
+
+                            }
+                        }
+
+                    ]).exec();
+        var join4 = await Hitlist.aggregate(
+                [  
+                    { $lookup:
+                        {
+                            from:"ipaddresses",
+                            localField:"offer4",
+                            foreignField:"ipaddress",
+                            as:"newhitlist"
+                        }
+                    },
+                        {
+                            $unwind: '$newhitlist'
+                        },{
+                            $project: {
+
+                              username: '$newhitlist.username',
+                              ipaddress: '$newhitlist.ipaddress',
+                              date: '$newhitlist.date'
+
+                            }
+                        }
+
+                    ]).exec();
+
+        var join5 = await Hitlist.aggregate(
+                [  
+                    { $lookup:
+                        {
+                            from:"ipaddresses",
+                            localField:"offer5",
+                            foreignField:"ipaddress",
+                            as:"newhitlist"
+                        }
+                    },
+                        {
+                            $unwind: '$newhitlist'
+                        },{
+                            $project: {
+
+                              username: '$newhitlist.username',
+                              ipaddress: '$newhitlist.ipaddress',
+                              date: '$newhitlist.date'
+
+                            }
+                        }
+
+                    ]).exec();
+                
+                var off1arr=[];
+                var wooo=0;
+
+                for(var i=1;i<workers.length;i++){
+                    for(var j=0;j<join.length;j++){
+                        if(workers[i].username === join[j].username){
+                            wooo++
+                        }
+                    }
+                    off1arr.push(wooo);
+                    wooo=0;
+                }
+
+                var off2arr=[];
+
+                for(var i=1;i<workers.length;i++){
+                    for(var j=0;j<join2.length;j++){
+                        if(workers[i].username === join[j].username){
+                            wooo++
+                        }
+                    }
+                    off2arr.push(wooo);
+                    wooo=0;
+                }
+                var off3arr=[];
+                for(var i=1;i<workers.length;i++){
+                    for(var j=0;j<join3.length;j++){
+                        if(workers[i].username === join[j].username){
+                            wooo++
+                        }
+                    }
+                    off3arr.push(wooo);
+                    wooo=0;
+                }
+                var off4arr=[];
+                for(var i=1;i<workers.length;i++){
+                    for(var j=0;j<join4.length;j++){
+                        if(workers[i].username === join[j].username){
+                            wooo++
+                        }
+                    }
+                    off4arr.push(wooo);
+                    wooo=0;
+                }
+                var off5arr=[];
+                for(var i=1;i<workers.length;i++){
+                    for(var j=0;j<join5.length;j++){
+                        if(workers[i].username === join[j].username){
+                            wooo++
+                        }
+                    }
+                    off5arr.push(wooo);
+                    wooo=0;
+                }
+                await Hitlist.deleteMany();
+                res.render("admin/checkhitlist",{workers,off1arr,off2arr,off3arr,off4arr,off5arr});
+               
+        });
+            
         // Admin Upload Email
         router.get("/admin/uploademail", isLoggedIn, function(req,res){
-            res.render("admin/uploademail", );
+            res.render("admin/uploademail");
         });
 
         router.post('/admin/uploademail', isLoggedIn, upload.single('myFile'), (req, res, next) => {
@@ -430,6 +606,10 @@ const   express         = require("express"),
             var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2020"}, time: { $regex: "PM"}},function(err,work){
                 return work;
             })
+
+            var attrea = await Att.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2020"}},function(err,work){
+                return work;
+            })
             var daysm = moment().utc().add(5, 'hours').add(30,'m').daysInMonth();
             var daysd = moment().utc().add(5, 'hours').add(30,'m').format("D");
             var curm = moment().utc().add(5, 'hours').add(30,'m').format("MM");
@@ -438,7 +618,33 @@ const   express         = require("express"),
             var cx = 0;
             var dsal = 0;
             
-            res.render("admin/gensalary",{worker,dates,xax,arr,cx,daysd,curm,dsal,daysm}) ;
+            res.render("admin/gensalary",{worker,dates,xax,arr,cx,daysd,curm,dsal,daysm,attrea}) ;
+        });
+
+        // Admin Generate Last Month Salary
+
+        router.get("/admin/gensalarylm", isLoggedIn,async function(req,res){
+            
+            var worker = await User.find(function(err,work){
+                return work;
+            })
+
+            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').format("MM") +"\/2020"}, time: { $regex: "PM"}},function(err,work){
+                return work;
+            })
+
+            var attrea = await Att.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').format("MM") +"\/2020"}},function(err,work){
+                return work;
+            })
+            var daysm = moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').daysInMonth();
+            var daysd = moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').format("D");
+            var curm = moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').format("MM");
+            var xax;
+            var arr =[];
+            var cx = 0;
+            var dsal = 0;
+            
+            res.render("admin/gensalarylm",{worker,dates,xax,arr,cx,daysd,curm,dsal,daysm,attrea}) ;
         });
 
         // middleware
