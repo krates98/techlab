@@ -486,7 +486,7 @@ const   express         = require("express"),
                 return work;
             })
 
-            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().subtract(1, 'months').format("MM") +"\/2020"}, time: { $regex: "PM"}},function(err,work){
+            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').format("MM") +"\/2020"}, time: { $regex: "PM"}},function(err,work){
                 return work;
             })
             var daysd = moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').daysInMonth();
