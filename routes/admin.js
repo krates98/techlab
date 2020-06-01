@@ -637,14 +637,12 @@ const   express         = require("express"),
                 return work;
             })
             var daysm = moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').daysInMonth();
-            var daysd = moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').format("D");
             var curm = moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').format("MM");
             var xax;
             var arr =[];
             var cx = 0;
             var dsal = 0;
-            
-            res.render("admin/gensalarylm",{worker,dates,xax,arr,cx,daysd,curm,dsal,daysm,attrea}) ;
+            res.render("admin/gensalarylm",{worker,dates,xax,arr,cx,curm,dsal,daysm,attrea}) ;
         });
 
         // middleware
