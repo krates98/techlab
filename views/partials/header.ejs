@@ -29,14 +29,18 @@
                 <li class="nav-item active"> 
                   <a class="nav-link" href="/admin">Admin</a>
                 </li>
-                
                 <% } %>
+                <% if(currentUser.username === "krates" || currentUser.username === "sunil"){ %>
+                    <li class="nav-item "> 
+                      <a class="nav-link" href="/users/mod">Moderate</a>
+                    </li>
+                    <% } %>
           </ul>
           <ul class="navbar-nav mr-sm-2">
-            <li class="nav-item active"> 
+            <li class="nav-item "> 
                 <a class="nav-link" href="/users/attendance">Attendance</a>
             </li>
-            <li class="nav-item active"> 
+            <li class="nav-item "> 
               <a class="nav-link" href="/users/<%= currentUser._id %>">Profile</a>
             </li>
             <li class="nav-item active"> 

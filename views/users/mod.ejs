@@ -1,0 +1,43 @@
+<%- include("../partials/header") %>
+
+<% if(currentUser.username === "krates"){ %>
+    <div class="col-sm-9">
+    <table class="table table-sm">
+        <th>Date</th>
+        <th>Username</th>
+        <th>Reason</th>
+        <th>Overtime Hours</th>
+        <% attrea.forEach(function(attr){ %>
+        <tr>
+            <td><%= attr.date %></td>
+            <td><%= attr.username %></td>
+            <td><%= attr.reason %></td>
+            <td><%= attr.overtime %></td>
+        </tr>
+        <%   }) %>
+    </table>
+
+
+<% } else if(currentUser.username === "sunil"){ %>
+    <div class="col-sm-12 modtop">
+    <table class="table table-sm">
+        <th>Date</th>
+        <th>Username</th>
+        <th>Reason</th>
+        <th>Overtime Hours</th>
+        <% attrea.forEach(function(attr){ %>
+        <tr>
+            <td><%= attr.date %></td>
+            <td><%= attr.username %></td>
+            <td><%= attr.reason %></td>
+            <td><%= attr.overtime %></td>
+        </tr>
+        <%   }) %>
+    </table>
+
+    <% } else { %>
+    <div class="toprow">
+        <h1>Not Allowed</h1>
+    <% } %>
+</div>
+<%- include("../partials/footer") %>

@@ -42,8 +42,18 @@ const   express         = require("express"),
                 res.redirect("/users/attendance");
         });
 
-     // User Profile 
-     router.get("/users/:id", isLoggedIn, function(req,res){
+    // Moderate Attendance
+
+    router.get("/users/mod", isLoggedIn,async function(req,res){
+        var attrea = await Att.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2020"}},function(err,work){
+            return work;
+        })
+        res.render("users/mod", {attrea});
+    });
+
+
+    // User Profile 
+    router.get("/users/:id", isLoggedIn, function(req,res){
         res.render("users/userprofile");
     });
 
