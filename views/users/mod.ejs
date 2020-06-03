@@ -7,14 +7,14 @@
         <th>Username</th>
         <th>Reason</th>
         <th>Overtime Hours</th>
-        <% attrea.forEach(function(attr){ %>
+        <% for(var i=attrea.length-1;i>=0;i--){ %>
         <tr>
-            <td><%= attr.date %></td>
-            <td><%= attr.username %></td>
-            <td><%= attr.reason %></td>
-            <td><%= attr.overtime %></td>
+            <td><%= attrea[i].date %></td>
+            <td><%= attrea[i].username %></td>
+            <td><%= attrea[i].reason %></td>
+            <td><%= attrea[i].overtime %></td>
         </tr>
-        <%   }) %>
+        <%   } %>
     </table>
 
 

@@ -384,7 +384,7 @@ const   express         = require("express"),
 
                 for(var i=1;i<workers.length;i++){
                     for(var j=0;j<join2.length;j++){
-                        if(workers[i].username === join[j].username){
+                        if(workers[i].username === join2[j].username){
                             wooo++
                         }
                     }
@@ -394,7 +394,7 @@ const   express         = require("express"),
                 var off3arr=[];
                 for(var i=1;i<workers.length;i++){
                     for(var j=0;j<join3.length;j++){
-                        if(workers[i].username === join[j].username){
+                        if(workers[i].username === join3[j].username){
                             wooo++
                         }
                     }
@@ -404,7 +404,7 @@ const   express         = require("express"),
                 var off4arr=[];
                 for(var i=1;i<workers.length;i++){
                     for(var j=0;j<join4.length;j++){
-                        if(workers[i].username === join[j].username){
+                        if(workers[i].username === join4[j].username){
                             wooo++
                         }
                     }
@@ -414,7 +414,7 @@ const   express         = require("express"),
                 var off5arr=[];
                 for(var i=1;i<workers.length;i++){
                     for(var j=0;j<join5.length;j++){
-                        if(workers[i].username === join[j].username){
+                        if(workers[i].username === join5[j].username){
                             wooo++
                         }
                     }
