@@ -5,7 +5,7 @@ const   express         = require("express"),
     // Fetch Offer Pages
 
     router.get("/pages", isLoggedIn,async function(req,res){
-        var offurl = await Offer.find(function(err,result){
+        var offurl = await Offer.find({toggle: true}, function(err,result){
             return result;
         });
         res.render("pages/pages",{offurl});

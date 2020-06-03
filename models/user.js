@@ -6,6 +6,7 @@ var UserSchema  = new mongoose.Schema({
     password: String,
     firstname: String,
     lastname: String,
+    email: {type: String, unique:true},
     phone: String,
     pin: String,
     laddress: String,
@@ -19,7 +20,9 @@ var UserSchema  = new mongoose.Schema({
     bankbranch: String,
     bankifsc: String,
     bankbene: String,
-    salary: String
+    salary: String,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date 
 })
 
 UserSchema.plugin(passportLocalMongoose);

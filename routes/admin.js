@@ -546,7 +546,7 @@ const   express         = require("express"),
             var insput = req.body.offerurl;
             var off = req.body.offername;
             
-            var addoff = {offerurl:insput, offername:off};
+            var addoff = {offerurl:insput, offername:off, toggle:false, priority:1};
                 
             Offer.create(addoff, function(err, email){
                 if(err){
@@ -560,6 +560,33 @@ const   express         = require("express"),
             res.redirect("/admin/offers");
         });
 
+        router.post("/admin/offers/:id", function(req, res){
+                var togg;
+            if(req.body.on === "on"){
+                togg = {toggle:false};
+            } else {
+                togg = {toggle:true};
+            }
+            Offer.findByIdAndUpdate(req.params.id, togg, function(err, blog){
+                if(err){
+                    console.log(err);
+                } else {
+                    res.redirect("/admin/offers");
+                }
+            });
+         });
+         
+         router.put("/admin/offers/:id", isLoggedIn,function(req,res){
+            var seu = {priority: req.body.pri};
+            Offer.findByIdAndUpdate(req.params.id,seu, function(err,random){
+                if(err){
+                    console.log("Error");
+                } else {
+                    res.redirect("/admin/offers");
+                }
+            });   
+       });
+         
         router.delete("/admin/offers/:id", function(req, res){
             Offer.findById(req.params.id, function(err, offrm){
                 if(err){
