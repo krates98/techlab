@@ -16,10 +16,12 @@ router.get("/data", isLoggedIn, function(req,res){
         var username  = req.user.username;
         var ipcreate  = {ipaddress: currentIp, date: datime, time: tatime, username: username}; 
         ipAdd.create(ipcreate, function(err, email){
-        if(err){
-            console.log(err)
-            } 
-        });
+            if(err && err.code !== 11000) {
+                console.log("iP Added")
+                } else {
+                console.log("Duplicate Ip Exist")
+                }
+            });
         var ip = req.clientIp;
         var boolData = false;
         request("http://api.ipstack.com/"+ ip +"?access_key=2b9734f1e27d53cbe77f447111dba11c").then((body) => {
