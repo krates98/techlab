@@ -3,6 +3,7 @@ const   express         = require("express"),
         passport        = require("passport"),
         Email           = require("../models/emails"),
         User            = require("../models/user"),
+        ipAdd           = require("../models/ipaddress"),
         request         = require("request-promise"),
         crypto          = require("crypto"),
         async           = require("async"),
@@ -35,6 +36,7 @@ var mailOptions = {
 //Landing page
 
 router.get("/", isLoggedIn,async function(req,res){
+    var ipcount;
     var emax = await Email.countDocuments(function(err,emaxa){
         return emaxa;
     });
@@ -49,8 +51,17 @@ router.get("/", isLoggedIn,async function(req,res){
             }
         })
     }
-    res.render("index");
-    });
+    var ipis = await ipAdd.find(function(work){
+      return work;
+    })
+    ipcount = ipis.filter(x => x.ipaddress === req.clientIp)
+    
+    if(ipcount && ipcount.length){
+      res.render("ipcheck");
+    } else {
+      res.render("index");
+  }
+});
     
     // Show Register Form
     router.get("/hiddenregister", function(req,res){

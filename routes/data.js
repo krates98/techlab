@@ -10,20 +10,16 @@ const   express         = require("express"),
 // Data Pages
 
 router.get("/data", isLoggedIn, function(req,res){
-        
-    ipAdd.find({}, function(err, ipData){
+        var currentIp = req.clientIp;
+        var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
+        var tatime    = moment().utc().add(5, 'hours').add(30,'m').format("LTS");
+        var username  = req.user.username;
+        var ipcreate  = {ipaddress: currentIp, date: datime, time: tatime, username: username}; 
+        ipAdd.create(ipcreate, function(err, email){
         if(err){
-            console.log(err);
-        }
-        else{
-            
-            for(var i=0;i<ipData.length;i++){
-            if(req.clientIp === ipData[i].ipaddress){
-            return res.render("data/ipcheck");
-            }
-          }
-        
-    
+            console.log(err)
+            } 
+        });
         var ip = req.clientIp;
         var boolData = false;
         request("http://api.ipstack.com/"+ ip +"?access_key=2b9734f1e27d53cbe77f447111dba11c").then((body) => {
@@ -40,11 +36,11 @@ router.get("/data", isLoggedIn, function(req,res){
             }
         });
         }).catch(function (err) {
+            res.render("data/notfound");
             console.log("Api call failed!!");
             });
-        }
+        
     });
-});
 
     // Data Show Page
 
@@ -52,13 +48,14 @@ router.get("/data/:id", isLoggedIn, async function(req,res){
         var currentIp = req.clientIp;
         var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
         var tatime    = moment().utc().add(5, 'hours').add(30,'m').format("LTS");
-        var userId    = req.user._id;
         var username  = req.user.username;
         var ipcreate  = {ipaddress: currentIp, date: datime, time: tatime, username: username}; 
         ipAdd.create(ipcreate, function(err, email){
-        if(err){
-            console.log(err)
-            } 
+        if(err && err.code !== 11000) {
+            console.log("iP Added")
+            } else {
+            console.log("Duplicate Ip Exist")
+            }
         });
         
 

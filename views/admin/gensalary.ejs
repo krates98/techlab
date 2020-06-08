@@ -38,10 +38,10 @@
                                 <%   cx = cx + dsal %>
                             <% }  %>
                             <% if(attvar[0].reason === "doubleday" && cx>0){ %>
-                                <%   cx = cx + dsal + (Number(attvar[0].overtime) * 50) %>
+                                <%   cx = cx + dsal + (Number(attvar[0].overtime) * (dsal/9)) %>
                             <% }  %>
                             <% if(attvar[0].reason === "overtime" && cx>0){ %>
-                                <%  cx = cx + (Number(attvar[0].overtime) * 50) %>
+                                <%  cx = cx + (Number(attvar[0].overtime) * (dsal/9)) %>
                             <% }  %>
                         
                         <% }  %>    

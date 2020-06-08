@@ -672,6 +672,40 @@ const   express         = require("express"),
             res.render("admin/gensalarylm",{worker,dates,xax,arr,cx,curm,dsal,daysm,attrea}) ;
         });
 
+        // User Performance
+
+        router.get("/admin/performance", isLoggedIn,async function(req,res){
+            var ipdata = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2020"}, time: { $regex: "PM"}},function(err,work){
+                return work;
+            })
+            
+            var worker = await User.find(function(err,work){
+                return work;
+            })
+
+            // for(var i=0;i<ipdata.length;i++){
+            //     if(worker[1].username === ipData[i].username){
+
+            //     }
+            // }
+            var startTime;
+            var endTime;
+            var duration;
+            var minutes;
+            var attcount = ipdata.filter(x => x.username == worker[1].username)
+                for(var j=0;j<attcount.length-1;j++){
+                    startTime = moment(attcount[j].time, "HH:mm:ss a");
+                    endTime = moment(attcount[j+1].time, "HH:mm:ss a");
+                    duration = moment.duration(endTime.diff(startTime));
+                    minutes = parseInt(duration.asMinutes());
+                    console.log(minutes)
+                    console.log(attcount[j].date);
+                }
+
+            res.render("admin/performance",{worker,ipdata});
+        });
+
+
         // middleware
 
         function isLoggedIn(req, res, next){
