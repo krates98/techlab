@@ -42,7 +42,7 @@ router.get("/", isLoggedIn,async function(req,res){
     });
 
     // Send mail if less than 1000 emails
-    if(emax<1000){
+    if(emax === 1000 || emax === 500 || emax === 100){
         transporter.sendMail(mailOptions, function (err, res) {
             if(err){
                 console.log(err);
@@ -51,12 +51,11 @@ router.get("/", isLoggedIn,async function(req,res){
             }
         })
     }
-    var ipis = await ipAdd.find(function(work){
+    var ipis = await ipAdd.findOne({ipaddress: req.clientIp},function(work){
       return work;
     })
-    ipcount = ipis.filter(x => x.ipaddress === req.clientIp)
     
-    if(ipcount && ipcount.length){
+    if(ipis){
       res.render("ipcheck");
     } else {
       res.render("index");

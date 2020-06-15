@@ -1,0 +1,143 @@
+<%- include("../partials/header") %>
+<div class="col-sm-10">
+<% var salcount %>
+<% var attvar = 0 %>
+<% var salsum = 0 %>
+            <%  for(var i=1;i<=daysd;i++){ %>    
+                <%  if(i<10){ xax = "0"+i.toString(); } else{ %>
+                        <%     xax = i.toString(); } %>
+                        <%   xax = xax + "/"+ curm +"/2020"; %>
+                <% arr.push(xax); %>
+                <% } %>
+        <% for(var i=1;i<worker.length;i++){ %>
+            <%    dsal = (worker[i].salary / daysm); %>
+                
+                    <% for(var j=0;j<arr.length;j++){ %>  
+                        <% salcount = dates.filter(x => x.date == arr[j] && x.username == worker[i].username) %>
+                        <% attvar = attrea.filter(x => x.date == arr[j] && x.username == worker[i].username) %>
+                        <% if(salcount && salcount.length){ %>
+                        <%   cx = cx + dsal %>
+                        <% }  %>
+                        <% if(attvar && attvar.length){ %>
+                            <% if(attvar[0].reason === "halfday" && cx>0){ %>
+                                <%   cx = cx - (dsal/2) %>
+                                <% }  %>
+                            <% if(attvar[0].reason === "holiday" || attvar[0].reason === "weekoff"){ %>
+                                <%   cx = cx + dsal %>
+                            <% }  %>
+                            <% if(attvar[0].reason === "doubleday" && cx>0){ %>
+                                <%   cx = cx + dsal + (Number(attvar[0].overtime) * (dsal/9)) %>
+                            <% }  %>
+                            <% if(attvar[0].reason === "overtime" && cx>0){ %>
+                                <%  cx = cx + (Number(attvar[0].overtime) * (dsal/9)) %>
+                            <% }  %>
+                        
+                        <% }  %>    
+                <%  } %>
+
+            <% if(cx){ %>
+            <% salsum +=cx %>
+            <% } %>
+            <% cx = 0 %>
+            <% dsal = 0  %> 
+            <% } %>
+            <% var total %>
+            <% total = cost[0].earning-(costing + Math.round(salsum)) %>
+            
+<table class="table table-dark col-sm-9">
+    <th>Earning</th>
+    <th>Costing</th>
+    <th>Total Salary</th>
+    <th>Profit</th>
+    <tr>
+        <td><%= cost[0].earning %></td>
+        <td><%= costing %></td>
+        <td><%= Math.round(salsum) %></td>
+        <td><%= total %></td>
+    </tr>
+</table>
+<table class="table col-sm-9">
+    <th>Liabilities</th>
+    <th>Cost</th>
+    <tr>
+        <td>Rent</td>
+        <td><%= cost[0].rent %></td>
+    </tr>
+    <tr>
+        <td>OfficeBoy</td>
+        <td><%= cost[0].officeboy %></td>
+    </tr>
+    <tr>
+        <td>Guard</td>
+        <td><%= cost[0].guard %></td>
+    </tr>
+    <tr>
+        <td>Generator</td>
+        <td><%= cost[0].generator %></td>
+    </tr>
+    <tr>
+        <td>Maid</td>
+        <td><%= cost[0].maid %></td>
+    </tr>
+    <tr>
+        <td>Electricity Fixed</td>
+        <td><%= cost[0].elecfix %></td>
+    </tr>
+    <tr>
+        <td>Electricity Updated</td>
+        <td><%= cost[0].elecran %></td>
+    </tr>
+    <tr>
+        <td>Diesel</td>
+        <td><%= cost[0].diesel %></td>
+    </tr>
+    <tr>
+        <td>Tea Day</td>
+        <td><%= cost[0].tead %></td>
+    </tr>
+    <tr>
+        <td>Tea Night</td>
+        <td><%= cost[0].tean %></td>
+    </tr>
+    <tr>
+        <td>Dsl</td>
+        <td><%= cost[0].dsl %></td>
+    </tr>
+    <tr>
+        <td>Emails</td>
+        <td><%= cost[0].emails %></td>
+    </tr>
+    <tr>
+        <td>Fkref</td>
+        <td><%= cost[0].fkref %></td>
+    </tr>
+    <tr>
+        <td>Traffic</td>
+        <td><%= cost[0].traffic %></td>
+    </tr>
+    <tr>
+        <td>Hosting</td>
+        <td><%= cost[0].hosting %></td>
+    </tr>
+    <tr>
+        <td>Domains</td>
+        <td><%= cost[0].domains %></td>
+    </tr>
+    <tr>
+        <td>Miscellaneous</td>
+        <td><%= cost[0].misl %></td>
+    </tr>
+    <tr>
+        <td>Total</td>
+        <td><%= costing %></td>
+    </tr>
+</table>
+
+</div>
+
+
+
+
+    
+
+<%- include("../partials/footer") %>

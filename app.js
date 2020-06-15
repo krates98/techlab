@@ -16,7 +16,8 @@ var     authRoutes      = require("./routes/index"),
         dataRoutes      = require("./routes/data"),
         offersRoutes    = require("./routes/offers"),
         adminRoutes     = require("./routes/admin"),
-        userRoutes      = require("./routes/users");
+        userRoutes      = require("./routes/users"),
+        accountRoutes   = require("./routes/accounts")
 
     mongoose.connect('mongodb+srv://krates:suyash98@yelpcamp-rda1o.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true , useCreateIndex: true });
     // mongoose.connect('mongodb://localhost:27017/techlab', { useNewUrlParser: true , useUnifiedTopology: true , useCreateIndex: true});
@@ -53,6 +54,7 @@ var     authRoutes      = require("./routes/index"),
     app.use("/", offersRoutes);
     app.use("/", adminRoutes);
     app.use("/", userRoutes);
+    app.use("/", accountRoutes);
 
     // app.listen(3000, '127.0.0.1', function(){
     app.listen(process.env.PORT, process.env.IP, function(){

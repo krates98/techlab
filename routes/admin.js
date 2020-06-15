@@ -7,13 +7,11 @@ const   express         = require("express"),
         Offer           = require("../models/offers"),
         Att             = require("../models/attendance"),  
         Hitlist         = require("../models/hitlist"),
-        Storehit        = require("../models/storehit"),
         moment          = require('moment'),
         multer          = require('multer'),
         csv             = require('fast-csv'),
         fs              = require('fs'),
-        http            = require('http'),
-        Chart           = require('chart.js');
+        http            = require('http');
 
         // SET STORAGE
         var storage = multer.diskStorage({
@@ -692,7 +690,7 @@ const   express         = require("express"),
             var endTime;
             var duration;
             var minutes;
-            var attcount = ipdata.filter(x => x.username == worker[1].username)
+            var attcount = ipdata.filter(x => x.username == worker[8].username)
                 for(var j=0;j<attcount.length-1;j++){
                     startTime = moment(attcount[j].time, "HH:mm:ss a");
                     endTime = moment(attcount[j+1].time, "HH:mm:ss a");
