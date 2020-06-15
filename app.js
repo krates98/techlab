@@ -5,12 +5,7 @@ var     express         = require("express"),
         mongoose        = require("mongoose"),
         passport        = require("passport"),
         LocalStrategy   = require("passport-local"),
-        Data            = require("./models/data"),
-        Email           = require("./models/emails"),
-        User            = require("./models/user"),
-        ipAdd           = require("./models/ipaddress"),
-        offer           = require("./models/offers"),
-        request         = require("request-promise");
+        User            = require("./models/user");
         
 var     authRoutes      = require("./routes/index"),
         dataRoutes      = require("./routes/data"),

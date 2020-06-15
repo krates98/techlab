@@ -1,6 +1,5 @@
 const   express         = require("express"),
         Fixed           = require("../models/fixedcost"),
-        Earning         = require("../models/earning"),
         ipAdd           = require("../models/ipaddress"),
         User            = require("../models/user"),
         Att             = require("../models/attendance"),
