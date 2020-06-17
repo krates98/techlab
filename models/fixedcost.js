@@ -18,6 +18,7 @@ var fixedSchema = new mongoose.Schema({
    hosting: Number,
    domains: Number,
    misl: Number,
+   salary: Number,
    earning: Number
 });
 

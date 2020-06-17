@@ -2,7 +2,6 @@ const   express         = require("express"),
         router          = express.Router(),
         Data            = require("../models/data"),
         Email           = require("../models/emails"),
-        User            = require("../models/user"),
         ipAdd           = require("../models/ipaddress"),
         request         = require("request-promise"),
         moment          = require('moment');

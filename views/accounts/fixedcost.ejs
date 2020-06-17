@@ -58,11 +58,26 @@
         <label for="misl" class="lablu">Misc:</label>
         <input type="number" name="misl" id="misl" value="<%= cost[0].misl %>">   
         <br>
-        <label for="earning" class="lablu">Earning:</label>
-        <input type="number" name="earning" id="earning" value="<%= cost[0].earning %>">   
+        <label for="salary" class="lablu">Salary:</label>
+        <input type="number" name="salary" id="salary" value="<%= cost[0].salary %>">   
         <br>
     </div>  </div> 
+    <hr>
+    <div>
+        <label for="earning" class="lablu">
+            <select name="currency">
+                <option>Earning</option>
+                <option>USD</option>
+            </select>    
+        </label>
+        <input type="number" name="earning" id="earning" value="<%= cost[0].earning %>">   
+        <br>
+    </div>
+    <hr>
+    <div >
     <button class="btn btn-success">Submit</button>
+    
+</div>
     </form>
 </div>
 </div>

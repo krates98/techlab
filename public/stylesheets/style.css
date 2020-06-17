@@ -244,3 +244,17 @@ body {
 .lablu{
     min-width: 100px;
 }
+
+.amount{
+    width: 90px;
+}
+
+.amput{
+    width: 100px;
+}
+
+.heem{
+    font-size: larger;
+    font-weight: 300;
+    margin: auto 20px; 
+}
