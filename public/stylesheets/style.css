@@ -258,3 +258,11 @@ body {
     font-weight: 300;
     margin: auto 20px; 
 }
+
+.inline-item{
+    display: flex;
+}
+
+.edit{
+    margin-right: 20px;
+}

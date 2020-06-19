@@ -1,0 +1,76 @@
+<%- include("../partials/header") %>
+<div class="col-sm-10">
+    <div class="container">
+        <h4>Input Transaction</h4>
+    <form action="/accounts/edit/<%=id%>?_method=PUT" method="POST">
+    <div class="col-sm-12">
+    <table class="table">
+        <tr>
+            <th>Event</th>
+            <th>Amount</th>
+            <th>CR/DB</th>
+            <th>Currency</th>
+            <th>Account</th>
+            <th>Notes</th>
+        </tr>
+        <tr>
+            <td>
+    <select id = "event" name = "event"  onchange = "if ($('#event').val() == 'Others') { $('#haad').show(); } else { $('#haad').hide(); }">
+        <option>Income</option>
+        <option>Withdrawal</option>
+        <option>Charge</option>
+        <option>Tax</option>
+        <option>DSL</option>
+        <option>Emails</option>
+        <option>Fkref</option>
+        <option>Electricity</option>
+        <option>Tea</option>
+        <option>Traffic</option>
+        <option>Hosting</option>
+        <option>Domains</option>
+        <option>Diesel</option>
+        <option class="hoop">Others</option>
+    </select>
+    <input type="text" name="other" class="amput" id="haad">
+</td>
+    <td>
+        <input type="number" name="amount" class="amount" value="<%= transa.amount %>"  required>
+    </td>
+    <td>
+        <select name="type" >
+            <option>Debit</option>
+            <option>Credit</option>
+        </select>
+    </td>
+    <td>
+        <select name="currency" >
+            <option>INR</option>
+            <option>USD</option>
+        </select>
+    </td>
+    <td>
+        <select name="account" >
+            <option>Exirv</option>
+            <option>IJP</option>
+            <option>Techlab</option>
+            <option>Suyash</option>
+            <option>Kushagra</option>
+        </select>
+    </td>
+    <td>
+        <input type="text" name="notes" class="amput" value="<%= transa.notes %>"  required>
+    </td>
+</tr>
+<tr>
+    <td colspan="8">
+    <button class="btn btn-success">Submit</button>
+    </td>
+</tr>
+</table>
+    </div>
+    </form>
+    
+</div>
+</div>
+<script src="/js/input.js"></script>
+<%- include("../partials/footer") %></input>

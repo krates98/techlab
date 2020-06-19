@@ -1,8 +1,5 @@
 const   express         = require("express"),
         Fixed           = require("../models/fixedcost"),
-        ipAdd           = require("../models/ipaddress"),
-        User            = require("../models/user"),
-        Att             = require("../models/attendance"),
         Trans           = require("../models/transactions"),
         { Convert }     = require("easy-currencies");
         moment          = require("moment"),
@@ -64,6 +61,7 @@ const   express         = require("express"),
     router.post("/accounts/transactions", isLoggedIn, async function(req,res){
         var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
         var even,con,ama,solid;
+        var tipu, acc;
         if(req.body.event === "Others"){
             even = req.body.other;
         } else {
@@ -74,15 +72,37 @@ const   express         = require("express"),
         } else {
             con = req.body.amount;
         }
-        ama = Math.round(con);
+        ama = con;
         solid  = {event: even, amount: ama, transtype: req.body.type, account: req.body.account ,date: datime, notes:req.body.notes}; 
-        Trans.create(solid, function(err, email){
+        
+        Trans.create(solid, function(err){
             if(err) {
                 console.log("Problem Adding Transaction")
                 } else {
                 console.log("Transaction Added")
                 }
             });
+            if(req.body.sent !== "Direct"){ 
+
+            if(req.body.type === "Debit"){
+                tipu = "Credit"
+            } else {
+                tipu = "Debit"
+            }
+
+            acc = req.body.sent;
+
+            solid  = {event: even, amount: ama, transtype: tipu, account: req.body.sent ,date: datime, notes:req.body.notes}; 
+            
+            Trans.create(solid, function(err){
+                if(err) {
+                    console.log("Problem Adding Transaction")
+                    } else {
+                    console.log("Double Transaction Added")
+                    }
+                });
+
+        }
         res.redirect("/accounts/transactions");
     })
 
@@ -123,6 +143,57 @@ const   express         = require("express"),
     
         res.render("accounts/query",{transa});
     });
+
+    // Edit Transaction
+    router.get("/accounts/edit/:id", isLoggedIn,async function(req,res){
+        var transa = await Trans.findById(req.params.id,function(work){
+            return work;
+        })
+        var id = req.params.id;
+        res.render("accounts/edit", {transa,id});
+    });
+
+    // Post Route Transaction
+
+    router.put("/accounts/edit/:id", isLoggedIn ,async function(req,res){
+        var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
+        var even,con,solid;
+        if(req.body.event === "Others"){
+            even = req.body.other;
+        } else {
+            even = req.body.event;
+        }
+        if(req.body.currency === "USD"){
+            con = await Convert(req.body.amount).from("USD").to("INR");
+        } else {
+            con = req.body.amount;
+        }
+        solid  = {event: even, amount: con, transtype: req.body.type, account: req.body.account ,date: datime, notes:req.body.notes}; 
+        
+        Trans.findByIdAndUpdate(req.params.id,solid,function(err,work){
+            if(err){
+                console.log("Problem Editing Transaction");
+            }
+            else{
+                console.log("Edited Transaction")
+            }
+        })
+    
+        res.redirect("/accounts/transactions");
+    });
+
+    router.delete("/accounts/delete/:id", function(req, res){
+        Trans.findById(req.params.id, function(err, offrm){
+            if(err){
+                console.log(err);
+            } else {
+                offrm.remove();
+                console.log("delete transaction")
+                res.redirect("/accounts/transactions");
+            }
+        });
+        
+     });
 
     // middleware 
 
