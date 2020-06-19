@@ -4,11 +4,12 @@ const   express         = require("express"),
         Email           = require("../models/emails"),
         ipAdd           = require("../models/ipaddress"),
         request         = require("request-promise"),
+        middleware      = require("../middleware/"),
         moment          = require('moment');
 
 // Data Pages
 
-router.get("/data", isLoggedIn, function(req,res){
+router.get("/data", middleware.isLoggedInUser, function(req,res){
         var currentIp = req.clientIp;
         var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
         var tatime    = moment().utc().add(5, 'hours').add(30,'m').format("LTS");
@@ -45,7 +46,7 @@ router.get("/data", isLoggedIn, function(req,res){
 
     // Data Show Page
 
-router.get("/data/:id", isLoggedIn, async function(req,res){
+router.get("/data/:id", middleware.isLoggedInUser, async function(req,res){
         var currentIp = req.clientIp;
         var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
         var tatime    = moment().utc().add(5, 'hours').add(30,'m').format("LTS");
@@ -78,17 +79,8 @@ router.get("/data/:id", isLoggedIn, async function(req,res){
             });
 
     //Delete Fetched Data
-    router.delete("/data/:id", isLoggedIn,  function(req, res){
+    router.delete("/data/:id", middleware.isLoggedInUser,  function(req, res){
                res.redirect("/logout");
      });
-
-     // middleware
-
-    function isLoggedIn(req, res, next){
-        if(req.isAuthenticated()){
-            return next();
-        }
-       res.redirect("/login");
-        }
 
      module.exports = router;

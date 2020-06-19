@@ -3,6 +3,7 @@ var     express         = require("express"),
         methodOverride  = require('method-override'),
         bodyParser      = require("body-parser"),
         mongoose        = require("mongoose"),
+        flash           = require("connect-flash"),
         passport        = require("passport"),
         LocalStrategy   = require("passport-local"),
         User            = require("./models/user");
@@ -20,7 +21,8 @@ var     authRoutes      = require("./routes/index"),
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(express.static(__dirname + "/public"));
     app.set("view engine", "ejs");
-    app.use(methodOverride('_method')); 
+    app.use(methodOverride('_method'));
+    app.use(flash()); 
 
     // passport configuration
     app.use(require("express-session")({
@@ -37,6 +39,8 @@ var     authRoutes      = require("./routes/index"),
 
     app.use(function(req, res, next){
         res.locals.currentUser = req.user;
+        res.locals.error = req.flash("error");
+        res.locals.success = req.flash("success");
         next();
     });
 
@@ -51,7 +55,7 @@ var     authRoutes      = require("./routes/index"),
     app.use("/", userRoutes);
     app.use("/", accountRoutes);
 
-    app.listen(3000, '127.0.0.1', function(){
-    // app.listen(process.env.PORT, process.env.IP, function(){
+    // app.listen(3000, '127.0.0.1', function(){
+    app.listen(process.env.PORT, process.env.IP, function(){
         console.log("Techlab Server Has Started!");
      });

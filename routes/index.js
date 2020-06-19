@@ -4,12 +4,12 @@ const   express         = require("express"),
         Email           = require("../models/emails"),
         User            = require("../models/user"),
         ipAdd           = require("../models/ipaddress"),
-        request         = require("request-promise"),
         crypto          = require("crypto"),
         async           = require("async"),
         nodemailer      = require("nodemailer"),
         xoauth2         = require("xoauth2"),
-        moment          = require('moment');
+        moment          = require('moment'),
+        middleware      = require("../middleware/");
 
         var transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
@@ -35,7 +35,7 @@ var mailOptions = {
 
 //Landing page
 
-router.get("/", isLoggedIn,async function(req,res){
+router.get("/", middleware.isLoggedInUser,async function(req,res){
     var ipcount;
     var emax = await Email.countDocuments(function(err,emaxa){
         return emaxa;
@@ -56,7 +56,7 @@ router.get("/", isLoggedIn,async function(req,res){
     })
     
     if(ipis){
-      res.render("ipcheck");
+      res.render("ipcheck",{error: "Please logout, Change IP, Clear History!"});
     } else {
       res.render("index");
   }
@@ -73,10 +73,11 @@ router.get("/", isLoggedIn,async function(req,res){
        var newUser = new User({username: req.body.username});
        User.register(newUser, req.body.password, function(err, user){
            if(err){
-               console.log(err);
+               req.flash("error", err.message );
                return res.render("register");
            }
            passport.authenticate("local")(req, res, function(){
+           req.flash("success","Welcome To Techlab")
            res.redirect("/");
            });
        });
@@ -85,14 +86,15 @@ router.get("/", isLoggedIn,async function(req,res){
 
    // Show Login Form
    router.get("/login", function(req,res){
-       res.render("login");
+       res.render("login",{message: req.flash("error")});
    })
   
   // Login Logic
 
   router.post("/login", passport.authenticate("local",{
        successRedirect: "/",
-       failureRedirect: "/login"    
+       failureRedirect: "/login",
+       failureFlash : true    
    }), function(req,res){
        
    });
@@ -101,6 +103,7 @@ router.get("/", isLoggedIn,async function(req,res){
 
    router.get("/logout", function(req,res){
        req.logout();
+       req.flash("success","Logged Out");
        res.redirect("/login");
    });
 
@@ -207,15 +210,5 @@ router.get("/", isLoggedIn,async function(req,res){
       res.redirect('/');
     });
   });
-    
-   
-   // middleware
-
-    function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-   res.redirect("/login");
-    }
 
 module.exports = router;

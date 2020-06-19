@@ -3,11 +3,12 @@ const   express         = require("express"),
         Trans           = require("../models/transactions"),
         { Convert }     = require("easy-currencies");
         moment          = require("moment"),
+        middleware      = require("../middleware/"),
         router          = express.Router();
 
     // Fetch Account Page
 
-    router.get("/accounts", isLoggedIn ,async function(req,res){
+    router.get("/accounts", middleware.isLoggedIn ,async function(req,res){
         const cost = await Fixed.find(function(ting){
             return ting;
         })
@@ -20,7 +21,7 @@ const   express         = require("express"),
 
     // Fetch Account Fixed Cost Page
 
-    router.get("/accounts/fixedcost", isLoggedIn ,async function(req,res){
+    router.get("/accounts/fixedcost", middleware.isLoggedIn ,async function(req,res){
         const cost = await Fixed.find(function(ting){
             return ting;
         })
@@ -30,7 +31,7 @@ const   express         = require("express"),
 
     // Post Account Fixed Cost Page
 
-    router.post("/accounts/fixedcost", isLoggedIn ,async function(req,res){
+    router.post("/accounts/fixedcost", middleware.isLoggedIn ,async function(req,res){
         const cost = await Fixed.find(function(ting){
             return ting;
         })
@@ -43,12 +44,13 @@ const   express         = require("express"),
         }
         var fix = {rent: req.body.rent, officeboy: req.body.officeboy, guard: req.body.guard, generator: req.body.generator, maid: req.body.maid, elecfix: req.body.elecfix, elecran: req.body.elecran, diesel:req.body.diesel, tead:req.body.tead, tean:req.body.tean, dsl:req.body.dsl, emails:req.body.emails, fkref:req.body.fkref, traffic:req.body.traffic, hosting:req.body.hosting, domains:req.body.domains, misl:req.body.misl, salary:req.body.salary, earning:earn }
         Fixed.findOneAndUpdate(cost, fix, function(){});
+        req.flash("success","Edited FixedCost, Displaying New Analysis")
         res.redirect("/accounts");
     });
 
     // Account Transactions
 
-    router.get("/accounts/transactions", isLoggedIn ,async function(req,res){
+    router.get("/accounts/transactions", middleware.isLoggedIn ,async function(req,res){
         var transa = await Trans.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/"+ moment().utc().add(5, 'hours').add(30,'m').format("YYYY")}},function(work){
             return work;
         })
@@ -58,7 +60,7 @@ const   express         = require("express"),
 
     // Transactions Post Routes
 
-    router.post("/accounts/transactions", isLoggedIn, async function(req,res){
+    router.post("/accounts/transactions", middleware.isLoggedIn, async function(req,res){
         var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
         var even,con,ama,solid;
         var tipu, acc;
@@ -103,12 +105,13 @@ const   express         = require("express"),
                 });
 
         }
-        res.redirect("/accounts/transactions");
+        req.flash("success","Transaction Added");
+        res.redirect("back");
     })
 
     // Query Transactions
 
-    router.get("/accounts/pnl", isLoggedIn ,async function(req,res){
+    router.get("/accounts/pnl", middleware.isLoggedIn ,async function(req,res){
         var transa = await Trans.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/"+ moment().utc().add(5, 'hours').add(30,'m').format("YYYY")}},function(work){
             return work;
         })
@@ -116,7 +119,7 @@ const   express         = require("express"),
         res.render("accounts/profitandloss",{transa});
     });
 
-    router.post("/accounts/bymonth", isLoggedIn ,async function(req,res){
+    router.post("/accounts/bymonth", middleware.isLoggedIn ,async function(req,res){
         let month = req.body.month;
         let year = req.body.year;
         var transa = await Trans.find({date: {$regex: "\/"+ month +"\/"+ year }},function(work){
@@ -126,7 +129,7 @@ const   express         = require("express"),
         res.render("accounts/query",{transa});
     });
 
-    router.post("/accounts/byyear", isLoggedIn ,async function(req,res){
+    router.post("/accounts/byyear", middleware.isLoggedIn ,async function(req,res){
         let year = req.body.year;
         var transa = await Trans.find({date: {$regex: year }},function(work){
             return work;
@@ -135,7 +138,7 @@ const   express         = require("express"),
         res.render("accounts/query",{transa});
     });
 
-    router.post("/accounts/byaccount", isLoggedIn ,async function(req,res){
+    router.post("/accounts/byaccount", middleware.isLoggedIn ,async function(req,res){
         let acc = req.body.account;
         var transa = await Trans.find({account: acc},function(work){
             return work;
@@ -145,7 +148,7 @@ const   express         = require("express"),
     });
 
     // Edit Transaction
-    router.get("/accounts/edit/:id", isLoggedIn,async function(req,res){
+    router.get("/accounts/edit/:id", middleware.isLoggedIn,async function(req,res){
         var transa = await Trans.findById(req.params.id,function(work){
             return work;
         })
@@ -155,7 +158,7 @@ const   express         = require("express"),
 
     // Post Route Transaction
 
-    router.put("/accounts/edit/:id", isLoggedIn ,async function(req,res){
+    router.put("/accounts/edit/:id", middleware.isLoggedIn ,async function(req,res){
         var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
         var even,con,solid;
         if(req.body.event === "Others"){
@@ -178,7 +181,7 @@ const   express         = require("express"),
                 console.log("Edited Transaction")
             }
         })
-    
+        req.flash("success","Transaction Edited")
         res.redirect("/accounts/transactions");
     });
 
@@ -188,26 +191,11 @@ const   express         = require("express"),
                 console.log(err);
             } else {
                 offrm.remove();
-                console.log("delete transaction")
-                res.redirect("/accounts/transactions");
+                req.flash("success","Transaction Deleted")
+                res.redirect("back");
             }
         });
         
      });
-
-    // middleware 
-
-    function isLoggedIn(req, res, next){
-        if(req.isAuthenticated()){
-            var usher = req.user.username;
-            if(usher === "krates"){
-            return next();
-            }
-            else {
-            res.send("Not Authorised");
-            }
-        }
-       res.redirect("/login");
-        }
 
 module.exports = router;

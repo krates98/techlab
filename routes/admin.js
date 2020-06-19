@@ -11,7 +11,8 @@ const   express         = require("express"),
         multer          = require('multer'),
         csv             = require('fast-csv'),
         fs              = require('fs'),
-        http            = require('http');
+        http            = require('http'),
+        middleware      = require("../middleware/");
 
         // SET STORAGE
         var storage = multer.diskStorage({
@@ -27,7 +28,7 @@ const   express         = require("express"),
 
 
         // Admin Landing Page
-        router.get("/admin", isLoggedIn,async function(req,res){
+        router.get("/admin", middleware.isLoggedIn,async function(req,res){
             var datime      = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
             var datime1     = moment().utc().subtract(18, 'hours').subtract(30,'m').format("DD/MM/YYYY");
             var datime2     = moment().utc().subtract(43, 'hours').subtract(30,'m').format("DD/MM/YYYY");
@@ -55,7 +56,7 @@ const   express         = require("express"),
 
         // Admin Today's Work
 
-        router.get("/admin/todaywork", isLoggedIn,async function(req,res){
+        router.get("/admin/todaywork", middleware.isLoggedIn,async function(req,res){
                 var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
                 var today     = await ipAdd.find({date: datime}, function(err,todee){
                                     return todee;
@@ -68,7 +69,7 @@ const   express         = require("express"),
 
         // Admin Yesterday's Work
 
-        router.get("/admin/yesterdaywork", isLoggedIn,async function(req,res){
+        router.get("/admin/yesterdaywork", middleware.isLoggedIn,async function(req,res){
                 var datime    = moment().utc().subtract(18, 'hours').subtract(30,'m').format("DD/MM/YYYY");
                 var today     = await ipAdd.find({date: datime}, function(err,todee){
                                     return todee;
@@ -81,13 +82,13 @@ const   express         = require("express"),
         
         // Admin Register User
 
-        router.get("/admin/register", isLoggedIn, function(req,res){
+        router.get("/admin/register", middleware.isLoggedIn, function(req,res){
             res.render("admin/register");
         });
 
         // Admin UserWork
 
-        router.get("/admin/userwork", isLoggedIn, function(req,res){
+        router.get("/admin/userwork", middleware.isLoggedIn, function(req,res){
             var noMatch = null;
                     if(req.query.users){
                         const users = req.query.users;
@@ -124,7 +125,7 @@ const   express         = require("express"),
                         });
 
         // Admin Data Left
-        router.get("/admin/dataleft", isLoggedIn, async function(req,res){
+        router.get("/admin/dataleft", middleware.isLoggedIn, async function(req,res){
             var AZ   = await Data.countDocuments({ state: "AZ" },function(err,result){
                 return result;
             });
@@ -197,11 +198,11 @@ const   express         = require("express"),
                 });
 
         // Admin HitList Page
-        router.get("/admin/hitlist", isLoggedIn, function(req,res){
+        router.get("/admin/hitlist", middleware.isLoggedIn, function(req,res){
             res.render("admin/hitlist", );
         });
 
-        router.post('/admin/hitlistsuccess', isLoggedIn, upload.single('myFile'), (req, res, next) => {
+        router.post('/admin/hitlistsuccess', middleware.isLoggedIn, upload.single('myFile'), (req, res, next) => {
             
             const file = req.file
             if (!file) {
@@ -238,7 +239,7 @@ const   express         = require("express"),
 
         
         // Admin HitList Page
-        router.get("/admin/checkhitlist", isLoggedIn,async function(req,res){
+        router.get("/admin/checkhitlist", middleware.isLoggedIn,async function(req,res){
             
             var workers = await User.find(function(err,work){
                 return work;
@@ -425,11 +426,11 @@ const   express         = require("express"),
         });
             
         // Admin Upload Email
-        router.get("/admin/uploademail", isLoggedIn, function(req,res){
+        router.get("/admin/uploademail", middleware.isLoggedIn, function(req,res){
             res.render("admin/uploademail");
         });
 
-        router.post('/admin/uploademail', isLoggedIn, upload.single('myFile'), (req, res, next) => {
+        router.post('/admin/uploademail', middleware.isLoggedIn, upload.single('myFile'), (req, res, next) => {
             
             const file = req.file
             if (!file) {
@@ -461,7 +462,7 @@ const   express         = require("express"),
         });
 
         // Admin Attendance Current Month 
-        router.get("/admin/attendance", isLoggedIn,async function(req,res){
+        router.get("/admin/attendance", middleware.isLoggedIn,async function(req,res){
             var worker = await User.find(function(err,work){
                 return work;
             })
@@ -479,7 +480,7 @@ const   express         = require("express"),
         });
 
         // Admin Attendance Last Month 
-        router.get("/admin/lastmonth", isLoggedIn,async function(req,res){
+        router.get("/admin/lastmonth", middleware.isLoggedIn,async function(req,res){
             var worker = await User.find(function(err,work){
                 return work;
             })
@@ -496,11 +497,11 @@ const   express         = require("express"),
         });
         
         // Admin Upload Data
-        router.get("/admin/uploaddata", isLoggedIn, function(req,res){
+        router.get("/admin/uploaddata", middleware.isLoggedIn, function(req,res){
             res.render("admin/uploaddata", );
         });
 
-        router.post('/admin/uploaddata', isLoggedIn, upload.single('myFile'), (req, res, next) => {
+        router.post('/admin/uploaddata', middleware.isLoggedIn, upload.single('myFile'), (req, res, next) => {
             
             const file = req.file
             if (!file) {
@@ -532,7 +533,7 @@ const   express         = require("express"),
         });
 
         // Admin Update Offers
-         router.get("/admin/offers", isLoggedIn,async function(req,res){
+         router.get("/admin/offers", middleware.isLoggedIn,async function(req,res){
             var offurl = await Offer.find(function(err,offig){
                 return offig;
             });
@@ -540,7 +541,7 @@ const   express         = require("express"),
         });
 
         // Admin Post Update Offers
-        router.post("/admin/offers", isLoggedIn, async function(req,res){
+        router.post("/admin/offers", middleware.isLoggedIn, async function(req,res){
             var insput = req.body.offerurl;
             var off = req.body.offername;
             
@@ -554,8 +555,8 @@ const   express         = require("express"),
                         console.log("added offer")
                     } 
                 });
-            
-            res.redirect("/admin/offers");
+            req.flash("success","Offer Added")
+            res.redirect("back");
         });
 
         router.post("/admin/offers/:id", function(req, res){
@@ -569,18 +570,20 @@ const   express         = require("express"),
                 if(err){
                     console.log(err);
                 } else {
-                    res.redirect("/admin/offers");
+                    req.flash("success","Turned Off Offer")
+                    res.redirect("back");
                 }
             });
          });
          
-         router.put("/admin/offers/:id", isLoggedIn,function(req,res){
+         router.put("/admin/offers/:id", middleware.isLoggedIn,function(req,res){
             var seu = {priority: req.body.pri};
             Offer.findByIdAndUpdate(req.params.id,seu, function(err,random){
                 if(err){
                     console.log("Error");
                 } else {
-                    res.redirect("/admin/offers");
+                    req.flash("success","Priority Set")
+                    res.redirect("back");
                 }
             });   
        });
@@ -591,7 +594,8 @@ const   express         = require("express"),
                     console.log(err);
                 } else {
                     offrm.remove();
-                    res.redirect("/admin/offers");
+                    req.flash("success","Deleted Offer")
+                    res.redirect("back");
                 }
             });
             
@@ -599,7 +603,7 @@ const   express         = require("express"),
 
         // Admin Salary User
 
-        router.get("/admin/salary", isLoggedIn,async function(req,res){
+        router.get("/admin/salary", middleware.isLoggedIn,async function(req,res){
             var userdata = await User.find(function (err,userd){
                 return userd;
             })
@@ -608,21 +612,22 @@ const   express         = require("express"),
 
          // Admin Salary Post
 
-         router.post("/admin/salary", isLoggedIn,function(req,res){
+         router.post("/admin/salary", middleware.isLoggedIn,function(req,res){
              var sal = {salary: req.body.salary};
              var seu = {username: req.body.users};
              User.findOneAndUpdate(seu, sal,async function(err, blog){
                 if(err){
                     console.log(err);
                 } else {
-                    res.redirect("/admin/salary");
+                    req.flash("success","Salary Updated")
+                    res.redirect("back");
                 }
             });
         });
 
         // Admin Generate Salary
 
-        router.get("/admin/gensalary", isLoggedIn,async function(req,res){
+        router.get("/admin/gensalary", middleware.isLoggedIn,async function(req,res){
             
             var worker = await User.find(function(err,work){
                 return work;
@@ -648,7 +653,7 @@ const   express         = require("express"),
 
         // Admin Generate Last Month Salary
 
-        router.get("/admin/gensalarylm", isLoggedIn,async function(req,res){
+        router.get("/admin/gensalarylm", middleware.isLoggedIn,async function(req,res){
             
             var worker = await User.find(function(err,work){
                 return work;
@@ -672,7 +677,7 @@ const   express         = require("express"),
 
         // User Performance
 
-        router.get("/admin/performance", isLoggedIn,async function(req,res){
+        router.get("/admin/performance", middleware.isLoggedIn,async function(req,res){
             var ipdata = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2020"}, time: { $regex: "PM"}},function(err,work){
                 return work;
             })
@@ -703,20 +708,5 @@ const   express         = require("express"),
             res.render("admin/performance",{worker,ipdata});
         });
 
-
-        // middleware
-
-        function isLoggedIn(req, res, next){
-        if(req.isAuthenticated()){
-            var usher = req.user.username;
-            if(usher === "krates"){
-            return next();
-            }
-            else {
-                res.send("Not Authorised");
-            }
-        }
-       res.redirect("/login");
-        }
 
         module.exports = router;

@@ -1,11 +1,12 @@
 const   express         = require("express"),
         Offer           = require("../models/offers"),
         Counter         = require("../models/counter"),
+        middleware      = require("../middleware/"),
         router          = express.Router();
     
     // Fetch Offer Pages
 
-    router.get("/pages", isLoggedIn,async function(req,res){
+    router.get("/pages", middleware.isLoggedInUser,async function(req,res){
 
         var counte = await Counter.find(function( err,result){
             return result;
@@ -24,13 +25,5 @@ const   express         = require("express"),
         res.render("pages/pages",{offurl,counte});
     });
 
-    // middleware
-
-    function isLoggedIn(req, res, next){
-        if(req.isAuthenticated()){
-            return next();
-        }
-       res.redirect("/login");
-        }
 
 module.exports = router;
