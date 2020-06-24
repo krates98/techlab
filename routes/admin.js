@@ -7,6 +7,7 @@ const   express         = require("express"),
         Offer           = require("../models/offers"),
         Att             = require("../models/attendance"),  
         Hitlist         = require("../models/hitlist"),
+        delIp           = require("../models/deletedips"),
         moment          = require('moment'),
         multer          = require('multer'),
         csv             = require('fast-csv'),
@@ -695,18 +696,70 @@ const   express         = require("express"),
             var endTime;
             var duration;
             var minutes;
+            var min =[],dut=[];
+            var user = worker[8].username;
             var attcount = ipdata.filter(x => x.username == worker[8].username)
                 for(var j=0;j<attcount.length-1;j++){
                     startTime = moment(attcount[j].time, "HH:mm:ss a");
                     endTime = moment(attcount[j+1].time, "HH:mm:ss a");
                     duration = moment.duration(endTime.diff(startTime));
                     minutes = parseInt(duration.asMinutes());
-                    console.log(minutes)
-                    console.log(attcount[j].date);
+                    min.push(minutes)
+                    dut.push(attcount[j].date);
                 }
 
-            res.render("admin/performance",{worker,ipdata});
+            res.render("admin/performance",{worker,ipdata,min,dut,user});
         });
 
+        // Admin IP Delete & Store
+
+        router.get("/admin/deleteips", middleware.isLoggedIn,async function(req,res){
+            res.render("admin/deleteips");
+
+        });
+
+        // Admin IP Delete & Store Post Route
+
+        router.post("/admin/deleteips", middleware.isLoggedIn,async function(req,res){
+            
+            const day = req.body.day;
+            const month = req.body.month;
+            const year = req.body.year;
+            const date = day +"/"+ month +"/"+ year;
+            var found = await ipAdd.find({date: date}, function(err, ipad){
+                return ipad;
+            })
+            res.render("admin/deleteips2",{found,date});
+        });
+
+        // Admin IP Delete & Store Delete Route
+
+        router.delete("/admin/deleteips", middleware.isLoggedIn,async function(req,res){
+            var datime    = moment().utc().add(5, 'hours').add(30,'m').format("DD/MM/YYYY");
+            var found = await ipAdd.find({date: req.body.date}, function(err, ipad){
+                return ipad;
+            })
+            var delips;
+            found.forEach(function(ipad){
+                delips = {ipaddress: ipad.ipaddress, date: ipad.date, time: ipad.time, username: ipad.username, deleteday: datime}
+                delIp.create(delips, function(err){
+                    if(err) {
+                        console.log("Problem Adding Deleted ips")
+                        } else {
+                        console.log("Added Deleted ips")
+                        }
+                    });
+                ipAdd.findOneAndDelete({ipaddress: ipad.ipaddress}, function(err, offrm){
+                if(err){
+                    console.log(err);
+                } else {
+                    offrm.remove();
+                    console.log("Removed Ip");
+                }
+            });
+        });
+            req.flash("success","iPs Deleted For " + req.body.date);
+            res.redirect("back")
+        });
 
         module.exports = router;

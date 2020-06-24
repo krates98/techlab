@@ -21,7 +21,7 @@
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-      
+        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <% if(currentUser){ %>  
@@ -49,6 +49,7 @@
           </ul>
           <% } %>
         </div>
+        
       </nav>
       <% if(error && error.length > 0){%>
       <div class="container alert alert-danger" role="alert">
@@ -83,6 +84,9 @@
                         </li>
                         <li>
                             <a href="/admin/userwork">Individual Work</a>
+                        </li>
+                        <li>
+                            <a href="/admin/performance">User Performance</a>
                         </li>
                     </ul>
                 </li>
@@ -152,10 +156,10 @@
                     </li>
             </ul>
             </li>
-            
             <li>
-                <a target="_blank" href="/hiddenregister">Register</a>
+                <a href="/admin/deleteips">Delete IPs</a>
             </li>
+            
                 
             </ul>
         </nav>
