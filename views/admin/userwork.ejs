@@ -1,16 +1,14 @@
 <%- include("../partials/header") %>
 
             <div class="col-sm-10">
-            <form action="/admin/userwork" method="GET" class="form-inline">
+            <form action="/admin/userwork" method="POST" class="form-inline">
             <select class="userwork" name="users">
-                <option value="selectuser">Select User</option>
                 <% for(var i=1;i<ussr.length;i++){ %>
                     <option value="<%= ussr[i].username %>"><%= ussr[i].username %></option>
                 <% } %>
               </select>
            
               <select class="userwork" name="day">
-                <option>- Day -</option>
                 <option value="01">1</option>
                 <option value="02">2</option>
                 <option value="03">3</option>
@@ -36,20 +34,20 @@
                 <option value="23">23</option>
                 <option value="24">24</option>
                 <option value="25">25</option>
-                <option value="26">26</option>
+                <option value="26" selected>26</option>
                 <option value="27">27</option>
                 <option value="28">28</option>
                 <option value="29">29</option>
                 <option value="30">30</option>
                 <option value="31">31</option>
-                </select><select class="userwork" name="month">
-                <option>- Month -</option>
+                </select>
+                <select class="userwork" name="month">
                 <option value="01">January</option>
                 <option value="02">Febuary</option>
                 <option value="03">March</option>
                 <option value="04">April</option>
                 <option value="05">May</option>
-                <option value="06">June</option>
+                <option value="06" selected>June</option>
                 <option value="07">July</option>
                 <option value="08">August</option>
                 <option value="09">September</option>
@@ -57,39 +55,11 @@
                 <option value="11">November</option>
                 <option value="12">December</option>
                 </select><select class="userwork" name="year">
-                <option>- Year -</option>
                 <option value="2020">2020</option>
+                <option value="2021">2021</option>
                 </select>
                 <button class="btn btn-primary" value="search">Submit</button>
             </form>
-        
-            
-            <%  if(noMatch === "has"){ %>
-                <table class="table">
-                    <tr>
-                        <th>Count</th>
-                        <th>Date</th>
-                        <th>Username</th>
-                        <th>IP</th>
-                        <th>Time</th>
-                    </tr>
-            <% ipad.forEach(function(campground,index){ %>
-                <tr>
-                    <td><%= index+1 %></td>
-                    <td><%= campground.date %></td>
-                    <td><%= campground.username %></td>
-                    <td><%= campground.ipaddress %></td>
-                    <td><%= campground.time %></td>
-                </tr>
-            <% }); %>
-                </table>
-        <% } %>
-            <% if(noMatch === "had") { %>
-                <div class="noresults">
-                    <br><br><br><br><br>
-                <h3>No Results</h3>
-            </div>
-                <% } %>
 
             </div>
         </div>

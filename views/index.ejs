@@ -11,9 +11,9 @@
 <div class="row toprow">
       <div class="col-sm">
           <h1 class="display-6">Welcome <%= currentUser.username %></h1>
-          <a href="/data">
+          <form action="/data" method="POST">
           <button class="btn btn-warning btn-lg btn-pad">Continue</button>
-          </a>
+          </form>
       </div>
     
     <% } %>

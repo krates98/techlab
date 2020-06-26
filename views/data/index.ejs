@@ -13,15 +13,13 @@
                 <td><%= xar %></td>
                 <td><%= xac %></td>
             </tr>
-        </table>
-            <% if(alldata !== null) { %>
+        </table>  
                 <hr>
-                <a href="/pages/" target="_blank"class="btn btn-info">Open Offers</a> -------
-                <a href="/data/<%= alldata._id %>" class="btn btn-primary">USE Data</a>
+                <div class="databuttons"> 
+                <a href="/pages/" target="_blank"class="btn btn-info edit">Open Offers</a> 
+                <form action="/data/<%= alldata._id %>" method="POST"><button class="btn btn-primary">USE Data</button></form>
+                </div>
                 <hr>
-            <% } else { %>
-            <h2>Data Not Found</h2>
-            <% } %>
     </div>
 </div>  
 <%- include("../partials/footer") %>

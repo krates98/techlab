@@ -7,8 +7,6 @@ const   express         = require("express"),
         crypto          = require("crypto"),
         async           = require("async"),
         nodemailer      = require("nodemailer"),
-        xoauth2         = require("xoauth2"),
-        moment          = require('moment'),
         middleware      = require("../middleware/");
 
         var transporter = nodemailer.createTransport({
@@ -36,7 +34,6 @@ var mailOptions = {
 //Landing page
 
 router.get("/", middleware.isLoggedInUser,async function(req,res){
-    var ipcount;
     var emax = await Email.countDocuments(function(err,emaxa){
         return emaxa;
     });
@@ -56,7 +53,7 @@ router.get("/", middleware.isLoggedInUser,async function(req,res){
     })
     
     if(ipis){
-      res.render("ipcheck",{error: "Please logout, Change IP, Clear History!"});
+      res.render("ipcheck",{error: "Please Logout, Change IP, Clear History!"});
     } else {
       res.render("index");
   }

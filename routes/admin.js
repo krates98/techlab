@@ -12,7 +12,6 @@ const   express         = require("express"),
         multer          = require('multer'),
         csv             = require('fast-csv'),
         fs              = require('fs'),
-        http            = require('http'),
         middleware      = require("../middleware/");
 
         // SET STORAGE
@@ -88,41 +87,43 @@ const   express         = require("express"),
         });
 
         // Admin UserWork
+        router.get("/admin/userwork", middleware.isLoggedIn,async function(req,res){
+            var ussr = await User.find(function(err,work){
+                return work;
+            })
+        
+            res.render("admin/userwork",{ussr});
+        });
 
-        router.get("/admin/userwork", middleware.isLoggedIn, function(req,res){
-            var noMatch = null;
-                    if(req.query.users){
-                        const users = req.query.users;
-                        const day = req.query.day;
-                        const month = req.query.month;
-                        const year = req.query.year;
+        router.post("/admin/userwork", middleware.isLoggedIn,async function(req,res){
+                        const users = req.body.users;
+                        const day = req.body.day;
+                        const month = req.body.month;
+                        const year = req.body.year;
                         const date = day +"/"+ month +"/"+ year;
-                        ipAdd.find({username: users, date: date}, function(err, ipad){
-                            if(err){
-                                console.log(err);
-                                } else {
-                                    noMatch = "has";
-                                    if(ipad.length < 1) {
-                                        noMatch = "had";
-                                    }
-                                    User.find(function(err, ussr){
-                                    res.render("admin/userwork",{ipad:ipad,ussr:ussr,noMatch});
-                                    });
-                                    }
-                            });
-                        }
-                            else{
-                                ipAdd.find(function(err,ipad){
-                                    if(err){
-                                        console.log(err);
-                                    }
-                                    else{
-                                        User.find(function(err, ussr){
-                                        res.render("admin/userwork",{ipad:ipad,ussr:ussr, noMatch:noMatch});
-                                        });
-                                    }
-                                });
+                        var ipdata = await ipAdd.find({username: users, date: date},function(err,work){
+                            return work;
+                            })
+                         
+                        var startTime,endTime,duration,minutes;
+                        var min =[];
+                        
+                            for(var j=0;j<ipdata.length-1;j++){
+                                startTime = moment(ipdata[j].time, "HH:mm:ss a");
+                                endTime = moment(ipdata[j+1].time, "HH:mm:ss a");
+                                duration = moment.duration(endTime.diff(startTime));
+                                minutes = parseInt(duration.asMinutes());
+                                min.push(minutes)
                             }
+                        
+                           
+                        if(ipdata && ipdata.length){
+                            res.render("admin/userwork2",{ipdata,min});
+                        }
+                        else {
+                            req.flash("error","Data Not Found");
+                            res.redirect("back");
+                        }           
                         });
 
         // Admin Data Left
@@ -188,11 +189,15 @@ const   express         = require("express"),
                 return result;
             });
 
+            var NY   = await Data.countDocuments({ state: "NY" },function(err,result){
+                return result;
+            });
+
             var EMAIL   = await Email.countDocuments(function(err,result){
                 return result;
             });
 
-            var stes =[AZ,CA,CO,CT,FL,GA,ID,IL,IN,IA,MD,MA,MI,NE,NV,NJ,TX,UT,VA,WA];
+            var stes =[AZ,CA,CO,CT,FL,GA,ID,IL,IN,IA,MD,MA,MI,NE,NV,NJ,TX,UT,VA,WA,NY];
 
             res.render("admin/dataleft",{stes, EMAIL});
 
