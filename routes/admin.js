@@ -193,11 +193,19 @@ const   express         = require("express"),
                 return result;
             });
 
+            var MN   = await Data.countDocuments({ state: "MN" },function(err,result){
+                return result;
+            });
+
+            var AL   = await Data.countDocuments({ state: "AL" },function(err,result){
+                return result;
+            });
+
             var EMAIL   = await Email.countDocuments(function(err,result){
                 return result;
             });
 
-            var stes =[AZ,CA,CO,CT,FL,GA,ID,IL,IN,IA,MD,MA,MI,NE,NV,NJ,TX,UT,VA,WA,NY];
+            var stes =[AZ,CA,CO,CT,FL,GA,ID,IL,IN,IA,MD,MA,MI,NE,NV,NJ,TX,UT,VA,WA,NY,MN,AL];
 
             res.render("admin/dataleft",{stes, EMAIL});
 

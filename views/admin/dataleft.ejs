@@ -144,6 +144,18 @@
                 <td>New York</td>
                 <td><%= stes[20] %></td>
             </tr>
+            <% if(stes[21]<2000) {%>
+                <tr class="table-danger">
+                <% } else {%> <tr> <% } %>
+                <td>Minnesota</td>
+                <td><%= stes[21] %></td>
+            </tr>
+            <% if(stes[20]<2000) {%>
+                <tr class="table-danger">
+                <% } else {%> <tr> <% } %>
+                <td>Alabama</td>
+                <td><%= stes[22] %></td>
+            </tr>
         </table>
     </div>
 

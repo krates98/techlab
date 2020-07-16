@@ -74,7 +74,7 @@ const   express         = require("express"),
         } else {
             con = req.body.amount;
         }
-        ama = con;
+        ama = con.toFixed(2);
         solid  = {event: even, amount: ama, transtype: req.body.type, account: req.body.account ,date: datime, notes:req.body.notes}; 
         
         Trans.create(solid, function(err){
