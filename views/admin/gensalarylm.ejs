@@ -1,5 +1,6 @@
 <%- include("../partials/header") %>
 <% var salcount %>
+
 <% var attvar = 0 %>
 <% var salsum = 0 %>
     <div class="col-sm-8">
@@ -18,6 +19,7 @@
                 <% } %>
         <% for(var i=1;i<worker.length;i++){ %>
             <%    dsal = (worker[i].salary / daysm); %>
+           
             
             <tr>
                 <td class="bg-info">

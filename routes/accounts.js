@@ -71,10 +71,11 @@ const   express         = require("express"),
         }
         if(req.body.currency === "USD"){
             con = await Convert(req.body.amount).from("USD").to("INR");
+            con = con.toFixed(2);
         } else {
             con = req.body.amount;
         }
-        ama = con.toFixed(2);
+        ama = con;
         solid  = {event: even, amount: ama, transtype: req.body.type, account: req.body.account ,date: datime, notes:req.body.notes}; 
         
         Trans.create(solid, function(err){
