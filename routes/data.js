@@ -61,7 +61,7 @@ router.post("/data", middleware.isLoggedInUser, function(req,res){
 
     router.post("/data/:id", middleware.isLoggedInUser, async function(req,res){
 
-        var oneEmail = await Email.findOne(function(err, emails){
+        var oneEmail = await Email.findOneAndDelete(function(err, emails){
         return emails;
         });
         
@@ -69,9 +69,7 @@ router.post("/data", middleware.isLoggedInUser, function(req,res){
                 return alldata;
             }); 
 
-        await Email.findOneAndDelete(oneEmail.email, function(err){
-                    console.log("deleted email")
-            });
+
         await Data.findByIdAndRemove(req.params.id, function(err){
                  console.log("delete data");
                });
