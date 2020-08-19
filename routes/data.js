@@ -69,7 +69,7 @@ router.post("/data", middleware.isLoggedInUser, function(req,res){
                 return alldata;
             }); 
 
-            await Email.findOneAndRemove(oneEmail.email, function(err){
+            await Email.findByIdAndRemove(oneEmail.id, function(err){
                 console.log("delete email");
               });
 
