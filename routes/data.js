@@ -76,8 +76,26 @@ router.post("/data", middleware.isLoggedInUser, function(req,res){
             await Data.findByIdAndRemove(req.params.id, function(err){
                  console.log("delete data");
                });
-               res.render("data/show",{usadata:oneData, emails: oneEmail});
+
+            var twoEmail = await Email.findOne(function(err, tmails){
+            return tmails;
             });
+               res.render("data/show",{usadata:oneData, emails: oneEmail , tmails: twoEmail});
+            });
+
+            router.post("/data/email/:id", middleware.isLoggedInUser, async function(req,res){
+
+                var oneData = await Email.findById(req.params.id, function(err, alldata){ 
+                    return alldata;
+                }); 
+                
+                await Email.findByIdAndRemove(req.params.id, function(err){
+                    console.log("delete second email");
+                  });
+            
+
+                       res.render("data/email",{oneData});
+                    });
 
     //Delete Fetched Data
     router.delete("/data/:id", middleware.isLoggedInUser,  function(req, res){
