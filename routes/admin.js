@@ -481,7 +481,7 @@ const   express         = require("express"),
                 return work;
             })
 
-            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2020"}, time: { $regex: "PM"}},function(err,work){
+            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2021"}, time: { $regex: "PM"}},function(err,work){
                 return work;
             })
             var daysd = moment().utc().add(5, 'hours').add(30,'m').format("D");
@@ -499,7 +499,7 @@ const   express         = require("express"),
                 return work;
             })
 
-            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').format("MM") +"\/2020"}, time: { $regex: "PM"}},function(err,work){
+            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').format("MM") +"\/2021"}, time: { $regex: "PM"}},function(err,work){
                 return work;
             })
             var daysd = moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').daysInMonth();
@@ -647,11 +647,11 @@ const   express         = require("express"),
                 return work;
             })
 
-            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2020"}, time: { $regex: "PM"}},function(err,work){
+            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2021"}, time: { $regex: "PM"}},function(err,work){
                 return work;
             })
 
-            var attrea = await Att.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2020"}},function(err,work){
+            var attrea = await Att.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2021"}},function(err,work){
                 return work;
             })
             var daysm = moment().utc().add(5, 'hours').add(30,'m').daysInMonth();
@@ -673,11 +673,11 @@ const   express         = require("express"),
                 return work;
             })
 
-            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').format("MM") +"\/2020"}, time: { $regex: "PM"}},function(err,work){
+            var dates = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').format("MM") +"\/2021"}, time: { $regex: "PM"}},function(err,work){
                 return work;
             })
 
-            var attrea = await Att.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').format("MM") +"\/2020"}},function(err,work){
+            var attrea = await Att.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').format("MM") +"\/2021"}},function(err,work){
                 return work;
             })
             var daysm = moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').daysInMonth();
@@ -692,7 +692,7 @@ const   express         = require("express"),
         // User Performance
 
         router.get("/admin/performance", middleware.isLoggedIn,async function(req,res){
-            var ipdata = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2020"}, time: { $regex: "PM"}},function(err,work){
+            var ipdata = await ipAdd.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2021"}, time: { $regex: "PM"}},function(err,work){
                 return work;
             })
             
