@@ -2,6 +2,7 @@ const   express         = require("express"),
         router          = express.Router(),
         User            = require("../models/user"),
         Att             = require("../models/attendance"),
+        ipAdd           = require("../models/ipaddress"),
         middleware      = require("../middleware/"),
         moment          = require('moment');
 
@@ -43,10 +44,22 @@ const   express         = require("express"),
     // Moderate Attendance
 
     router.get("/users/mod", middleware.isLoggedInUser,async function(req,res){
-        var attrea = await Att.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2020"}},function(err,work){
+        var attrea = await Att.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2021"}},function(err,work){
             return work;
         })
-        res.render("users/mod", {attrea});
+        var dates = await Att.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').subtract(1, 'months').format("MM") +"\/2021"}},function(err,wok){
+            return wok;
+        })
+            var datime    = moment().utc().subtract(18, 'hours').subtract(30,'m').format("DD/MM/YYYY");
+            var today     = await ipAdd.find({date: datime}, function(err,todee){
+                                return todee;
+                            });
+            var worker    = await User.find(function(err,uss){
+                                return uss;
+                            })
+
+
+        res.render("users/mod", {attrea,dates,today,worker});
     });
 
 
