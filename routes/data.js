@@ -69,9 +69,9 @@ router.post("/data", middleware.isLoggedInUser, function(req,res){
                 return alldata;
             }); 
 
-            await Email.findByIdAndRemove(oneEmail.id, function(err){
-                console.log("delete email");
-              });
+            // await Email.findByIdAndRemove(oneEmail.id, function(err){
+            //     console.log("delete email");
+            //   });
 
             await Data.findByIdAndRemove(req.params.id, function(err){
                  console.log("delete data");
