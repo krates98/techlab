@@ -19,9 +19,9 @@ router.post("/data", middleware.isLoggedInUser, function(req,res){
         // request("http://api.ipstack.com/"+ ip +"?access_key=2b9734f1e27d53cbe77f447111dba11c").then((body) => {
         request("http://ip-api.com/json/"+ ip).then((body) => { 
         const ipData = JSON.parse(body);
-        var xar = ipData.region;
+        var xar = ipData.countryCode;
         var xac = ipData.regionName;
-        var xa = ipData.countryCode;
+        var xa = ipData.region;
         
         Data.findOne({state: xa}, function(err, alldata){
             if(err){
