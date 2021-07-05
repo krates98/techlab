@@ -73,12 +73,24 @@ router.get("/", middleware.isLoggedInUser,async function(req,res){
   }
 });
 
-    // Show Register Form
+    // Show Change IP Form
     router.get("/changeip", function(req,res){
       var xa=req.clientIp;
-      res.render("changeip",{xa});
+      res.render("changeip/changeip",{xa});
   });
+
+      // Show Change Location
+      router.get("/changeip/location", function(req,res){
+        var xa=req.clientIp;
+        res.render("changeip/location");
+    });
     
+      // Show Change Location
+      router.get("/changeip/ip", function(req,res){
+        var xa=req.clientIp;
+        res.render("changeip/ip");
+    });
+
     // Show Register Form
     router.get("/hiddenregister", function(req,res){
         res.render("register");

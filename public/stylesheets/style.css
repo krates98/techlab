@@ -269,6 +269,5 @@ body {
 
 .databuttons{
     display: flex;
-    margin: auto;
-    width: fit-content;
+    justify-content: center;
 }

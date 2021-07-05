@@ -15,6 +15,18 @@
           <button class="btn btn-warning btn-lg btn-pad">Continue</button>
           </form>
       </div>
+
+      <% if(currentUser.dsl !== null || currentUser.length() !== 0) { %>
+
+        <div class="col-sm">
+           
+                <form action="changeip/changeip.ejs">
+                    <button class="btn btn-danger btn-lg btn-pad">Change Location</button>  
+                </form>
+            </a>
+        </div>
+
+    <% } %>
     
     <% } %>
 
