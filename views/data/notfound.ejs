@@ -5,5 +5,16 @@
         <h3>Data Not Found</h3>
     </div>
 </div>
+<% if(currentUser.dsl.length != 0) { %>
+
+    <div class="col-sm">
+           
+            <form action="changeip">
+                <button class="btn btn-danger btn-lg btn-pad">Change Location</button>  
+            </form>
+        </a>
+    </div>
+</div>
+<% } %>
 
 <%- include("../partials/footer") %>

@@ -77,7 +77,7 @@ router.get("/", middleware.isLoggedInUser,async function(req,res){
       // Show Change IP Form
       router.get("/changeip", middleware.isLoggedInUser, function(req,res){
         var ip = req.clientIp;
-        request("http://ip-api.com/json/"+ ip).then((body) => { 
+        request("http://api.ipstack.com/"+ ip +"?access_key=2b9734f1e27d53cbe77f447111dba11c").then((body) => {
         const ipData = JSON.parse(body);
         var xar = ipData.countryCode;
         var xac = ipData.regionName;
