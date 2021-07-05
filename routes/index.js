@@ -72,6 +72,12 @@ router.get("/", middleware.isLoggedInUser,async function(req,res){
       res.render("index");
   }
 });
+
+    // Show Register Form
+    router.get("/changeip", function(req,res){
+      var xa=req.clientIp;
+      res.render("changeip",{xa});
+  });
     
     // Show Register Form
     router.get("/hiddenregister", function(req,res){
