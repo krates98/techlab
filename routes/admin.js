@@ -201,11 +201,35 @@ const   express         = require("express"),
                 return result;
             });
 
+            var OR   = await Data.countDocuments({ state: "OR" },function(err,result){
+                return result;
+            });
+
+            var PA   = await Data.countDocuments({ state: "PA" },function(err,result){
+                return result;
+            });
+
+            var OH   = await Data.countDocuments({ state: "OH" },function(err,result){
+                return result;
+            });
+
+            var TN   = await Data.countDocuments({ state: "TN" },function(err,result){
+                return result;
+            });
+
+            var NC   = await Data.countDocuments({ state: "NC" },function(err,result){
+                return result;
+            });
+
+            var AR   = await Data.countDocuments({ state: "AR" },function(err,result){
+                return result;
+            });
+
             var EMAIL   = await Email.countDocuments(function(err,result){
                 return result;
             });
 
-            var stes =[AZ,CA,CO,CT,FL,GA,ID,IL,IN,IA,MD,MA,MI,NE,NV,NJ,TX,UT,VA,WA,NY,MN,AL];
+            var stes =[AZ,CA,CO,CT,FL,GA,ID,IL,IN,IA,MD,MA,MI,NE,NV,NJ,TX,UT,VA,WA,NY,MN,AL,OR,PA,OH,TN,NC,AR];
 
             res.render("admin/dataleft",{stes, EMAIL});
 
