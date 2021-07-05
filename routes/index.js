@@ -8,6 +8,7 @@ const   express         = require("express"),
         async           = require("async"),
         nodemailer      = require("nodemailer"),
         Counter         = require("../models/counter"),
+        request         = require("request-promise"),
         middleware      = require("../middleware/");
 
 
@@ -73,22 +74,34 @@ router.get("/", middleware.isLoggedInUser,async function(req,res){
   }
 });
 
-    // Show Change IP Form
-    router.get("/changeip", function(req,res){
-      var xa=req.clientIp;
-      res.render("changeip/changeip",{xa});
-  });
-
-      // Show Change Location
-      router.get("/changeip/location", function(req,res){
-        var xa=req.clientIp;
-        res.render("changeip/location");
+      // Show Change IP Form
+      router.get("/changeip", middleware.isLoggedInUser, function(req,res){
+        var ip = req.clientIp;
+        request("http://ip-api.com/json/"+ ip).then((body) => { 
+        const ipData = JSON.parse(body);
+        var xar = ipData.countryCode;
+        var xac = ipData.regionName;
+        var xa = ipData.region;
+        var xax=req.clientIp;
+        res.render("changeip/index",{xax,xar,xac,xa});
+    })
+  })
+  
+        // Show Change Location
+        router.get("/changeip/location", middleware.isLoggedInUser, function(req,res){
+            request("https://proxypanel.io/proxy/locations/"+ req.user.dsl +"/355eb53c2d605431e543879bd452889b:46Vm_w5j_S98k6-Gy2h__LmGYxY1LDSq_nEqho4D60E").then((body) => { 
+            const status = JSON.parse(body);
+            var xar = status.status;
+            res.render("changeip/location",{xar});
+        })
     });
-    
-      // Show Change Location
-      router.get("/changeip/ip", function(req,res){
-        var xa=req.clientIp;
-        res.render("changeip/ip");
+              // Show Change Location
+          router.get("/changeip/ip", middleware.isLoggedInUser, function(req,res){
+            request("https://proxypanel.io/proxy/change-ip/"+ req.user.dsl +"/355eb53c2d605431e543879bd452889b:46Vm_w5j_S98k6-Gy2h__LmGYxY1LDSq_nEqho4D60E").then((body) => { 
+            const status = JSON.parse(body);
+            var xar = status.status;
+            res.render("changeip/ip",{xar});
+        })
     });
 
     // Show Register Form
