@@ -45,24 +45,24 @@ var mailOptions = {
 //Landing page
 
 router.get("/", middleware.isLoggedInUser,async function(req,res){
-    var emax = await Email.countDocuments(function(err,emaxa){
-        return emaxa;
-    });
+  //   var emax = await Email.countDocuments(function(err,emaxa){
+  //       return emaxa;
+  //   });
 
-    var counte = await Counter.find(function( err,result){
-      return result;
-  })
+  //   var counte = await Counter.find(function( err,result){
+  //     return result;
+  // })
   
-    // Send mail if less than 1000 emails
-    if(emax < 1000 && counte[0].count % 100 == 0 ){
-        transporter.sendMail(mailOptions, function (err, res) {
-            if(err){
-                console.log("not sent");
-            } else {
-                console.log('Email Sent');
-            }
-        })
-    }
+  //   // Send mail if less than 1000 emails
+  //   if(emax < 1000 && counte[0].count % 100 == 0 ){
+  //       transporter.sendMail(mailOptions, function (err, res) {
+  //           if(err){
+  //               console.log("not sent");
+  //           } else {
+  //               console.log('Email Sent');
+  //           }
+  //       })
+  //   }
     var ipis = await ipAdd.findOne({ipaddress: req.clientIp},function(work){
       return work;
     })
@@ -113,6 +113,7 @@ router.get("/", middleware.isLoggedInUser,async function(req,res){
 
    router.post("/hiddenregister", function(req,res){
        var newUser = new User({username: req.body.username});
+
        User.register(newUser, req.body.password, function(err, user){
            if(err){
                req.flash("error", err.message );
