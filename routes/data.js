@@ -67,17 +67,17 @@ router.post("/data", middleware.isLoggedInUser, function(req,res){
             return result;
         })
 
-        var oneEmail = await Email.findOne(function(err, emails){
-        return emails;
-        });
+        // var oneEmail = await Email.findOne(function(err, emails){
+        // return emails;
+        // });
         
         var oneData = await Data.findById(req.params.id, function(err, alldata){ 
                 return alldata;
             }); 
 
-            await Email.findByIdAndRemove(oneEmail.id, function(err){
-                console.log("delete email");
-              });
+            // await Email.findByIdAndRemove(oneEmail.id, function(err){
+            //     console.log("delete email");
+            //   });
 
             await Data.findByIdAndRemove(req.params.id, function(err){
                  console.log("delete data");
@@ -87,7 +87,7 @@ router.post("/data", middleware.isLoggedInUser, function(req,res){
             return tmails;
             });
 
-               res.render("data/show",{usadata:oneData, emails: oneEmail , tmails: twoEmail, counte});
+               res.render("data/show",{usadata:oneData , tmails: twoEmail, counte});
             });
 
             router.post("/data/email/:id", middleware.isLoggedInUser, async function(req,res){
