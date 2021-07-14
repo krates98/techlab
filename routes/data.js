@@ -3,6 +3,7 @@ const   express         = require("express"),
         Data            = require("../models/data"),
         Email           = require("../models/emails"),
         ipAdd           = require("../models/ipaddress"),
+        Counter         = require("../models/counter"),
         request         = require("request-promise"),
         middleware      = require("../middleware/"),
         moment          = require('moment');
@@ -62,6 +63,10 @@ router.post("/data", middleware.isLoggedInUser, function(req,res){
 
     router.post("/data/:id", middleware.isLoggedInUser, async function(req,res){
 
+        var counte = await Counter.find(function( err,result){
+            return result;
+        })
+
         var oneEmail = await Email.findOne(function(err, emails){
         return emails;
         });
@@ -70,9 +75,9 @@ router.post("/data", middleware.isLoggedInUser, function(req,res){
                 return alldata;
             }); 
 
-            // await Email.findByIdAndRemove(oneEmail.id, function(err){
-            //     console.log("delete email");
-            //   });
+            await Email.findByIdAndRemove(oneEmail.id, function(err){
+                console.log("delete email");
+              });
 
             await Data.findByIdAndRemove(req.params.id, function(err){
                  console.log("delete data");
@@ -81,7 +86,8 @@ router.post("/data", middleware.isLoggedInUser, function(req,res){
             var twoEmail = await Email.findOne(function(err, tmails){
             return tmails;
             });
-               res.render("data/show",{usadata:oneData, emails: oneEmail , tmails: twoEmail});
+
+               res.render("data/show",{usadata:oneData, emails: oneEmail , tmails: twoEmail, counte});
             });
 
             router.post("/data/email/:id", middleware.isLoggedInUser, async function(req,res){

@@ -7,7 +7,6 @@ const   express         = require("express"),
         crypto          = require("crypto"),
         async           = require("async"),
         nodemailer      = require("nodemailer"),
-        Counter         = require("../models/counter"),
         request         = require("request-promise"),
         middleware      = require("../middleware/");
 
