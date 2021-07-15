@@ -1,0 +1,29 @@
+<%- include("../partials/header") %>
+<div class="databuttons">
+    <form action="/users/updated" method="POST">
+        <div class="input-group input2 ">
+          <div class="input-group-prepend">
+              <select class="usersalary" name="users">
+          <option value="selectuser">Select User:</option>
+          <% for(var i=1;i<worker.length;i++){ %>
+              <option value="<%= worker[i].username %>"><%= worker[i].username %></option>
+          <% } %>
+        </select>
+                         
+        <select class="usersalary" name="dsl">
+            <option value="selectuser">Select Proxy</option>
+           
+                <option value="coolroxxx/custom2">coolroxxx/custom2</option>
+                <option value="coolroxxx/custom3">coolroxxx/custom3</option>
+                <option value="coolroxxx/custom4">coolroxxx/custom4</option>
+           
+          </select>
+          <div class="input-group-append">
+              <button class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+      <hr>
+  </form>
+</div></div>
+
+<%- include("../partials/footer") %>

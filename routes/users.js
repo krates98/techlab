@@ -44,6 +44,7 @@ const   express         = require("express"),
     // Moderate Attendance
 
     router.get("/users/mod", middleware.isLoggedInUser,async function(req,res){
+        
         var attrea = await Att.find({date: {$regex: "\/"+ moment().utc().add(5, 'hours').add(30,'m').format("MM") +"\/2021"}},function(err,work){
             return work;
         })
@@ -62,6 +63,28 @@ const   express         = require("express"),
         res.render("users/mod", {attrea,dates,today,worker});
     });
 
+    router.get("/users/proxy", middleware.isLoggedInUser,async function(req,res){
+        var worker    = await User.find(function(err,uss){
+            return uss;
+        })
+
+        res.render("users/proxy",{worker});
+    })
+
+    router.post("/users/updated", middleware.isLoggedInUser,async function(req,res){
+
+             var sal = {dsl: req.body.dsl};
+             var seu = {username: req.body.users};
+             User.findOneAndUpdate(seu, sal,async function(err, blog){
+                if(err){
+                    console.log(err);
+                } else {
+                    req.flash("success","DSL Updated");   
+                }
+            });
+
+        res.render("users/updated");
+    });
 
     // User Profile 
     router.get("/users/:id", middleware.isLoggedInUser, function(req,res){
