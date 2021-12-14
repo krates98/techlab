@@ -74,13 +74,13 @@
                         </div>
                 <hr>
             </form>
-                <% if(counte[0].count % 2 === 0){%>
+                <!-- <% if(counte[0].count % 2 === 0){%> -->
                     <div class="row" id="fetchdata">
                 <form target="_blank" action="/data/email/<%= tmails._id %>" method="POST">
                 <button class="btn btn-info btn-lg btn-block fetch">Get New Email</button>    
                 </form>
                 <hr>
-                <% } %>   
+                <!-- <% } %>    -->
                 <div class="row" id="fetchdata">
                 <form action="/logout" method="GET">
                 <button class="btn btn-primary btn-lg btn-block fetch">Fetch New Data</button>    
